@@ -12,12 +12,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.sarafinmahtab.tnsassistant.teacher.RegisterTeacher;
-
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
-import static com.sarafinmahtab.tnsassistant.R.id.radio;
-import static com.sarafinmahtab.tnsassistant.R.id.teacher;
-
 public class LoginActivity extends AppCompatActivity {
 
     private static RadioGroup radioGroup;
