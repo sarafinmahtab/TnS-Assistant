@@ -10,9 +10,6 @@
         android:id="@+id/tns"
         android:layout_width="wrap_content"
         android:layout_height="54dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="28dp"
         android:background="@drawable/border"
         android:text="Welcome to TnS Assistant"
         android:textColor="#123152"
@@ -23,7 +20,9 @@
         app:layout_constraintLeft_toLeftOf="@+id/teacher"
         app:layout_constraintRight_toRightOf="@+id/student"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/areyou"
@@ -153,20 +152,22 @@
         android:textStyle="bold"
         android:layout_alignBaseline="@+id/register"
         android:layout_alignBottom="@+id/register"
-        android:layout_toLeftOf="@+id/register"
-        android:layout_toStartOf="@+id/register" />
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_marginLeft="11dp"
+        android:layout_marginStart="11dp" />
 
     <Button
         android:id="@+id/register"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:text="Register"
-        android:layout_alignParentBottom="true"
+        android:layout_marginTop="33dp"
+        android:layout_below="@+id/signIn"
         android:layout_toRightOf="@+id/textView"
         android:layout_toEndOf="@+id/textView"
-        android:layout_marginLeft="27dp"
-        android:layout_marginStart="27dp"
-        android:layout_marginBottom="19dp" />
+        android:layout_marginLeft="18dp"
+        android:layout_marginStart="18dp" />
 
     <TextView
         android:id="@+id/textView5"

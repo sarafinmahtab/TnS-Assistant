@@ -16,17 +16,18 @@ public class LoginActivity extends AppCompatActivity {
     private String radio_str;
 
     private EditText email, password;
-    private static Button signIn;
+    private static Button signIn, register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        onButtonClick();
+        onLoginButtonClick();
+        onRegisterButtonClick();
     }
 
-    public void onButtonClick() {
+    public void onLoginButtonClick() {
         signIn = (Button) findViewById(R.id.signIn);
         signIn.setOnClickListener(
                 new View.OnClickListener() {
@@ -44,6 +45,18 @@ public class LoginActivity extends AppCompatActivity {
                         String pass = password.getText().toString();
 
                         Toast.makeText(LoginActivity.this, radio_str+'\n'+mail+'\n'+pass, Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+    }
+
+    public void onRegisterButtonClick() {
+        register = (Button) findViewById(R.id.register);
+        register.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
                     }
                 }
         );
