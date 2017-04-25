@@ -12,12 +12,21 @@
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".teacher.RegisterTeacher" />
-        <activity android:name=".student.RegisterStudent"></activity>
+        <activity android:name=".teacher.RegisterTeacher">
+            <intent-filter>
+                <action android:name="com.sarafinmahtab.tnsassistant.teacher.RegisterTeacher" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".student.RegisterStudent">
+            <intent-filter>
+                <action android:name="com.sarafinmahtab.tnsassistant.student.RegisterStudent" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

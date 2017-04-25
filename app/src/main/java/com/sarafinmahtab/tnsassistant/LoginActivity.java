@@ -1,7 +1,10 @@
 package com.sarafinmahtab.tnsassistant;
 
+import android.content.Intent;
+import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,11 +12,17 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.sarafinmahtab.tnsassistant.teacher.RegisterTeacher;
+
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
+import static com.sarafinmahtab.tnsassistant.R.id.radio;
+import static com.sarafinmahtab.tnsassistant.R.id.teacher;
+
 public class LoginActivity extends AppCompatActivity {
 
     private static RadioGroup radioGroup;
     private static RadioButton radioButton;
-    private String radio_str;
+    public static int radio_key;
 
     private EditText email, password;
     private static Button signIn, register;
@@ -23,8 +32,27 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        radioClickAction();
         onLoginButtonClick();
         onRegisterButtonClick();
+    }
+
+    public void radioClickAction() {
+        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+        radioGroup.setOnCheckedChangeListener(
+                new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                        int selected_id = radioGroup.getCheckedRadioButtonId();
+                        radioButton = (RadioButton) findViewById(selected_id);
+                        if(radioButton.getId() == R.id.teacher) {
+                            radio_key = 1;
+                        } else if(radioButton.getId() == R.id.student) {
+                            radio_key = 2;
+                        }
+                    }
+                }
+        );
     }
 
     public void onLoginButtonClick() {
@@ -33,18 +61,21 @@ public class LoginActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
-                        int selected_id = radioGroup.getCheckedRadioButtonId();
-                        radioButton = (RadioButton) findViewById(selected_id);
-                        radio_str = radioButton.getText().toString();
-
                         email = (EditText) findViewById(R.id.email);
                         password = (EditText) findViewById(R.id.passWord);
 
+                        String radio_str;
                         String mail = email.getText().toString();
                         String pass = password.getText().toString();
-
-                        Toast.makeText(LoginActivity.this, radio_str+'\n'+mail+'\n'+pass, Toast.LENGTH_SHORT).show();
+                        if(radio_key == 1) {
+                            radio_str = "Teacher";
+                            Toast.makeText(LoginActivity.this, radio_str+'\n'+mail+'\n'+pass, Toast.LENGTH_SHORT).show();
+                        } else if(radio_key == 2) {
+                            radio_str = "Student";
+                            Toast.makeText(LoginActivity.this, radio_str+'\n'+mail+'\n'+pass, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "You haven't checked any profile yet!", Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
         );
@@ -56,7 +87,16 @@ public class LoginActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        Intent intent;
+                        if(radio_key == 1) {
+                            intent = new Intent("com.sarafinmahtab.tnsassistant.teacher.RegisterTeacher");
+                            startActivity(intent);
+                        } else if(radio_key == 2) {
+                            intent = new Intent("com.sarafinmahtab.tnsassistant.student.RegisterStudent");
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(LoginActivity.this, "You haven't checked any profile yet!", Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
         );
