@@ -12,6 +12,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.sarafinmahtab.tnsassistant.BackgroundWork.BackgroundWorker;
+
 public class LoginActivity extends AppCompatActivity {
 
     private static RadioGroup radioGroup;
@@ -63,7 +65,10 @@ public class LoginActivity extends AppCompatActivity {
                         String pass = password.getText().toString();
                         if(radio_key == 1) {
                             radio_str = "Teacher";
+                            String type = "Login";
                             Toast.makeText(LoginActivity.this, radio_str+'\n'+mail+'\n'+pass, Toast.LENGTH_SHORT).show();
+                            BackgroundWorker backgroundWorker = new BackgroundWorker(LoginActivity.this);
+                            backgroundWorker.execute(type, mail, pass);
                         } else if(radio_key == 2) {
                             radio_str = "Student";
                             Toast.makeText(LoginActivity.this, radio_str+'\n'+mail+'\n'+pass, Toast.LENGTH_SHORT).show();
