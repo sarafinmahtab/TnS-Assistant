@@ -35,17 +35,17 @@ public class LoginActivity extends AppCompatActivity {
 
     public static int radio_key;
 
-    RequestQueue requestQueue;
+//    RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Cache cache = new DiskBasedCache(getCacheDir(), 1024*1024);
-        Network network = new BasicNetwork(new HurlStack());
-        requestQueue = new RequestQueue(cache, network);
-        requestQueue.start();
+//        Cache cache = new DiskBasedCache(getCacheDir(), 1024*1024);
+//        Network network = new BasicNetwork(new HurlStack());
+//        requestQueue = new RequestQueue(cache, network);
+//        requestQueue.start();
 
         radioClickAction();
         onLoginButtonClick();
@@ -110,18 +110,16 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(String response) {
                                     Toast.makeText(LoginActivity.this, response, Toast.LENGTH_LONG).show();
-                                    requestQueue.stop();
                                 }
                             }, new Response.ErrorListener(){
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
                                     Toast.makeText(LoginActivity.this, "An Error Occurred", Toast.LENGTH_LONG).show();
                                     error.printStackTrace();
-                                    requestQueue.stop();
                                 }
                             });
 
-                            requestQueue.add(stringRequestforReg);
+                            MySingleton.getMyInstance(getApplicationContext()).addToRequestQueue(stringRequestforReg);
                             startActivity(intent);
                         } else if(radio_key == 2) {
                             intent = new Intent("com.sarafinmahtab.tnsassistant.student.RegisterStudent");
@@ -129,18 +127,16 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onResponse(String response) {
                                     Toast.makeText(LoginActivity.this, response, Toast.LENGTH_LONG).show();
-                                    requestQueue.stop();
                                 }
                             }, new Response.ErrorListener(){
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
                                     Toast.makeText(LoginActivity.this, "An Error Occurred", Toast.LENGTH_LONG).show();
                                     error.printStackTrace();
-                                    requestQueue.stop();
                                 }
                             });
 
-                            requestQueue.add(stringRequestforReg);
+                            MySingleton.getMyInstance(getApplicationContext()).addToRequestQueue(stringRequestforReg);
                             startActivity(intent);
                         } else {
                             Toast.makeText(LoginActivity.this, "You haven't checked any profile yet!", Toast.LENGTH_LONG).show();
