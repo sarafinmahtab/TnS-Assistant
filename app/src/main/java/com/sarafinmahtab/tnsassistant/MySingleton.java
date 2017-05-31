@@ -12,6 +12,11 @@ import com.android.volley.toolbox.Volley;
 
 public class MySingleton {
 
+//    Cache cache = new DiskBasedCache(getCacheDir(), 1024*1024);
+//    Network network = new BasicNetwork(new HurlStack());
+//    requestQueue = new RequestQueue(cache, network);
+//    requestQueue.start();
+
     private static MySingleton myInstance;
     private static Context myContext;
 

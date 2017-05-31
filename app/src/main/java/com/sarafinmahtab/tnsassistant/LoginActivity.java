@@ -1,7 +1,9 @@
 package com.sarafinmahtab.tnsassistant;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.IdRes;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,41 +13,37 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.android.volley.Cache;
-import com.android.volley.Network;
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.BasicNetwork;
-import com.android.volley.toolbox.DiskBasedCache;
-import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.sarafinmahtab.tnsassistant.teacher.TeacherActivity;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText email, password;
+    private EditText Email, Password;
 
     private static RadioGroup radioGroup;
     private static RadioButton radioButton;
     private static Button signIn, register;
 
-    public String server_url = "http://192.168.0.63/tnsAssistant/reg_response.php";
+    private String login_url = "http://192.168.0.100/TnSAssistant/teacher_login.php";
+    private AlertDialog.Builder builder;
 
     public static int radio_key;
-
-//    RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-//        Cache cache = new DiskBasedCache(getCacheDir(), 1024*1024);
-//        Network network = new BasicNetwork(new HurlStack());
-//        requestQueue = new RequestQueue(cache, network);
-//        requestQueue.start();
 
         radioClickAction();
         onLoginButtonClick();
@@ -76,29 +74,96 @@ public class LoginActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        email = (EditText) findViewById(R.id.email);
-                        password = (EditText) findViewById(R.id.passWord);
+                        Email = (EditText) findViewById(R.id.email);
+                        Password = (EditText) findViewById(R.id.passWord);
+                        builder = new AlertDialog.Builder(LoginActivity.this);
 
                         String radio_str;
-                        String mail = email.getText().toString();
-                        String pass = password.getText().toString();
-                        if(radio_key == 1) {
-                            radio_str = "Teacher";
-                            String type = "Login";
-                            Toast.makeText(LoginActivity.this, radio_str+'\n'+mail+'\n'+pass, Toast.LENGTH_SHORT).show();
-                        } else if(radio_key == 2) {
-                            radio_str = "Student";
-                            Toast.makeText(LoginActivity.this, radio_str+'\n'+mail+'\n'+pass, Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(LoginActivity.this, "You haven't checked any profile yet!", Toast.LENGTH_LONG).show();
+                        final String email = Email.getText().toString();
+                        final String password = Password.getText().toString();
+
+                        switch (radio_key) {
+                            case 1:
+                                if(email.equals("") || password.equals("")) {
+                                    builder.setTitle("Invalid Username or Password!!");
+                                    display_alert("Please fill all the fields.");
+                                } else {
+                                    StringRequest stringRequestforLogin = new StringRequest(Request.Method.POST, login_url, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            try {
+                                                JSONArray jsonArray = new JSONArray(response);
+                                                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                                                String code = jsonObject.getString("code");
+
+                                                switch (code) {
+                                                    case "login_failed":
+                                                        builder.setTitle("Login failed!!");
+                                                        display_alert(jsonObject.getString("message"));
+                                                        break;
+                                                    case "login_success":
+//                                                        Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show();
+                                                        Intent intent = new Intent(LoginActivity.this, TeacherActivity.class);
+
+                                                        Bundle bundle = new Bundle();
+                                                        bundle.putString("name", jsonObject.getString("first_name"));
+                                                        bundle.putString("username", jsonObject.getString("username"));
+                                                        intent.putExtras(bundle);
+
+                                                        startActivity(intent);
+                                                        break;
+                                                }
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Toast.makeText(LoginActivity.this, "Error occurred!!", Toast.LENGTH_LONG).show();
+                                            error.printStackTrace();
+                                        }
+                                    }) {
+                                        @Override
+                                        protected Map<String, String> getParams() throws AuthFailureError {
+                                            Map<String, String> params = new HashMap<String, String>();
+                                            params.put("email", email);
+                                            params.put("password", password);
+                                            return params;
+                                        }
+                                    };
+
+                                    MySingleton.getMyInstance(LoginActivity.this).addToRequestQueue(stringRequestforLogin);
+                                }
+                                break;
+                            case 2:
+                                radio_str = "Student";
+                                Toast.makeText(LoginActivity.this, radio_str + '\n' + email + '\n' + password, Toast.LENGTH_SHORT).show();
+                                break;
+                            default:
+                                Toast.makeText(LoginActivity.this, "You haven't checked any profile yet!", Toast.LENGTH_LONG).show();
+                                break;
                         }
                     }
                 }
         );
     }
 
+    public void display_alert(String message) {
+        builder.setMessage(message);
+        builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Email.setText("");
+                        Password.setText("");
+                    }
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
     public void onRegisterButtonClick() {
-        register = (Button) findViewById(R.id.register);
+        register = (Button) findViewById(R.id.onstart);
         register.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -106,37 +171,9 @@ public class LoginActivity extends AppCompatActivity {
                         Intent intent;
                         if(radio_key == 1) {
                             intent = new Intent("com.sarafinmahtab.tnsassistant.teacher.RegisterTeacher");
-                            StringRequest stringRequestforReg = new StringRequest(Request.Method.POST, server_url, new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    Toast.makeText(LoginActivity.this, response, Toast.LENGTH_LONG).show();
-                                }
-                            }, new Response.ErrorListener(){
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Toast.makeText(LoginActivity.this, "An Error Occurred", Toast.LENGTH_LONG).show();
-                                    error.printStackTrace();
-                                }
-                            });
-
-                            MySingleton.getMyInstance(getApplicationContext()).addToRequestQueue(stringRequestforReg);
                             startActivity(intent);
                         } else if(radio_key == 2) {
                             intent = new Intent("com.sarafinmahtab.tnsassistant.student.RegisterStudent");
-                            StringRequest stringRequestforReg = new StringRequest(Request.Method.POST, server_url, new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    Toast.makeText(LoginActivity.this, response, Toast.LENGTH_LONG).show();
-                                }
-                            }, new Response.ErrorListener(){
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Toast.makeText(LoginActivity.this, "An Error Occurred", Toast.LENGTH_LONG).show();
-                                    error.printStackTrace();
-                                }
-                            });
-
-                            MySingleton.getMyInstance(getApplicationContext()).addToRequestQueue(stringRequestforReg);
                             startActivity(intent);
                         } else {
                             Toast.makeText(LoginActivity.this, "You haven't checked any profile yet!", Toast.LENGTH_LONG).show();
