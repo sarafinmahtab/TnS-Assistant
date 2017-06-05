@@ -29,13 +29,13 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText Email, Password;
+    private EditText Username, Password;
 
     private static RadioGroup radioGroup;
     private static RadioButton radioButton;
     private static Button signIn, register;
 
-    private String login_url = "http://192.168.0.100/TnSAssistant/teacher_login.php";
+    private String login_url = "http://192.168.0.102/TnSAssistant/teacher_login.php";
     private AlertDialog.Builder builder;
 
     public static int radio_key;
@@ -46,8 +46,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         radioClickAction();
-        onLoginButtonClick();
-        onRegisterButtonClick();
+        onSigninButtonClick();
+//        onRegisterButtonClick();
     }
 
     public void radioClickAction() {
@@ -68,23 +68,23 @@ public class LoginActivity extends AppCompatActivity {
         );
     }
 
-    public void onLoginButtonClick() {
+    public void onSigninButtonClick() {
         signIn = (Button) findViewById(R.id.signIn);
         signIn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Email = (EditText) findViewById(R.id.email);
+                        Username = (EditText) findViewById(R.id.username);
                         Password = (EditText) findViewById(R.id.passWord);
                         builder = new AlertDialog.Builder(LoginActivity.this);
 
                         String radio_str;
-                        final String email = Email.getText().toString();
+                        final String username = Username.getText().toString();
                         final String password = Password.getText().toString();
 
                         switch (radio_key) {
                             case 1:
-                                if(email.equals("") || password.equals("")) {
+                                if(username.equals("") || password.equals("")) {
                                     builder.setTitle("Invalid Username or Password!!");
                                     display_alert("Please fill all the fields.");
                                 } else {
@@ -102,12 +102,14 @@ public class LoginActivity extends AppCompatActivity {
                                                         display_alert(jsonObject.getString("message"));
                                                         break;
                                                     case "login_success":
-//                                                        Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show();
+                                                        Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show();
                                                         Intent intent = new Intent(LoginActivity.this, TeacherActivity.class);
 
                                                         Bundle bundle = new Bundle();
-                                                        bundle.putString("name", jsonObject.getString("first_name"));
-                                                        bundle.putString("username", jsonObject.getString("username"));
+                                                        bundle.putString("employee_code", jsonObject.getString("employee_code"));
+                                                        bundle.putString("desig_name", jsonObject.getString("desig_name"));
+                                                        bundle.putString("dept_code", jsonObject.getString("dept_code"));
+                                                        bundle.putString("email", jsonObject.getString("email"));
                                                         intent.putExtras(bundle);
 
                                                         startActivity(intent);
@@ -127,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                                         @Override
                                         protected Map<String, String> getParams() throws AuthFailureError {
                                             Map<String, String> params = new HashMap<String, String>();
-                                            params.put("email", email);
+                                            params.put("username", username);
                                             params.put("password", password);
                                             return params;
                                         }
@@ -138,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
                                 break;
                             case 2:
                                 radio_str = "Student";
-                                Toast.makeText(LoginActivity.this, radio_str + '\n' + email + '\n' + password, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, radio_str + '\n' + username + '\n' + password, Toast.LENGTH_SHORT).show();
                                 break;
                             default:
                                 Toast.makeText(LoginActivity.this, "You haven't checked any profile yet!", Toast.LENGTH_LONG).show();
@@ -154,7 +156,7 @@ public class LoginActivity extends AppCompatActivity {
         builder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Email.setText("");
+                        Username.setText("");
                         Password.setText("");
                     }
                 });

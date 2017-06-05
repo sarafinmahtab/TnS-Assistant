@@ -8,18 +8,22 @@ import android.widget.TextView;
 import com.sarafinmahtab.tnsassistant.R;
 
 public class TeacherActivity extends AppCompatActivity {
-    TextView greetings, email_view;
+    TextView code_name, designation, dept_code, email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher);
 
-        greetings = (TextView) findViewById(R.id.greetings);
-        email_view = (TextView) findViewById(R.id.email_view);
+        code_name = (TextView) findViewById(R.id.teacher_code);
+        designation = (TextView) findViewById(R.id.designation);
+        dept_code = (TextView) findViewById(R.id.dept_code);
+        email = (TextView) findViewById(R.id.email_of_teacher);
 
         Bundle bundle = getIntent().getExtras();
-        greetings.setText("Welcome " + bundle.getString("name"));
-        email_view.setText(bundle.getString("username"));
+        code_name.setText(bundle.getString("employee_code"));
+        designation.setText(bundle.getString("desig_name"));
+        dept_code.setText(bundle.getString("dept_code"));
+        email.setText(bundle.getString("email"));
     }
 }

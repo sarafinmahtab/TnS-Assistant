@@ -1,31 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.sarafinmahtab.tnsassistant.teacher.TeacherActivity">
 
     <TextView
-        android:id="@+id/greetings"
+        android:id="@+id/name"
         android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="179dp"
-        android:background="@drawable/border"
+        android:layout_height="30dp"
+        android:hint="Teacher's Name"
         android:textAlignment="center"
         android:textColor="#123456"
-        android:textSize="18sp"
-        tools:layout_editor_absoluteX="81dp"
-        tools:layout_editor_absoluteY="48dp" />
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
     <TextView
-        android:id="@+id/email_view"
-        android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:layout_below="@+id/greetings"
+        android:id="@+id/designation"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="15dp"
+        android:hint="Designation"
+        android:textAlignment="center"
+        android:textColor="#123456"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/teacher_code"
+        android:layout_alignLeft="@+id/teacher_code"
+        android:layout_alignStart="@+id/teacher_code" />
+
+    <TextView
+        android:id="@+id/teacher_code"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="37dp"
+        android:hint="Code Name"
+        android:textAlignment="center"
+        android:textColor="#123456"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/name"
+        android:layout_alignLeft="@+id/name"
+        android:layout_alignStart="@+id/name" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="25dp"
+        app:srcCompat="@drawable/teacher_pic"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/change_image"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_below="@+id/imageView2"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/border"
+        android:background="#123456"
+        android:padding="5dp"
+        android:text="Change Image"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/dept_code"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_alignLeft="@+id/designation"
+        android:layout_alignStart="@+id/designation"
+        android:layout_below="@+id/designation"
+        android:layout_marginTop="17dp"
+        android:hint="Department"
+        android:textAlignment="center"
+        android:textColor="#123456"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/email_of_teacher"
+        android:layout_width="400dp"
+        android:layout_height="24dp"
+        android:layout_below="@+id/name"
+        android:layout_centerHorizontal="true"
+        android:hint="Email"
         android:textAlignment="center"
         android:textColor="#123456"
         android:textSize="18sp"
