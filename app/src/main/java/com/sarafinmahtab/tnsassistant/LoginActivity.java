@@ -106,6 +106,8 @@ public class LoginActivity extends AppCompatActivity {
                                                         Intent intent = new Intent(LoginActivity.this, TeacherActivity.class);
 
                                                         Bundle bundle = new Bundle();
+                                                        bundle.putString("t_first_name", jsonObject.getString("t_first_name"));
+                                                        bundle.putString("t_last_name", jsonObject.getString("t_last_name"));
                                                         bundle.putString("employee_code", jsonObject.getString("employee_code"));
                                                         bundle.putString("desig_name", jsonObject.getString("desig_name"));
                                                         bundle.putString("dept_code", jsonObject.getString("dept_code"));
