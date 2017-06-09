@@ -35,7 +35,8 @@ public class LoginActivity extends AppCompatActivity {
     private static RadioButton radioButton;
     private static Button signIn, register;
 
-    private String login_url = "http://192.168.0.102/TnSAssistant/teacher_login.php";
+//    private String login_url = "http://192.168.0.63/TnSAssistant/teacher_login.php";
+    private String login_url = "http://192.168.0.150/TnSAssistant/teacher_login.php";
     private AlertDialog.Builder builder;
 
     public static int radio_key;
@@ -106,6 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                                                         Intent intent = new Intent(LoginActivity.this, TeacherActivity.class);
 
                                                         Bundle bundle = new Bundle();
+                                                        bundle.putString("teacher_id", jsonObject.getString("teacher_id"));
                                                         bundle.putString("t_first_name", jsonObject.getString("t_first_name"));
                                                         bundle.putString("t_last_name", jsonObject.getString("t_last_name"));
                                                         bundle.putString("employee_code", jsonObject.getString("employee_code"));

@@ -53,19 +53,19 @@
             android:id="@+id/teacher_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
             android:hint="Code"
             android:textAlignment="viewStart"
             android:textColor="#123456"
-            android:textSize="18sp"
+            android:textSize="15sp"
             android:textStyle="bold"
-            tools:layout_conversion_absoluteX="127dp"
-            tools:layout_conversion_absoluteY="60dp"
-            tools:layout_conversion_absoluteWidth="41dp"
-            tools:layout_conversion_absoluteHeight="21dp"
-            android:layout_marginTop="0dp"
+            app:layout_constraintLeft_toLeftOf="@+id/designation"
             app:layout_constraintTop_toBottomOf="@+id/email_of_teacher"
-            android:layout_marginLeft="0dp"
-            app:layout_constraintLeft_toLeftOf="@+id/designation" />
+            tools:layout_conversion_absoluteHeight="21dp"
+            tools:layout_conversion_absoluteWidth="41dp"
+            tools:layout_conversion_absoluteX="127dp"
+            tools:layout_conversion_absoluteY="60dp" />
 
         <TextView
             android:id="@+id/name"
@@ -89,52 +89,52 @@
             android:id="@+id/designation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="0dp"
             android:hint="Desig"
             android:textAlignment="viewStart"
             android:textColor="#123456"
-            android:textSize="18sp"
-            tools:layout_conversion_absoluteX="127dp"
-            tools:layout_conversion_absoluteY="81dp"
-            tools:layout_conversion_absoluteWidth="44dp"
-            tools:layout_conversion_absoluteHeight="21dp"
-            android:layout_marginTop="0dp"
+            android:textSize="15sp"
+            app:layout_constraintLeft_toLeftOf="@+id/teacher_details"
             app:layout_constraintTop_toBottomOf="@+id/teacher_code"
-            android:layout_marginLeft="8dp"
-            app:layout_constraintLeft_toLeftOf="@+id/teacher_details" />
+            tools:layout_conversion_absoluteHeight="21dp"
+            tools:layout_conversion_absoluteWidth="44dp"
+            tools:layout_conversion_absoluteX="127dp"
+            tools:layout_conversion_absoluteY="81dp" />
 
         <TextView
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
             android:text=", "
             android:textAlignment="gravity"
-            android:textSize="18sp"
+            android:textSize="15sp"
             android:textStyle="bold"
-            tools:layout_conversion_absoluteX="171dp"
-            tools:layout_conversion_absoluteY="81dp"
-            tools:layout_conversion_absoluteWidth="8dp"
-            tools:layout_conversion_absoluteHeight="21dp"
             app:layout_constraintLeft_toRightOf="@+id/designation"
-            android:layout_marginLeft="0dp"
             app:layout_constraintTop_toTopOf="@+id/designation"
-            android:layout_marginTop="0dp" />
+            tools:layout_conversion_absoluteHeight="21dp"
+            tools:layout_conversion_absoluteWidth="8dp"
+            tools:layout_conversion_absoluteX="171dp"
+            tools:layout_conversion_absoluteY="81dp" />
 
         <TextView
             android:id="@+id/dept_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
             android:hint="Dept"
             android:textAlignment="gravity"
             android:textColor="#123456"
-            android:textSize="18sp"
-            tools:layout_conversion_absoluteX="180dp"
-            tools:layout_conversion_absoluteY="81dp"
-            tools:layout_conversion_absoluteWidth="37dp"
-            tools:layout_conversion_absoluteHeight="21dp"
+            android:textSize="15sp"
             app:layout_constraintLeft_toRightOf="@+id/textView6"
-            android:layout_marginLeft="0dp"
             app:layout_constraintTop_toTopOf="@+id/textView6"
-            android:layout_marginTop="0dp" />
+            tools:layout_conversion_absoluteHeight="21dp"
+            tools:layout_conversion_absoluteWidth="37dp"
+            tools:layout_conversion_absoluteX="180dp"
+            tools:layout_conversion_absoluteY="81dp" />
 
 
         <Button
@@ -178,6 +178,51 @@
             android:layout_marginRight="8dp"
             app:layout_constraintHorizontal_bias="0.0"
             android:layout_marginBottom="0dp" />
+
+        <TextView
+            android:id="@+id/course_list_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/border"
+            android:text="Running Courses"
+            android:textColor="#123456"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/course_loader"
+            app:layout_constraintTop_toBottomOf="@+id/change_image" />
+
+        <Button
+            android:id="@+id/course_loader"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="0dp"
+            android:background="#123456"
+            android:text="Load"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/course_list_header"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/course_list_header"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/cousres_list"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="@+id/course_list_header"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="@+id/course_loader"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/course_list_header"
+            app:layout_constraintHorizontal_bias="0.0" />
 
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

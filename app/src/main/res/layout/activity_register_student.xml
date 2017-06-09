@@ -14,7 +14,6 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="18dp"
-        android:background="@drawable/border2"
         android:text="Complete your Registration as a Student"
         android:textAlignment="center"
         android:textColor="#123152"
