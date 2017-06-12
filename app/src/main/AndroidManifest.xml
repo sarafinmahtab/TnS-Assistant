@@ -32,7 +32,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".teacher.TeacherActivity"></activity>
+        <activity android:name=".teacher.TeacherActivity" />
+        <activity android:name=".teacher.TeacherPanel"></activity>
     </application>
 
 </manifest>

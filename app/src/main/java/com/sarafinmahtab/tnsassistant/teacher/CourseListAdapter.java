@@ -1,6 +1,8 @@
 package com.sarafinmahtab.tnsassistant.teacher;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +48,18 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.My
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "You've clicked " + course.getCourse_id(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(context, "You've clicked " + course.getCourse_id(), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(context, TeacherPanel.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("teacher_id", course.getCourse_id());
+                bundle.putString("course_code", course.getCourse_code());
+                bundle.putString("course_title", course.getCourse_title());
+                bundle.putString("credit", course.getCredit());
+                bundle.putString("session", course.getSession());
+
+                intent.putExtras(bundle);
+                context.startActivity(intent);
             }
         });
     }

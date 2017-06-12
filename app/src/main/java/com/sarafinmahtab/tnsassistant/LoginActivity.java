@@ -1,5 +1,6 @@
 package com.sarafinmahtab.tnsassistant;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.IdRes;
@@ -75,6 +76,10 @@ public class LoginActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
+                        progressDialog.setMessage("Please Wait!!");
+                        progressDialog.show();
+
                         Username = (EditText) findViewById(R.id.username);
                         Password = (EditText) findViewById(R.id.passWord);
                         builder = new AlertDialog.Builder(LoginActivity.this);
@@ -92,6 +97,8 @@ public class LoginActivity extends AppCompatActivity {
                                     StringRequest stringRequestforLogin = new StringRequest(Request.Method.POST, login_url, new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String response) {
+                                            progressDialog.dismiss();
+
                                             try {
                                                 JSONArray jsonArray = new JSONArray(response);
                                                 JSONObject jsonObject = jsonArray.getJSONObject(0);
@@ -126,7 +133,8 @@ public class LoginActivity extends AppCompatActivity {
                                     }, new Response.ErrorListener() {
                                         @Override
                                         public void onErrorResponse(VolleyError error) {
-                                            Toast.makeText(LoginActivity.this, "Error occurred!!", Toast.LENGTH_LONG).show();
+                                            progressDialog.dismiss();
+                                            Toast.makeText(LoginActivity.this, "Connection Failed!!", Toast.LENGTH_LONG).show();
                                             error.printStackTrace();
                                         }
                                     }) {

@@ -79,7 +79,7 @@ public class TeacherActivity extends AppCompatActivity {
 
     private void loadCourseData() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading Data!!");
+        progressDialog.setMessage("Loading Courses!!");
         progressDialog.show();
 
         StringRequest stringRequestforJSONArray = new StringRequest(Request.Method.POST, course_list_url, new Response.Listener<String>() {
