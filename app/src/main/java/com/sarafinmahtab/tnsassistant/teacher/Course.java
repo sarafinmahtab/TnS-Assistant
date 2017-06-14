@@ -20,10 +20,6 @@ public class Course {
         return course_id;
     }
 
-    public void setCourse_id(String course_id) {
-        this.course_id = course_id;
-    }
-
     public String getCourse_code() {
         return course_code;
     }
