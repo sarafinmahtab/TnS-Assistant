@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -43,6 +44,11 @@ public class TeacherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher);
 
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.activity_teacher_toolbar);
+        setSupportActionBar(myToolbar);
+
+        myToolbar.setTitleTextColor(0xFFFFFFFF);
+
         name = (TextView) findViewById(R.id.name);
         code_name = (TextView) findViewById(R.id.teacher_code);
         designation = (TextView) findViewById(R.id.designation);
@@ -53,6 +59,8 @@ public class TeacherActivity extends AppCompatActivity {
 
         teacher_id = bundle.getString("teacher_id");
         full_name = bundle.getString("t_first_name") + " " + bundle.getString("t_last_name");
+
+        getSupportActionBar().setTitle(bundle.getString("t_first_name") + " Activity");
 
         name.setText(full_name);
         code_name.setText("Code Name: " + bundle.getString("employee_code"));

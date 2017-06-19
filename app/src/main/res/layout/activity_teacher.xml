@@ -15,13 +15,22 @@
         tools:layout_editor_absoluteY="0dp"
         tools:layout_editor_absoluteX="0dp">
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/activity_teacher_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorTpanel"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
         <ImageView
             android:id="@+id/teacher_display_pic"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginEnd="7dp"
             android:layout_marginLeft="0dp"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="60dp"
             android:contentDescription="@null"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -71,25 +80,25 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="72dp"
             android:hint="Teacher's Name"
             android:textAlignment="viewStart"
             android:textColor="#123456"
             android:textSize="18sp"
             android:textStyle="bold"
-            tools:layout_conversion_absoluteX="127dp"
-            tools:layout_conversion_absoluteY="22dp"
-            tools:layout_conversion_absoluteWidth="129dp"
-            tools:layout_conversion_absoluteHeight="21dp"
+            app:layout_constraintLeft_toLeftOf="@+id/email_of_teacher"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="16dp"
-            android:layout_marginLeft="0dp"
-            app:layout_constraintLeft_toLeftOf="@+id/email_of_teacher" />
+            tools:layout_conversion_absoluteHeight="21dp"
+            tools:layout_conversion_absoluteWidth="129dp"
+            tools:layout_conversion_absoluteX="127dp"
+            tools:layout_conversion_absoluteY="22dp" />
 
         <TextView
             android:id="@+id/designation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="0dp"
             android:layout_marginTop="0dp"
             android:hint="Desig"
             android:textAlignment="viewStart"
