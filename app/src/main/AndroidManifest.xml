@@ -32,9 +32,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".teacher.TeacherActivity" />
-        <activity android:name=".teacher.TeacherPanel"></activity>
-        <activity android:name=".student.StudentActivity"></activity>
+        <activity
+            android:name=".teacher.TeacherActivity"
+            android:label="Teacher Activity" />
+        <activity
+            android:name=".student.StudentActivity"
+            android:label="Student Activity" />
+        <activity android:name=".teacher.TeacherDashboard"></activity>
     </application>
 
 </manifest>

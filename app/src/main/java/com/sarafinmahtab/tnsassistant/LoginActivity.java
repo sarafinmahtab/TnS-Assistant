@@ -7,6 +7,10 @@ import android.support.annotation.IdRes;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,6 +50,12 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.home_toolbar);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setTitle("TnS Assistant");
+
+        myToolbar.setTitleTextColor(0xFFFFFFFF);
 
         radioClickAction();
         onSigninButtonClick();
@@ -195,5 +205,23 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main_activity_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.rate_us:
+                Toast.makeText(LoginActivity.this, "You've rated!!", Toast.LENGTH_LONG).show();
+            case R.id.about:
+                Toast.makeText(LoginActivity.this, "Clicked About!!", Toast.LENGTH_LONG).show();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

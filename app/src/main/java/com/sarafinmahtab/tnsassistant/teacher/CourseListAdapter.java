@@ -49,7 +49,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.My
             @Override
             public void onClick(View v) {
 //                Toast.makeText(context, "You've clicked " + course.getCourse_id(), Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(context, TeacherPanel.class);
+                Intent intent = new Intent(context, TeacherDashboard.class);
 
                 Bundle bundle = new Bundle();
                 bundle.putString("teacher_id", course.getCourse_id());

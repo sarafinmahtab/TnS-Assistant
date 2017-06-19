@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303f9f</color>
+    <color name="colorPrimaryDark">#384859</color>
     <color name="colorAccent">#453f3e</color>
     <color name="tree">#1e8449</color>
+    <color name="white">#FFFFFF</color>
+    <color name="home">#16001E</color>
+    <color name="colorTpanel">#123456</color>
+    <color name="colorSpanel">#401629</color>
 </resources>

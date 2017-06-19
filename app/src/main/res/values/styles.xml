@@ -1,11 +1,24 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="actionBarPopupTheme">@style/AppThemeOverlay.Popup</item>
+    </style>
+
+    <style name="AppThemeOverlay.Popup" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:colorBackground">#123456</item>
+        <item name="colorControlHighlight">#336384</item>
+        <item name="android:actionMenuTextColor">#FFFFFF</item>
+    </style>
+
+    <style name="ToolbarStyle" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <!-- Customize color of navigation drawer icon and back arrow -->
+        <item name="colorControlNormal">@color/white</item>
     </style>
 
 </resources>
