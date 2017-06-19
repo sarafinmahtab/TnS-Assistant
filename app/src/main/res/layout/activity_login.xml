@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -12,20 +11,12 @@
         android:layout_height="wrap_content"
         tools:context="com.sarafinmahtab.tnsassistant.LoginActivity">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/home_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorTpanel"
-            android:elevation="4dp"
-            android:theme="@style/AppTheme"
-            app:theme="@style/ToolbarStyle"
-            app:popupTheme="?actionBarPopupTheme" />
-
         <TextView
             android:id="@+id/tns"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/header_border"
             android:text="Welcome to TnS Assistant"
             android:textColor="#123456"
@@ -34,9 +25,7 @@
             android:textStyle="bold"
             app:layout_constraintHorizontal_bias="0.555"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            android:layout_below="@+id/home_toolbar"
-            android:layout_centerHorizontal="true" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/areyou"
