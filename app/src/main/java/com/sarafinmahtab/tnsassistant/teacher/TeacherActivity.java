@@ -37,6 +37,7 @@ public class TeacherActivity extends AppCompatActivity {
     RecyclerView.Adapter adapter;
     RecyclerView recyclerView;
 
+//    String login_url = "http://192.168.0.63/TnSAssistant/generate_courses.php";
     String course_list_url = "http://192.168.0.150/TnSAssistant/generate_courses.php";
 
     @Override

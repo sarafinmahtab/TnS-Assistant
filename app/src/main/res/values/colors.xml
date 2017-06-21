@@ -6,6 +6,7 @@
     <color name="tree">#1e8449</color>
     <color name="white">#FFFFFF</color>
     <color name="home">#16001E</color>
-    <color name="colorTpanel">#123456</color>
-    <color name="colorSpanel">#401629</color>
+    <color name="colorTnSPrimary">#123456</color>
+    <color name="colorTnSText">#123456</color>
+    <color name="colorTnSAlternative">#401629</color>
 </resources>
