@@ -23,6 +23,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.sarafinmahtab.tnsassistant.student.StudentActivity;
 import com.sarafinmahtab.tnsassistant.teacher.TeacherActivity;
 
 import org.json.JSONArray;
@@ -40,10 +41,13 @@ public class LoginActivity extends AppCompatActivity {
     private static RadioButton radioButton;
     private static Button signIn, register;
 
-//    private String login_url = "http://192.168.0.63/TnSAssistant/teacher_login.php";
-    private String login_url = "http://192.168.0.150/TnSAssistant/teacher_login.php";
-    private AlertDialog.Builder builder;
+//    private String teac_login_url = "http://192.168.0.63/TnSAssistant/teacher_login.php";
+    private String teac_login_url = "http://192.168.0.150/TnSAssistant/teacher_login.php";
 
+//    private String std_login_url = "http://192.168.0.63/TnSAssistant/student_login.php";
+    private String std_login_url = "http://192.168.0.150/TnSAssistant/student_login.php";
+
+    private AlertDialog.Builder builder;
     public static int radio_key;
 
     @Override
@@ -98,14 +102,14 @@ public class LoginActivity extends AppCompatActivity {
                         final String username = Username.getText().toString();
                         final String password = Password.getText().toString();
 
-                        switch (radio_key) {
-                            case 1:
-                                if(username.equals("") || password.equals("")) {
-                                    progressDialog.dismiss();
-                                    builder.setTitle("Invalid Username or Password!!");
-                                    display_alert("Please fill all the fields.");
-                                } else {
-                                    StringRequest stringRequestforLogin = new StringRequest(Request.Method.POST, login_url, new Response.Listener<String>() {
+                        if(username.equals("") || password.equals("")) {
+                            progressDialog.dismiss();
+                            builder.setTitle("Blank Username or Password!!");
+                            display_alert("Please fill all the fields.");
+                        } else {
+                            switch (radio_key) {
+                                case 1:
+                                    StringRequest stringRequestforTeacLogin = new StringRequest(Request.Method.POST, teac_login_url, new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String response) {
                                             progressDialog.dismiss();
@@ -158,16 +162,69 @@ public class LoginActivity extends AppCompatActivity {
                                         }
                                     };
 
-                                    MySingleton.getMyInstance(LoginActivity.this).addToRequestQueue(stringRequestforLogin);
-                                }
-                                break;
-                            case 2:
-                                radio_str = "Student";
-                                Toast.makeText(LoginActivity.this, radio_str + '\n' + username + '\n' + password, Toast.LENGTH_SHORT).show();
-                                break;
-                            default:
-                                Toast.makeText(LoginActivity.this, "You haven't checked any profile yet!", Toast.LENGTH_LONG).show();
-                                break;
+                                    MySingleton.getMyInstance(LoginActivity.this).addToRequestQueue(stringRequestforTeacLogin);
+                                    break;
+                                case 2:
+                                    StringRequest stringRequestforStdLogin = new StringRequest(Request.Method.POST, std_login_url, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+
+                                            progressDialog.dismiss();
+
+                                            try {
+                                                JSONArray jsonArray = new JSONArray(response);
+                                                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                                                String code = jsonObject.getString("code");
+
+                                                switch (code) {
+                                                    case "login_failed":
+                                                        builder.setTitle("Login failed!!");
+                                                        display_alert(jsonObject.getString("message"));
+                                                        break;
+                                                    case "login_success":
+                                                        Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_LONG).show();
+                                                        Intent intent = new Intent(LoginActivity.this, StudentActivity.class);
+
+                                                        Bundle bundle = new Bundle();
+                                                        bundle.putString("student_id", jsonObject.getString("student_id"));
+                                                        bundle.putString("registration_no", jsonObject.getString("registration_no"));
+                                                        bundle.putString("email_no", jsonObject.getString("email_no"));
+                                                        bundle.putString("s_first_name", jsonObject.getString("s_first_name"));
+                                                        bundle.putString("s_last_name", jsonObject.getString("s_last_name"));
+                                                        bundle.putString("dept_name", jsonObject.getString("dept_name"));
+                                                        intent.putExtras(bundle);
+
+                                                        startActivity(intent);
+                                                        break;
+                                                }
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            progressDialog.dismiss();
+                                            Toast.makeText(LoginActivity.this, "Connection Failed!!", Toast.LENGTH_LONG).show();
+                                            error.printStackTrace();
+                                        }
+                                    }) {
+                                        @Override
+                                        protected Map<String, String> getParams() throws AuthFailureError {
+                                            Map<String, String> params = new HashMap<String, String>();
+                                            params.put("username", username);
+                                            params.put("password", password);
+                                            return params;
+                                        }
+                                    };
+
+                                    MySingleton.getMyInstance(LoginActivity.this).addToRequestQueue(stringRequestforStdLogin);
+                                    break;
+                                default:
+                                    builder.setTitle("Login Failed!!");
+                                    display_alert("You haven't checked any profile yet!");
+                                    break;
+                            }
                         }
                     }
                 }

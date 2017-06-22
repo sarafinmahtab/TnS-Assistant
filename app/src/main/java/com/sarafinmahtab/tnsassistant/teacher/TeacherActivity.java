@@ -50,7 +50,7 @@ public class TeacherActivity extends AppCompatActivity {
 
         myToolbar.setTitleTextColor(0xFFFFFFFF);
 
-        name = (TextView) findViewById(R.id.name);
+        name = (TextView) findViewById(R.id.teacher_name);
         code_name = (TextView) findViewById(R.id.teacher_code);
         designation = (TextView) findViewById(R.id.designation);
         dept_code = (TextView) findViewById(R.id.dept_code);
