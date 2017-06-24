@@ -18,6 +18,7 @@
 
     <style name="ToolbarStyle" parent="@style/ThemeOverlay.AppCompat.ActionBar">
         <!-- Customize color of navigation drawer icon and back arrow -->
+        <item name="actionMenuTextColor">@color/white</item>
         <item name="colorControlNormal">@color/white</item>
     </style>
 

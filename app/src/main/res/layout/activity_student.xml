@@ -21,11 +21,12 @@
             android:layout_height="56dp"
             android:background="@color/colorTnSPrimary"
             android:elevation="4dp"
-            android:theme="@style/AppTheme"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:theme="@style/AppTheme"
             app:theme="@style/ToolbarStyle"
+            app:popupTheme="?actionBarPopupTheme"
             app:layout_constraintHorizontal_bias="0.0" />
 
         <ImageView
@@ -52,6 +53,7 @@
             android:textColor="@color/colorAccent"
             android:textSize="14sp"
             android:textStyle="italic"
+            android:fontFamily="@string/tns_font_family"
             tools:layout_conversion_absoluteX="127dp"
             tools:layout_conversion_absoluteY="43dp"
             tools:layout_conversion_absoluteWidth="34dp"
@@ -70,6 +72,7 @@
             android:textColor="@color/colorTnSText"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:fontFamily="@string/tns_font_family"
             tools:layout_conversion_absoluteHeight="21dp"
             tools:layout_conversion_absoluteWidth="129dp"
             tools:layout_conversion_absoluteX="127dp"
@@ -88,6 +91,7 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="14sp"
+            android:fontFamily="@string/tns_font_family"
             tools:layout_conversion_absoluteHeight="30dp"
             tools:layout_conversion_absoluteWidth="93dp"
             tools:layout_conversion_absoluteX="14dp"
@@ -114,6 +118,7 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="14sp"
+            android:fontFamily="@string/tns_font_family"
             app:layout_constraintBottom_toBottomOf="@+id/change_teacher_image"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintLeft_toLeftOf="@+id/dept_std"
@@ -135,6 +140,7 @@
             android:textColor="@color/colorTnSText"
             android:textSize="15sp"
             android:textStyle="bold"
+            android:fontFamily="@string/tns_font_family"
             app:layout_constraintLeft_toLeftOf="@+id/email_of_student"
             app:layout_constraintTop_toBottomOf="@+id/student_name" />
 
@@ -146,6 +152,7 @@
             android:hint="Dept"
             android:textColor="@color/colorTnSText"
             android:textSize="15sp"
+            android:fontFamily="@string/tns_font_family"
             app:layout_constraintTop_toBottomOf="@+id/email_of_student"
             app:layout_constraintLeft_toRightOf="@+id/student_display_pic"
             android:layout_marginLeft="4dp" />

@@ -2,14 +2,15 @@ package com.sarafinmahtab.tnsassistant.teacher;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sarafinmahtab.tnsassistant.R;
 
@@ -23,6 +24,8 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.My
 
     private List<Course> listItem;
     private Context context;
+
+    private int selectedPosition = -1;
 
     public CourseListAdapter(List<Course> listItem, Context context) {
         this.listItem = listItem;
@@ -39,16 +42,25 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.My
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final Course course = listItem.get(position);
+        final int updatedPosition = position;
 
         holder.textViewCourse_code.setText(course.getCourse_code());
         holder.textViewCourse_title.setText(course.getCourse_title());
         holder.textViewCredit.setText(course.getCredit());
         holder.textViewSession.setText(course.getSession());
 
+        if(selectedPosition == updatedPosition) {
+            holder.itemView.setBackground(ContextCompat.getDrawable(context, R.drawable.cardview_click_effect));
+        } else {
+            holder.itemView.setBackground(ContextCompat.getDrawable(context, R.drawable.cardview_border));
+        }
+
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(context, "You've clicked " + course.getCourse_id(), Toast.LENGTH_LONG).show();
+                selectedPosition = updatedPosition;
+                notifyDataSetChanged();
+
                 Intent intent = new Intent(context, TeacherDashboard.class);
 
                 Bundle bundle = new Bundle();

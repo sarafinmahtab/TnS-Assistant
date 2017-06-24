@@ -32,6 +32,7 @@
             android:textColorLink="@android:color/holo_red_dark"
             android:textSize="26sp"
             android:textStyle="bold"
+            android:fontFamily="@string/tns_font_family"
             app:layout_constraintHorizontal_bias="0.555"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
@@ -50,7 +51,8 @@
             android:textAlignment="center"
             android:textColor="@color/colorTnSText"
             android:textSize="20sp"
-            android:textStyle="bold"
+            android:textStyle="normal"
+            android:fontFamily="@string/tns_font_family"
             tools:layout_editor_absoluteY="212dp" />
 
         <RadioGroup
@@ -72,7 +74,8 @@
                 android:text="Teacher"
                 android:textColor="@color/colorTnSText"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:fontFamily="@string/tns_font_family"
+                android:textStyle="normal" />
 
             <RadioButton
                 android:id="@+id/student"
@@ -82,7 +85,8 @@
                 android:text="Student"
                 android:textColor="@color/colorTnSText"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:fontFamily="@string/tns_font_family"
+                android:textStyle="normal" />
         </RadioGroup>
 
         <TextView
@@ -99,7 +103,8 @@
             android:textAlignment="center"
             android:textColor="@color/colorTnSText"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="normal"
+            android:fontFamily="@string/tns_font_family" />
 
         <EditText
             android:id="@+id/username"
@@ -136,7 +141,8 @@
             android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Button"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:fontFamily="@string/tns_font_family" />
 
         <TextView
             android:id="@+id/textView2"
@@ -150,7 +156,8 @@
             android:textAlignment="center"
             android:textColor="@color/colorTnSText"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="normal"
+            android:fontFamily="@string/tns_font_family" />
 
         <TextView
             android:id="@+id/textView3"
@@ -164,7 +171,8 @@
             android:textAlignment="center"
             android:textColor="@color/colorTnSText"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="normal"
+            android:fontFamily="@string/tns_font_family" />
 
         <TextView
             android:id="@+id/textView5"
@@ -177,6 +185,7 @@
             android:textColor="@color/colorTnSText"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:fontFamily="@string/tns_font_family"
             android:layout_below="@+id/radioGroup"
             android:layout_centerHorizontal="true" />
 

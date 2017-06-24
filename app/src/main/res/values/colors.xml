@@ -7,6 +7,7 @@
     <color name="white">#FFFFFF</color>
     <color name="home">#16001E</color>
     <color name="colorTnSPrimary">#123456</color>
-    <color name="colorTnSText">#123456</color>
+    <color name="colorTnSText">#081625</color>
     <color name="colorTnSAlternative">#401629</color>
+    <color name="colorControlEffect">#bc7c5c</color>
 </resources>
