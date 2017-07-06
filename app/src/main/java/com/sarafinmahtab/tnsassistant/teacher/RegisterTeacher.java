@@ -27,9 +27,11 @@ public class RegisterTeacher extends AppCompatActivity {
 
     private EditText Username, FirstName, LastName, Email, Phone, Password, ConfirmPass;
     private String username, first_name, last_name, email, phone, password, confirm_pass;
-//    private String reg_url = "http://192.168.0.63/TnSAssistant/teacher_register.php";
-    private String reg_url = "http://192.168.0.150/TnSAssistant/teacher_register.php";
+
     private AlertDialog.Builder builder;
+
+    private String reg_url = "http://192.168.0.63/TnSAssistant/teacher_register.php";
+//    private String reg_url = "http://192.168.0.150/TnSAssistant/teacher_register.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

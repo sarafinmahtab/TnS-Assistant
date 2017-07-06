@@ -39,13 +39,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private static RadioGroup radioGroup;
     private static RadioButton radioButton;
-    private static Button signIn, register;
+    private static Button signIn;
 
-//    private String teac_login_url = "http://192.168.0.63/TnSAssistant/teacher_login.php";
-    private String teac_login_url = "http://192.168.0.150/TnSAssistant/teacher_login.php";
+    private String teac_login_url = "http://192.168.0.63/TnSAssistant/teacher_login.php";
+    private String std_login_url = "http://192.168.0.63/TnSAssistant/student_login.php";
 
-//    private String std_login_url = "http://192.168.0.63/TnSAssistant/student_login.php";
-    private String std_login_url = "http://192.168.0.150/TnSAssistant/student_login.php";
+//    private String teac_login_url = "http://192.168.0.150/TnSAssistant/teacher_login.php";
+//    private String std_login_url = "http://192.168.0.150/TnSAssistant/student_login.php";
 
     private AlertDialog.Builder builder;
     public static int radio_key;
@@ -281,5 +281,22 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "Clicked About!!", Toast.LENGTH_LONG).show();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed(){
+        new AlertDialog.Builder(this).setTitle("Exit TnS")
+                .setMessage("Are you sure you want to exit?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_HOME);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                        System.exit(0);
+                    }
+                }).setNegativeButton("No", null).show();
     }
 }

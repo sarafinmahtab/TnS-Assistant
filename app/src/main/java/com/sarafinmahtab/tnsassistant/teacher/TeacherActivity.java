@@ -1,9 +1,12 @@
 package com.sarafinmahtab.tnsassistant.teacher;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -43,8 +46,8 @@ public class TeacherActivity extends AppCompatActivity {
     RecyclerView.Adapter adapter;
     RecyclerView recyclerView;
 
-//    String login_url = "http://192.168.0.63/TnSAssistant/generate_courses.php";
-    String course_list_url = "http://192.168.0.150/TnSAssistant/generate_courses.php";
+    String course_list_url = "http://192.168.0.63/TnSAssistant/generate_courses.php";
+//    String course_list_url = "http://192.168.0.150/TnSAssistant/generate_courses.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,5 +160,22 @@ public class TeacherActivity extends AppCompatActivity {
                 startActivity(new Intent(TeacherActivity.this, LoginActivity.class));
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed(){
+        new AlertDialog.Builder(this).setTitle("Exit TnS")
+                .setMessage("Are you sure you want to exit?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_HOME);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                        System.exit(0);
+                    }
+                }).setNegativeButton("No", null).show();
     }
 }

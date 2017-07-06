@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,9 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.My
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final Course course = listItem.get(position);
         final int updatedPosition = position;
+
+        holder.cardView.setCardBackgroundColor(Color.TRANSPARENT);
+        holder.cardView.setCardElevation(0);
 
         holder.textViewCourse_code.setText(course.getCourse_code());
         holder.textViewCourse_title.setText(course.getCourse_title());
@@ -85,6 +89,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.My
 
         TextView textViewCourse_code, textViewCourse_title, textViewCredit, textViewSession;
         LinearLayout linearLayout;
+        CardView cardView;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -94,6 +99,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.My
             textViewCredit = (TextView) itemView.findViewById(R.id.credit_item);
             textViewSession = (TextView) itemView.findViewById(R.id.session_item);
 
+            cardView = (CardView) itemView.findViewById(R.id.cardview);
             linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
         }
     }
