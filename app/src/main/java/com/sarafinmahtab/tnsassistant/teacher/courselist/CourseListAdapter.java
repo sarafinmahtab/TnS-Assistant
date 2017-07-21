@@ -1,4 +1,4 @@
-package com.sarafinmahtab.tnsassistant.teacher;
+package com.sarafinmahtab.tnsassistant.teacher.courselist;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sarafinmahtab.tnsassistant.R;
+import com.sarafinmahtab.tnsassistant.teacher.TeacherDashboard;
 
 import java.util.List;
 

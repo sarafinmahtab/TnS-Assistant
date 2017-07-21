@@ -37,10 +37,10 @@ public class TeacherDashboard extends AppCompatActivity {
         title = bundle.getString("course_title");
         getSupportActionBar().setTitle(title);
 
-        students = (ImageButton) findViewById(R.id.students);
-        send_mail = (ImageButton) findViewById(R.id.send_mail);
-        share_files = (ImageButton) findViewById(R.id.sharing);
-        mark_sheet = (ImageButton) findViewById(R.id.mark_sheet);
+        students = (ImageButton) findViewById(R.id.all_courses);
+        send_mail = (ImageButton) findViewById(R.id.student_inbox);
+        share_files = (ImageButton) findViewById(R.id.student_notice_board);
+        mark_sheet = (ImageButton) findViewById(R.id.student_result_sheet);
 
         students.setOnClickListener(new View.OnClickListener() {
             @Override

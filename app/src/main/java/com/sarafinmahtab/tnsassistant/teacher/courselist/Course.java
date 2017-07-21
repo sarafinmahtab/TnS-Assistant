@@ -1,4 +1,4 @@
-package com.sarafinmahtab.tnsassistant.teacher;
+package com.sarafinmahtab.tnsassistant.teacher.courselist;
 
 /**
  * Created by Arafin on 6/8/2017.
@@ -8,7 +8,7 @@ public class Course {
 
     private String course_id, course_code, course_title, session, credit;
 
-    Course(String course_id, String course_code, String course_title, String session, String credit) {
+    public Course(String course_id, String course_code, String course_title, String session, String credit) {
         this.course_id = course_id;
         this.course_code = course_code;
         this.course_title = course_title;

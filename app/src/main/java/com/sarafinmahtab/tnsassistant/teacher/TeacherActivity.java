@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -26,7 +25,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.sarafinmahtab.tnsassistant.LoginActivity;
 import com.sarafinmahtab.tnsassistant.MySingleton;
 import com.sarafinmahtab.tnsassistant.R;
-import com.sarafinmahtab.tnsassistant.student.StudentActivity;
+import com.sarafinmahtab.tnsassistant.teacher.courselist.Course;
+import com.sarafinmahtab.tnsassistant.teacher.courselist.CourseListAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
