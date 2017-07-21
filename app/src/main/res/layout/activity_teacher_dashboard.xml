@@ -1,43 +1,184 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sarafinmahtab.tnsassistant.teacher.TeacherDashboard">
+    android:fillViewport="true">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/activity_teacher_dashboard__toolbar"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:background="@color/colorTnSPrimary"
-        app:contentInsetStartWithNavigation="0dp"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:theme="@style/AppTheme"
-        app:theme="@style/ToolbarStyle" />
-
-    <TextView
-        android:id="@+id/dash_course_title"
-        android:layout_width="0dp"
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:text=""
-        android:textAlignment="center"
-        android:textColor="#CC0000"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0.08"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintTop_toBottomOf="@+id/activity_teacher_dashboard__toolbar" />
-</android.support.constraint.ConstraintLayout>
+        tools:context="com.sarafinmahtab.tnsassistant.teacher.TeacherDashboard">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/activity_teacher_dashboard__toolbar"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:background="@color/colorTnSPrimary"
+            android:theme="@style/AppTheme"
+            app:contentInsetStartWithNavigation="0dp"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:theme="@style/ToolbarStyle" />
+
+        <LinearLayout
+            android:id="@+id/grid_linear_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activity_teacher_dashboard__toolbar">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/first_column"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="5dp"
+                android:padding="8dp">
+
+                <ImageButton
+                    android:id="@+id/students"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/icon_border"
+                    android:scaleType="centerInside"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.017"
+                    app:srcCompat="@drawable/students" />
+
+                <ImageButton
+                    android:id="@+id/send_mail"
+                    android:layout_width="90dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginStart="30dp"
+                    android:background="@drawable/icon_border"
+                    android:scaleType="centerInside"
+                    app:layout_constraintBottom_toBottomOf="@+id/students"
+                    app:layout_constraintLeft_toRightOf="@+id/students"
+                    app:layout_constraintRight_toLeftOf="@+id/sharing"
+                    app:layout_constraintTop_toTopOf="@+id/students"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:srcCompat="@drawable/send_mail" />
+
+                <ImageButton
+                    android:id="@+id/sharing"
+                    android:layout_width="90dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/icon_border"
+                    android:scaleType="centerInside"
+                    app:layout_constraintBottom_toBottomOf="@+id/send_mail"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/send_mail"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:srcCompat="@drawable/share_files" />
+
+            </android.support.constraint.ConstraintLayout>
+
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/second_column"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:padding="8dp">
+
+                <ImageButton
+                    android:id="@+id/mark_sheet"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/icon_border"
+                    android:scaleType="centerInside"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.017"
+                    app:srcCompat="@drawable/mark_sheet" />
+
+                <ImageButton
+                    android:id="@+id/send_mail1"
+                    android:layout_width="90dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginStart="30dp"
+                    android:background="@drawable/icon_border"
+                    android:scaleType="centerInside"
+                    app:layout_constraintBottom_toBottomOf="@+id/mark_sheet"
+                    app:layout_constraintLeft_toRightOf="@+id/mark_sheet"
+                    app:layout_constraintRight_toLeftOf="@+id/sharing1"
+                    app:layout_constraintTop_toTopOf="@+id/mark_sheet"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:srcCompat="@drawable/send_mail" />
+
+                <ImageButton
+                    android:id="@+id/sharing1"
+                    android:layout_width="90dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/icon_border"
+                    android:scaleType="centerInside"
+                    app:layout_constraintBottom_toBottomOf="@+id/send_mail1"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/send_mail1"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:srcCompat="@drawable/share_files" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/third_column"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:padding="8dp">
+
+                <ImageButton
+                    android:id="@+id/mark_sheet1"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/icon_border"
+                    android:scaleType="centerInside"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/mark_sheet" />
+
+            </android.support.constraint.ConstraintLayout>
+
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>
