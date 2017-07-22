@@ -9,11 +9,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,8 +40,11 @@ import java.util.List;
 import java.util.Map;
 
 public class TeacherActivity extends AppCompatActivity {
+
     TextView name, code_name, designation, dept_code, email;
-    Button course_loader;
+    Button course_loader, change_teacher_image, choose_teacher_image, upload_teacher_image;
+    ImageView teacher_display_pic;
+
     String full_name, teacher_id;
 
     List<Course> listItem;
@@ -78,6 +83,8 @@ public class TeacherActivity extends AppCompatActivity {
         dept_code.setText(bundle.getString("dept_code"));
         email.setText(bundle.getString("email"));
 
+        displayImageUpload();
+
         course_loader = (Button) findViewById(R.id.course_loader);
         course_loader.setOnClickListener(
                 new View.OnClickListener() {
@@ -93,6 +100,32 @@ public class TeacherActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    private void displayImageUpload() {
+        change_teacher_image = (Button) findViewById(R.id.change_teacher_image);
+        choose_teacher_image = (Button) findViewById(R.id.teacher_choose_btn);
+        upload_teacher_image = (Button) findViewById(R.id.teacher_upload_btn);
+
+        change_teacher_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(TeacherActivity.this);
+
+                LayoutInflater inflater = LayoutInflater.from(TeacherActivity.this);
+                final View customView = inflater.inflate(R.layout.upload_image_dialog_layout, null);
+
+                builder.setView(customView).setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.setTitle("Upload Your Display Picture");
+                alert.show();
+            }
+        });
     }
 
     private void loadCourseData() {
