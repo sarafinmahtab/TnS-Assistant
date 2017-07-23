@@ -132,10 +132,12 @@ public class LoginActivity extends AppCompatActivity {
                                                         bundle.putString("teacher_id", jsonObject.getString("teacher_id"));
                                                         bundle.putString("t_first_name", jsonObject.getString("t_first_name"));
                                                         bundle.putString("t_last_name", jsonObject.getString("t_last_name"));
+                                                        bundle.putString("display_picture", jsonObject.getString("display_picture"));
                                                         bundle.putString("employee_code", jsonObject.getString("employee_code"));
                                                         bundle.putString("desig_name", jsonObject.getString("desig_name"));
-                                                        bundle.putString("dept_code", jsonObject.getString("dept_code"));
+                                                        bundle.putString("dept_name", jsonObject.getString("dept_name"));
                                                         bundle.putString("email", jsonObject.getString("email"));
+                                                        bundle.putString("user_id", jsonObject.getString("user_id"));
                                                         intent.putExtras(bundle);
 
                                                         startActivity(intent);
@@ -284,19 +286,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed(){
-        new AlertDialog.Builder(this).setTitle("Exit TnS")
-                .setMessage("Are you sure you want to exit?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(Intent.ACTION_MAIN);
-                        intent.addCategory(Intent.CATEGORY_HOME);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        finish();
-                        System.exit(0);
-                    }
-                }).setNegativeButton("No", null).show();
+    public void onBackPressed() {
+        moveTaskToBack(true);
     }
 }
