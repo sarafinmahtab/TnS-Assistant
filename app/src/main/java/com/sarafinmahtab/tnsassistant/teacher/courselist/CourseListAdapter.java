@@ -27,6 +27,8 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.My
     private List<Course> listItem;
     private Context context;
 
+    private String course_code, course_title, credit, session;
+
     private int selectedPosition = -1;
 
     public CourseListAdapter(List<Course> listItem, Context context) {
@@ -49,10 +51,15 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.My
         holder.cardView.setCardBackgroundColor(Color.TRANSPARENT);
         holder.cardView.setCardElevation(0);
 
-        holder.textViewCourse_code.setText(course.getCourse_code());
-        holder.textViewCourse_title.setText(course.getCourse_title());
-        holder.textViewCredit.setText(course.getCredit());
-        holder.textViewSession.setText(course.getSession());
+        course_code = "Code: " + course.getCourse_code();
+        course_title = course.getCourse_title();
+        credit = "Credit: " + course.getCredit();
+        session = "Session: " + course.getSession();
+
+        holder.textViewCourse_code.setText(course_code);
+        holder.textViewCourse_title.setText(course_title);
+        holder.textViewCredit.setText(credit);
+        holder.textViewSession.setText(session);
 
         if(selectedPosition == updatedPosition) {
             holder.itemView.setBackground(ContextCompat.getDrawable(context, R.drawable.cardview_click_effect));
@@ -69,7 +76,8 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.My
                 Intent intent = new Intent(context, TeacherDashboard.class);
 
                 Bundle bundle = new Bundle();
-                bundle.putString("teacher_id", course.getCourse_id());
+                bundle.putString("teacher_id", course.getTeacherId());
+                bundle.putString("course_id", course.getCourse_id());
                 bundle.putString("course_code", course.getCourse_code());
                 bundle.putString("course_title", course.getCourse_title());
                 bundle.putString("credit", course.getCredit());

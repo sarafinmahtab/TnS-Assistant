@@ -35,17 +35,16 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText Username, Password;
+    EditText Username, Password;
+    RadioGroup radioGroup;
+    RadioButton radioButton;
+    Button signIn;
 
-    private static RadioGroup radioGroup;
-    private static RadioButton radioButton;
-    private static Button signIn;
+    String teac_login_url = "http://192.168.0.63/TnSAssistant/teacher_login.php";
+    String std_login_url = "http://192.168.0.63/TnSAssistant/student_login.php";
 
-    private String teac_login_url = "http://192.168.0.63/TnSAssistant/teacher_login.php";
-    private String std_login_url = "http://192.168.0.63/TnSAssistant/student_login.php";
-
-//    private String teac_login_url = "http://192.168.0.150/TnSAssistant/teacher_login.php";
-//    private String std_login_url = "http://192.168.0.150/TnSAssistant/student_login.php";
+//    String teac_login_url = "http://192.168.0.63/TnSAssistant/teacher_login.php";
+//    String std_login_url = "http://192.168.0.63/TnSAssistant/student_login.php";
 
     private AlertDialog.Builder builder;
     public static int radio_key;
@@ -193,7 +192,10 @@ public class LoginActivity extends AppCompatActivity {
                                                         bundle.putString("email_no", jsonObject.getString("email_no"));
                                                         bundle.putString("s_first_name", jsonObject.getString("s_first_name"));
                                                         bundle.putString("s_last_name", jsonObject.getString("s_last_name"));
+                                                        bundle.putString("std_display_picture", jsonObject.getString("std_display_picture"));
                                                         bundle.putString("dept_name", jsonObject.getString("dept_name"));
+                                                        bundle.putString("user_id", jsonObject.getString("user_id"));
+
                                                         intent.putExtras(bundle);
 
                                                         startActivity(intent);

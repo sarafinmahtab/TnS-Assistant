@@ -1,12 +1,10 @@
 package com.sarafinmahtab.tnsassistant.teacher;
 
-import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.TransactionTooLargeException;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -42,9 +40,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -59,19 +55,21 @@ public class TeacherActivity extends AppCompatActivity {
     ImageView teacher_display_pic, teacher_image_load;
     String full_name, teacher_id, user_id, image_url;
 
+    ProgressDialog loadingDialog;
+
     private int IMG_REQUEST = 1;
     private Bitmap bitmap;
-    String image_upload_url = "http://192.168.0.63/TnSAssistant/teacher_pic_upload.php";
     boolean imageUploaded = false;
 
     List<Course> listItem;
     RecyclerView.Adapter adapter;
     RecyclerView recyclerView;
 
+    String image_upload_url = "http://192.168.0.63/TnSAssistant/teacher_pic_upload.php";
     String course_list_url = "http://192.168.0.63/TnSAssistant/generate_courses.php";
-//    String course_list_url = "http://192.168.0.150/TnSAssistant/generate_courses.php";
 
-    ProgressDialog loadingDialog;
+//    String image_upload_url = "http://192.168.0.63/TnSAssistant/teacher_pic_upload.php";
+//    String course_list_url = "http://192.168.0.63/TnSAssistant/generate_courses.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +139,7 @@ public class TeacherActivity extends AppCompatActivity {
         }, 0, 0, ImageView.ScaleType.CENTER_INSIDE, null, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                loadingDialog.dismiss();
                 Toast.makeText(TeacherActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
                 error.printStackTrace();
             }
@@ -199,14 +198,14 @@ public class TeacherActivity extends AppCompatActivity {
         Intent selectImageIntent = new Intent();
         selectImageIntent.setType("image/*");
         selectImageIntent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(selectImageIntent, IMG_REQUEST);
+        startActivityForResult(Intent.createChooser(selectImageIntent, "Select Picture"), IMG_REQUEST);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == IMG_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+        if(requestCode == IMG_REQUEST && resultCode == RESULT_OK && data != null) {
             Uri path = data.getData();
 
             try {
@@ -217,6 +216,8 @@ public class TeacherActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+        } else {
+            Toast.makeText(TeacherActivity.this, "No Image is selected!!", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -291,12 +292,12 @@ public class TeacherActivity extends AppCompatActivity {
 
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject obj = jsonArray.getJSONObject(i);
-                        Course courses = new Course(
+                        Course courses = new Course(teacher_id,
                                 obj.getString("course_id"),
-                                "Code: " + obj.getString("course_code"),
+                                obj.getString("course_code"),
                                 obj.getString("course_title"),
-                                "Credit: " + obj.getString("credit"),
-                                "Session: " + obj.getString("session"));
+                                obj.getString("credit"),
+                                obj.getString("session"));
                         listItem.add(courses);
                     }
 

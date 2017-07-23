@@ -12,9 +12,8 @@ import com.sarafinmahtab.tnsassistant.R;
 
 public class TeacherDashboard extends AppCompatActivity {
 
-    String title;
+    String course_code, course_id, teacher_id;
 
-    TextView course_title;
     ImageButton students, send_mail, share_files, mark_sheet;
 
     @Override
@@ -34,8 +33,10 @@ public class TeacherDashboard extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
 
-        title = bundle.getString("course_title");
-        getSupportActionBar().setTitle(title);
+        course_code = bundle.getString("course_code");
+        course_id = bundle.getString("course_id");
+        teacher_id = bundle.getString("teacher_id");
+        getSupportActionBar().setTitle("Dashboard: " + course_code);
 
         students = (ImageButton) findViewById(R.id.student_list);
         send_mail = (ImageButton) findViewById(R.id.teacher_inbox);
@@ -45,28 +46,28 @@ public class TeacherDashboard extends AppCompatActivity {
         students.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TeacherDashboard.this, "Polapainz", Toast.LENGTH_LONG).show();
+                Toast.makeText(TeacherDashboard.this, "Students", Toast.LENGTH_LONG).show();
             }
         });
 
         send_mail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TeacherDashboard.this, "Mail Pathao", Toast.LENGTH_LONG).show();
+                Toast.makeText(TeacherDashboard.this, teacher_id, Toast.LENGTH_LONG).show();
             }
         });
 
         share_files.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TeacherDashboard.this, "share mar", Toast.LENGTH_LONG).show();
+                Toast.makeText(TeacherDashboard.this, course_id, Toast.LENGTH_LONG).show();
             }
         });
 
         mark_sheet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TeacherDashboard.this, "Number de", Toast.LENGTH_LONG).show();
+                Toast.makeText(TeacherDashboard.this, "Marksheet", Toast.LENGTH_LONG).show();
             }
         });
     }

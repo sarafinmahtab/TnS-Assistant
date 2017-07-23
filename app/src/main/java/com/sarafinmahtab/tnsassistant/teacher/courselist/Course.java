@@ -6,14 +6,19 @@ package com.sarafinmahtab.tnsassistant.teacher.courselist;
 
 public class Course {
 
-    private String course_id, course_code, course_title, session, credit;
+    private String teacher_id, course_id, course_code, course_title, session, credit;
 
-    public Course(String course_id, String course_code, String course_title, String session, String credit) {
+    public Course(String teacher_id, String course_id, String course_code, String course_title, String session, String credit) {
+        this.teacher_id = teacher_id;
         this.course_id = course_id;
         this.course_code = course_code;
         this.course_title = course_title;
         this.session = session;
         this.credit = credit;
+    }
+
+    public String getTeacherId() {
+        return  teacher_id;
     }
 
     public String getCourse_id() {

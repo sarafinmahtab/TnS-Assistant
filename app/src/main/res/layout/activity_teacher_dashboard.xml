@@ -88,7 +88,7 @@
                     app:layout_constraintRight_toLeftOf="@+id/notice_board"
                     app:layout_constraintTop_toTopOf="@+id/student_list"
                     app:layout_constraintVertical_bias="0.0"
-                    app:srcCompat="@drawable/send_mail" />
+                    app:srcCompat="@drawable/inbox" />
 
                 <TextView
                     android:id="@+id/teacher_inbox_title"
