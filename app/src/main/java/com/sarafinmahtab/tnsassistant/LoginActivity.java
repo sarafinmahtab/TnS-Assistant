@@ -56,8 +56,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.home_toolbar);
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("TnS Assistant");
-
+        getSupportActionBar().setTitle("Welcome To TnS Assistant");
         myToolbar.setTitleTextColor(0xFFFFFFFF);
 
         onRadioClickAction();
@@ -66,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void onRadioClickAction() {
-        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+        radioGroup = (RadioGroup) findViewById(R.id.radio_area);
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -74,9 +73,9 @@ public class LoginActivity extends AppCompatActivity {
                 int selected_id = radioGroup.getCheckedRadioButtonId();
                 radioButton = (RadioButton) findViewById(selected_id);
 
-                if(radioButton.getId() == R.id.teacher) {
+                if(radioButton.getId() == R.id.teacher_radio) {
                     radio_key = 1;
-                } else if(radioButton.getId() == R.id.student) {
+                } else if(radioButton.getId() == R.id.student_radio) {
                     radio_key = 2;
                 }
             }
@@ -84,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onSigninButtonClick() {
-        signIn = (Button) findViewById(R.id.signIn);
+        signIn = (Button) findViewById(R.id.signin_btn);
         signIn.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -93,8 +92,8 @@ public class LoginActivity extends AppCompatActivity {
                         progressDialog.setMessage("Please Wait!!");
                         progressDialog.show();
 
-                        Username = (EditText) findViewById(R.id.username);
-                        Password = (EditText) findViewById(R.id.passWord);
+                        Username = (EditText) findViewById(R.id.username_entry);
+                        Password = (EditText) findViewById(R.id.password_entry);
                         builder = new AlertDialog.Builder(LoginActivity.this);
 
                         final String username = Username.getText().toString();

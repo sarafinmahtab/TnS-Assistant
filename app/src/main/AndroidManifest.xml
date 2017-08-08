@@ -39,7 +39,7 @@
         <activity
             android:name=".student.StudentActivity"
             android:label="Student Activity" />
-        <activity android:name=".teacher.TeacherDashboard"></activity>
+        <activity android:name=".teacher.TeacherDashboard" />
     </application>
 
 </manifest>
