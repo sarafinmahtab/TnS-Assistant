@@ -48,9 +48,6 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.My
         final Course course = listItem.get(position);
         final int updatedPosition = position;
 
-        holder.cardView.setCardBackgroundColor(Color.TRANSPARENT);
-        holder.cardView.setCardElevation(0);
-
         course_code = "Code: " + course.getCourse_code();
         course_title = course.getCourse_title();
         credit = "Credit: " + course.getCredit();
@@ -61,11 +58,11 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.My
         holder.textViewCredit.setText(credit);
         holder.textViewSession.setText(session);
 
-        if(selectedPosition == updatedPosition) {
-            holder.itemView.setBackground(ContextCompat.getDrawable(context, R.drawable.cardview_click_effect));
-        } else {
-            holder.itemView.setBackground(ContextCompat.getDrawable(context, R.drawable.cardview_border));
-        }
+//        if(selectedPosition == updatedPosition) {
+//            holder.itemView.setBackground(ContextCompat.getDrawable(context, R.drawable.cardview_click_effect));
+//        } else {
+//            holder.itemView.setBackground(ContextCompat.getDrawable(context, R.drawable.cardview_border));
+//        }
 
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
