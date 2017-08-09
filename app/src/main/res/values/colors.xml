@@ -6,9 +6,10 @@
     <color name="tree">#1e8449</color>
     <color name="white">#FFFFFF</color>
     <color name="home">#16001E</color>
-    <!--<color name="colorTnSPrimary">#123456</color>-->
+
     <color name="colorTnSPrimary">#236484</color>
     <color name="colorTnSText">#081625</color>
-    <color name="colorTnSAlternative">#401629</color>
+    <color name="colorTnSAlternative">#238380</color>
     <color name="colorControlEffect">#82a4ab</color>
+    <color name="colorIconSelect">#b2bdc4</color>
 </resources>

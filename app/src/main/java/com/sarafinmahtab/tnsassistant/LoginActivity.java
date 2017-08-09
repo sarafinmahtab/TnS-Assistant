@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.home_toolbar);
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("Welcome To TnS Assistant");
+        getSupportActionBar().setTitle("TnS Assistant");
         myToolbar.setTitleTextColor(0xFFFFFFFF);
 
         onRadioClickAction();
@@ -282,9 +282,9 @@ public class LoginActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.rate_us:
-                Toast.makeText(LoginActivity.this, "You've rated!!", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, "Ratings", Toast.LENGTH_LONG).show();
             case R.id.about:
-                Toast.makeText(LoginActivity.this, "Clicked About!!", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this, "About Us", Toast.LENGTH_LONG).show();
         }
         return super.onOptionsItemSelected(item);
     }

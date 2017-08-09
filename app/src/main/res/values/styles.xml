@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -12,8 +12,8 @@
 
     <style name="AppThemeOverlay.Popup" parent="ThemeOverlay.AppCompat.Dark">
         <item name="android:colorBackground">@color/colorTnSPrimary</item>
-        <item name="colorControlHighlight">#336384</item>
-        <item name="android:actionMenuTextColor">#FFFFFF</item>
+        <item name="colorControlHighlight">@color/colorPrimaryDark</item>
+        <item name="android:actionMenuTextColor">@color/white</item>
     </style>
 
     <style name="ToolbarStyle" parent="@style/ThemeOverlay.AppCompat.ActionBar">
