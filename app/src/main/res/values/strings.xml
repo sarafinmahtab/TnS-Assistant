@@ -4,6 +4,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="ip_address">http://192.168.0.63/TnSAssistant/</string>
+
     <!--<string name="tns_font_family">sans-serif-light</string>-->
     <string name="tns_font_family">sans-serif-medium</string>
     <string name="cv_icon">CV</string>

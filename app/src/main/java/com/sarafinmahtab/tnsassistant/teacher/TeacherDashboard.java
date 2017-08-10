@@ -1,14 +1,15 @@
 package com.sarafinmahtab.tnsassistant.teacher;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sarafinmahtab.tnsassistant.R;
+import com.sarafinmahtab.tnsassistant.teacher.studentlist.StudentList;
 
 public class TeacherDashboard extends AppCompatActivity {
 
@@ -46,7 +47,18 @@ public class TeacherDashboard extends AppCompatActivity {
         students.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TeacherDashboard.this, "Students", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(TeacherDashboard.this, StudentList.class);
+
+                Bundle stdListBundle = new Bundle();
+
+                stdListBundle.putString("course_id", course_id);
+                stdListBundle.putString("teacher_id", teacher_id);
+                stdListBundle.putString("course_code", course_code);
+
+                intent.putExtras(stdListBundle);
+
+                startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
 
