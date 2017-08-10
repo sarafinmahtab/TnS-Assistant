@@ -1,6 +1,7 @@
 package com.sarafinmahtab.tnsassistant.teacher.studentlist;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +14,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
+import com.sarafinmahtab.tnsassistant.MySingleton;
 import com.sarafinmahtab.tnsassistant.R;
 
 import java.util.List;
@@ -38,8 +43,25 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
     }
 
     @Override
-    public void onBindViewHolder(StdViewHolder holder, int position) {
+    public void onBindViewHolder(final StdViewHolder holder, int position) {
         final StudentItem stdItem = stdListItem.get(position);
+
+        if(!stdItem.getStdListDisplay().equals("")) {
+            ImageRequest imageListLoadRequest = new ImageRequest(stdItem.getStdListDisplay(), new Response.Listener<Bitmap>() {
+                @Override
+                public void onResponse(Bitmap response) {
+                    holder.stdDisplayPic.setImageBitmap(response);
+                }
+            }, 0, 0, ImageView.ScaleType.CENTER_INSIDE, null, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
+                    error.printStackTrace();
+                }
+            });
+
+            MySingleton.getMyInstance(context).addToRequestQueue(imageListLoadRequest);
+        }
 
         holder.textViewStdName.setText(stdItem.getStdListName());
         holder.textViewStdReg.setText(stdItem.getStdListReg());

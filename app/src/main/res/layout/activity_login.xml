@@ -19,14 +19,12 @@
             android:elevation="4dp"
             android:textAlignment="center"
             android:theme="@style/AppTheme"
-            android:titleTextAppearance="@style/Toolbar.TitleText"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:popupTheme="?actionBarPopupTheme"
-            app:theme="@style/ToolbarStyle"
-            tools:targetApi="lollipop" />
+            app:theme="@style/ToolbarStyle" />
 
         <TextView
             android:id="@+id/tns_header"
