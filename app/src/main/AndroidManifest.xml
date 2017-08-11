@@ -43,7 +43,8 @@
             android:name=".student.StudentActivity"
             android:label="Student Activity" />
         <activity android:name=".teacher.TeacherDashboard" />
-        <activity android:name=".teacher.studentlist.StudentList"></activity>
+        <activity android:name=".teacher.studentlist.StudentList" />
+        <activity android:name=".student.stdcourses.AllCoursesActivity"></activity>
     </application>
 
 </manifest>

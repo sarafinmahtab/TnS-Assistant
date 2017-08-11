@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.sarafinmahtab.tnsassistant.LoginActivity;
 import com.sarafinmahtab.tnsassistant.MySingleton;
 import com.sarafinmahtab.tnsassistant.R;
+import com.sarafinmahtab.tnsassistant.student.stdcourses.AllCoursesActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -52,6 +54,9 @@ public class StudentActivity extends AppCompatActivity {
     Button change_student_image, choose_student_image, upload_student_image;
     ImageView student_display_pic, student_image_load;
 
+    //Grid ImageButtons
+    ImageButton all_courses_btn;
+
     String std_image_upload_url = "http://192.168.0.63/TnSAssistant/student_pic_upload.php";
 //    String image_upload_url = "http://192.168.0.63/TnSAssistant/student_pic_upload.php";
 
@@ -73,6 +78,8 @@ public class StudentActivity extends AppCompatActivity {
         reg_id = (TextView) findViewById(R.id.reg_std);
         dept_name = (TextView) findViewById(R.id.dept_std);
 
+        all_courses_btn = (ImageButton) findViewById(R.id.all_courses);
+
         name = bundle.getString("s_first_name") + " " + bundle.getString("s_last_name");
         std_id = bundle.getString("student_id");
         std_image_url = bundle.getString("std_display_picture");
@@ -90,6 +97,20 @@ public class StudentActivity extends AppCompatActivity {
         }
 
         displayImageUpload();
+
+        all_courses_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StudentActivity.this, AllCoursesActivity.class);
+
+                Bundle allCoursesBundle = new Bundle();
+                allCoursesBundle.putString("student_id", std_id);
+                intent.putExtras(allCoursesBundle);
+
+                startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            }
+        });
     }
 
     private void loadDisplayImage() {

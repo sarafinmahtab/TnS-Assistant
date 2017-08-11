@@ -41,6 +41,7 @@
     <string name="course_code">Course Code</string>
     <string name="credit">Credit</string>
     <string name="session">Session</string>
+    <string name="semester">Semester</string>
     <!--<string name="tns_font_family">sans-serif</string>-->
     <!--<string name="tns_font_family">sans-serif-condensed</string>-->
     <!--<string name="tns_font_family">sans-serif-black</string>-->
