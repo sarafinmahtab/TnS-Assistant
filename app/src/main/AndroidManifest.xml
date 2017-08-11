@@ -40,11 +40,10 @@
             android:name=".teacher.TeacherActivity"
             android:label="Teacher Activity" />
         <activity
-            android:name=".student.StudentActivity"
-            android:label="Student Activity" />
+            android:name=".student.StudentActivity" />
         <activity android:name=".teacher.TeacherDashboard" />
         <activity android:name=".teacher.studentlist.StudentList" />
-        <activity android:name=".student.stdcourses.AllCoursesActivity"></activity>
+        <activity android:name=".student.stdcourses.AllCoursesActivity" />
     </application>
 
 </manifest>

@@ -42,6 +42,7 @@
     <string name="credit">Credit</string>
     <string name="session">Session</string>
     <string name="semester">Semester</string>
+    <string name="logout">Logout</string>
     <!--<string name="tns_font_family">sans-serif</string>-->
     <!--<string name="tns_font_family">sans-serif-condensed</string>-->
     <!--<string name="tns_font_family">sans-serif-black</string>-->
