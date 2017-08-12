@@ -1,7 +1,9 @@
 package com.sarafinmahtab.tnsassistant.teacher.studentlist;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -69,7 +71,10 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
         holder.stdCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Call " + stdItem.getStdListPhone(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(context, "Call " + stdItem.getStdListPhone(), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse(String.format("tel:%s", stdItem.getStdListPhone())));
+                context.startActivity(intent);
             }
         });
 

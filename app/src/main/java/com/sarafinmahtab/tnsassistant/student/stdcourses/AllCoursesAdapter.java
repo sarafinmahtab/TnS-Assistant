@@ -47,12 +47,21 @@ public class AllCoursesAdapter extends RecyclerView.Adapter<AllCoursesAdapter.Al
 
         holder.textViewListCourseCode.setText(courseItem.getStdListCourseCode());
 
-        Random rnd = new Random();
-        int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+        //Selects any random color
+//        Random rnd = new Random();
+//        int randomSelectedColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+
+        int[] randomColors = context.getResources().getIntArray(R.array.random_colors);
+
+        //Selects random colors from color Array
+//        int randomSelectedColor = randomColors[new Random().nextInt(randomColors.length)];
+
+        //Maintains the sorted colors from color Array
+        int randomSelectedColor = randomColors[position];
 
         GradientDrawable bgShape = (GradientDrawable)holder.allCoursesRelativeLayout.getBackground();
         bgShape.mutate();
-        bgShape.setColor(color);
+        bgShape.setColor(randomSelectedColor);
 
         holder.textViewListCourseTitle.setText(courseItem.getStdListCourseTitle());
         holder.textViewListCredit.setText(String.format("Credit: %s", courseItem.getStdListCredit()));

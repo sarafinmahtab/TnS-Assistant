@@ -3,7 +3,6 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#384859</color>
     <color name="colorAccent">#453f3e</color>
-    <color name="tree">#1e8449</color>
     <color name="white">#FFFFFF</color>
     <color name="home">#16001E</color>
 
@@ -12,4 +11,45 @@
     <color name="colorTnSAlternative">#238380</color>
     <color name="colorControlEffect">#82a4ab</color>
     <color name="colorIconSelect">#c9c9c9</color>
+
+    <color name="orange">#c94d20</color>
+    <color name="sweet">#992f08</color>
+    <color name="light_sweet">#783e46</color>
+    <color name="fox_red">#b90621</color>
+    <color name="red">#d1151b</color>
+    <color name="deep_red">#7e0b0b</color>
+    <color name="pink">#830b45</color>
+    <color name="green">#1e8449</color>
+    <color name="deep_green">#125637</color>
+    <color name="purple">#5e1e83</color>
+    <color name="fox_purple">#763965</color>
+    <color name="blue">#17538f</color>
+    <color name="navy_blue">#123456</color>
+    <color name="deep_blue">#051f39</color>
+    <color name="fade_blue">#384859</color>
+    <color name="dark_green">#324137</color>
+    <color name="deep_cyan">#238380</color>
+    <color name="fox_green">#229143</color>
+
+    <integer-array name="random_colors">
+        <item>@color/orange</item>
+        <item>@color/red</item>
+        <item>@color/fox_red</item>
+        <item>@color/sweet</item>
+        <item>@color/deep_red</item>
+        <item>@color/pink</item>
+        <item>@color/light_sweet</item>
+        <item>@color/fox_purple</item>
+        <item>@color/dark_green</item>
+        <item>@color/deep_green</item>
+        <item>@color/green</item>
+        <item>@color/fox_green</item>
+        <item>@color/deep_cyan</item>
+        <item>@color/blue</item>
+        <item>@color/navy_blue</item>
+        <item>@color/deep_blue</item>
+        <item>@color/fade_blue</item>
+        <item>@color/purple</item>
+    </integer-array>
+
 </resources>
