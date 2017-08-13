@@ -40,7 +40,7 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
     @Override
     public StdViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.std_list_item, parent, false);
+                .inflate(R.layout.student_item, parent, false);
         return new StdViewHolder(view);
     }
 
@@ -48,25 +48,25 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
     public void onBindViewHolder(final StdViewHolder holder, int position) {
         final StudentItem stdItem = stdListItem.get(position);
 
-        if(!stdItem.getStdListDisplay().equals("")) {
-            ImageRequest imageListLoadRequest = new ImageRequest(stdItem.getStdListDisplay(), new Response.Listener<Bitmap>() {
-                @Override
-                public void onResponse(Bitmap response) {
-                    holder.stdDisplayPic.setImageBitmap(response);
-                }
-            }, 0, 0, ImageView.ScaleType.CENTER_INSIDE, null, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
-                    error.printStackTrace();
-                }
-            });
-
-            MySingleton.getMyInstance(context).addToRequestQueue(imageListLoadRequest);
-        }
+//        if(!stdItem.getStdListDisplay().equals("")) {
+//            ImageRequest imageListLoadRequest = new ImageRequest(stdItem.getStdListDisplay(), new Response.Listener<Bitmap>() {
+//                @Override
+//                public void onResponse(Bitmap response) {
+//                    holder.stdDisplayPic.setImageBitmap(response);
+//                }
+//            }, 0, 0, ImageView.ScaleType.CENTER_INSIDE, null, new Response.ErrorListener() {
+//                @Override
+//                public void onErrorResponse(VolleyError error) {
+//                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
+//                    error.printStackTrace();
+//                }
+//            });
+//
+//            MySingleton.getMyInstance(context).addToRequestQueue(imageListLoadRequest);
+//        }
 
         holder.textViewStdName.setText(stdItem.getStdListName());
-        holder.textViewStdReg.setText(stdItem.getStdListReg());
+        holder.textViewStdReg.setText(String.format("Reg ID: %s", stdItem.getStdListReg()));
 
         holder.stdCall.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +108,7 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
             stdDisplayPic = (ImageView) itemView.findViewById(R.id.stdlist_display);
             stdCall = (ImageButton) itemView.findViewById(R.id.std_call);
 
-            stdLinearLayout = (LinearLayout) itemView.findViewById(R.id.std_linear_list);
+            stdLinearLayout = (LinearLayout) itemView.findViewById(R.id.std_linearLayout);
             std_cardView = (CardView) itemView.findViewById(R.id.std_cardview);
         }
     }

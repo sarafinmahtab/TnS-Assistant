@@ -62,7 +62,7 @@ public class TeacherActivity extends AppCompatActivity {
     boolean imageUploaded = false;
 
     List<Course> listItem;
-    RecyclerView.Adapter adapter;
+    CourseListAdapter adapter;
     RecyclerView recyclerView;
 
     String image_upload_url = "http://192.168.0.63/TnSAssistant/teacher_pic_upload.php";

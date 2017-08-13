@@ -31,7 +31,7 @@ public class StudentList extends AppCompatActivity {
     String courseID, teacherID, stdName;
 
     List<StudentItem> stdListItem;
-    RecyclerView.Adapter stdAdapter;
+    StudentListAdapter stdAdapter;
     RecyclerView stdRecyclerView;
 
     @Override

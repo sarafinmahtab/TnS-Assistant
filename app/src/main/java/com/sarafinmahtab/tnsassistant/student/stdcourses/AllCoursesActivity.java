@@ -31,7 +31,7 @@ public class AllCoursesActivity extends AppCompatActivity {
     String studentID;
 
     RecyclerView allCourseRecyclerView;
-    RecyclerView.Adapter allCourseAdapter;
+    AllCoursesAdapter allCourseAdapter;
     List<CourseItem> allCoursesList;
 
     @Override
