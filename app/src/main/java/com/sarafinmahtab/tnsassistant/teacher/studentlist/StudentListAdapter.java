@@ -1,14 +1,10 @@
 package com.sarafinmahtab.tnsassistant.teacher.studentlist;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
-import com.sarafinmahtab.tnsassistant.MySingleton;
 import com.sarafinmahtab.tnsassistant.R;
 
 import java.util.ArrayList;
@@ -36,9 +28,14 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
     private List<StudentItem> stdListItem;
     private Context context;
 
+    private ArrayList<StudentItem> newStdListItem;
+
     public StudentListAdapter(List<StudentItem> stdListItem, Context context) {
         this.stdListItem = stdListItem;
         this.context = context;
+
+        newStdListItem = new ArrayList<>();
+        newStdListItem.addAll(this.stdListItem);
     }
 
     @Override
@@ -50,7 +47,7 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
 
     @Override
     public void onBindViewHolder(final StdViewHolder holder, int position) {
-        final StudentItem stdItem = stdListItem.get(position);
+        final StudentItem stdItem = newStdListItem.get(position);
 
 //        if(!stdItem.getStdListDisplay().equals("")) {
 //            ImageRequest imageListLoadRequest = new ImageRequest(stdItem.getStdListDisplay(), new Response.Listener<Bitmap>() {
@@ -92,7 +89,7 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
 
     @Override
     public int getItemCount() {
-        return stdListItem.size();
+        return (null != newStdListItem ? newStdListItem.size() : 0);
     }
 
     public static class StdViewHolder extends RecyclerView.ViewHolder {
@@ -115,5 +112,73 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
             stdLinearLayout = (LinearLayout) itemView.findViewById(R.id.std_linearLayout);
             std_cardView = (CardView) itemView.findViewById(R.id.std_cardview);
         }
+    }
+
+    public void checkQueryFromList(final String query) {
+
+        int type = 1, i, j, m;
+        newStdListItem.clear();
+
+        for(i = 0; i < query.length(); i++) {
+            if(query.charAt(i) >= '0' && query.charAt(i) <= '9') {
+                type = 2;
+            }
+        }
+
+        if(type == 1) {
+            for(i = 0; i < stdListItem.size(); i++)
+            {
+//				int k = 0;
+
+                for(j = 0; j < stdListItem.get(i).getStdListName().length(); j++)
+                {
+                    if(j+query.length() > stdListItem.get(i).getStdListReg().length()) {
+                        break;
+                    }
+
+                    boolean ck = true;
+
+                    for(m = 0; m < query.length(); m++)
+                    {
+                        if(query.charAt(m) != stdListItem.get(i).getStdListName().toLowerCase().charAt(j+m)) {
+                            ck = false;
+                        }
+                    }
+
+                    if(ck) {
+                        newStdListItem.add(stdListItem.get(i));
+                        break;
+                    }
+                }
+            }
+        } else {
+            for(i = 0; i < stdListItem.size(); i++)
+            {
+//				int k = 0;
+
+                for(j = 0; j < stdListItem.get(i).getStdListReg().length(); j++)
+                {
+                    if(j+query.length() > stdListItem.get(i).getStdListReg().length()) {
+                        break;
+                    }
+
+                    boolean ck = true;
+
+                    for(m = 0; m < query.length(); m++)
+                    {
+                        if(query.charAt(m) != stdListItem.get(i).getStdListReg().toLowerCase().charAt(j+m)) {
+                            ck = false;
+                        }
+                    }
+
+                    if(ck) {
+                        newStdListItem.add(stdListItem.get(i));
+                        break;
+                    }
+                }
+            }
+        }
+
+        notifyDataSetChanged();
     }
 }

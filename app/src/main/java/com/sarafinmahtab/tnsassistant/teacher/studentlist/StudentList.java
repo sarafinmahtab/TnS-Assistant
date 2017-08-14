@@ -144,7 +144,8 @@ public class StudentList extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
 
-                Toast.makeText(StudentList.this, newText, Toast.LENGTH_LONG).show();
+                stdAdapter.checkQueryFromList(newText.toLowerCase());
+//                Toast.makeText(StudentList.this, newText, Toast.LENGTH_LONG).show();
 
                 return true;
             }
