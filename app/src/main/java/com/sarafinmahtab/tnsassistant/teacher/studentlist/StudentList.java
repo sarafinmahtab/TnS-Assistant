@@ -4,7 +4,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -14,7 +18,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sarafinmahtab.tnsassistant.MySingleton;
 import com.sarafinmahtab.tnsassistant.R;
-import com.sarafinmahtab.tnsassistant.teacher.TeacherActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +37,10 @@ public class StudentList extends AppCompatActivity {
     StudentListAdapter stdAdapter;
     RecyclerView stdRecyclerView;
 
+    SearchView stdSearchView;
+    EditText searchEditText;
+    ImageView closeButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,18 +56,22 @@ public class StudentList extends AppCompatActivity {
 
         stdListToolbar.setTitleTextColor(0xFFFFFFFF);
 
-        stdRecyclerView = (RecyclerView) findViewById(R.id.std_list_view);
-        stdRecyclerView.setHasFixedSize(true);
-        stdRecyclerView.setLayoutManager(new LinearLayoutManager(StudentList.this));
-
-        stdListItem = new ArrayList<>();
-
         Bundle bundle = getIntent().getExtras();
 
         courseID = bundle.getString("course_id");
         teacherID = bundle.getString("teacher_id");
 
         getSupportActionBar().setTitle(bundle.getString("course_code"));
+
+        stdSearchView = (SearchView) findViewById(R.id.std_searchView);
+        searchEditText = (EditText) findViewById(R.id.search_src_text);
+        closeButton = (ImageView) findViewById(R.id.search_close_btn);
+        stdRecyclerView = (RecyclerView) findViewById(R.id.std_list_view);
+
+        stdRecyclerView.setHasFixedSize(true);
+        stdRecyclerView.setLayoutManager(new LinearLayoutManager(StudentList.this));
+
+        stdListItem = new ArrayList<>();
 
         StringRequest stringRequestForStdList = new StringRequest(Request.Method.POST, std_list_url, new Response.Listener<String>() {
             @Override
@@ -107,6 +118,50 @@ public class StudentList extends AppCompatActivity {
         };
 
         MySingleton.getMyInstance(StudentList.this).addToRequestQueue(stringRequestForStdList);
+
+        stdSearchView.onActionViewExpanded();
+        stdSearchView.setIconified(false);
+        stdSearchView.setQueryHint("Search by Name or Reg ID");
+
+        if(!stdSearchView.isFocused()) {
+            stdSearchView.clearFocus();
+        }
+
+//        stdSearchView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                searchView.setIconified(false);
+//            }
+//        });
+
+        stdSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                Toast.makeText(StudentList.this, newText, Toast.LENGTH_LONG).show();
+
+                return true;
+            }
+        });
+
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Clear the text from EditText view
+                searchEditText.setText("");
+
+                //Clear query
+                stdSearchView.setQuery("", false);
+                stdAdapter.notifyDataSetChanged();
+                stdSearchView.clearFocus();
+            }
+        });
     }
 
     @Override
