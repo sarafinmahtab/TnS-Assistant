@@ -1,38 +1,34 @@
 package com.sarafinmahtab.tnsassistant.student.stdcourses;
 
+import android.support.design.widget.TabLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.sarafinmahtab.tnsassistant.MySingleton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+
+import android.widget.TextView;
+
 import com.sarafinmahtab.tnsassistant.R;
-import com.sarafinmahtab.tnsassistant.teacher.courselist.Course;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.w3c.dom.Text;
 
 public class AllCoursesActivity extends AppCompatActivity {
 
-    String all_courses_list_url = "http://192.168.0.63/TnSAssistant/all_courses_list.php";
-    String studentID;
+    private String studentID;
 
-    RecyclerView allCourseRecyclerView;
-    AllCoursesAdapter allCourseAdapter;
-    List<CourseItem> allCoursesList;
+    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,69 +45,86 @@ public class AllCoursesActivity extends AppCompatActivity {
 
         stdListToolbar.setTitleTextColor(0xFFFFFFFF);
 
-        allCourseRecyclerView = (RecyclerView) findViewById(R.id.all_courses_list_view);
-        allCourseRecyclerView.setHasFixedSize(true);
-        allCourseRecyclerView.setLayoutManager(new LinearLayoutManager(AllCoursesActivity.this));
-
-        allCoursesList = new ArrayList<>();
+        getSupportActionBar().setTitle("Your Courses");
 
         Bundle bundle = getIntent().getExtras();
         studentID = bundle.getString("student_id");
 
-        getSupportActionBar().setTitle("Your Running Courses");
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        StringRequest stringRequestForAllCoursesList = new StringRequest(Request.Method.POST, all_courses_list_url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    JSONArray jsonArray = jsonObject.getJSONArray("all_courses_list");
+        mViewPager = (ViewPager) findViewById(R.id.courselist_container);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
 
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject obj = jsonArray.getJSONObject(i);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.courses_tabs);
+        tabLayout.setupWithViewPager(mViewPager);
+    }
 
-                        CourseItem courseItem = new CourseItem(
-                                obj.getString("course_id"),
-                                obj.getString("course_code"),
-                                obj.getString("course_title"),
-                                obj.getString("credit"),
-                                obj.getString("semester")
-                        );
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-                        allCoursesList.add(courseItem);
-                    }
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
 
-                    allCourseAdapter = new AllCoursesAdapter(allCoursesList, AllCoursesActivity.this);
-                    allCourseRecyclerView.setAdapter(allCourseAdapter);
-
-                } catch (JSONException e) {
-                    Toast.makeText(AllCoursesActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a PlaceholderFragment (defined as a static inner class below).
+            switch (position) {
+                case 0:
+                    return new CurrentCourses();
+                case 1:
+                    return new DropCourses();
+                case 2:
+                    return new PassedCourses();
+                default:
+                    return null;
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(AllCoursesActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
+        }
+
+        @Override
+        public int getCount() {
+            // Show 3 total pages.
+            return 3;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "Current";
+                case 1:
+                    return "Drop";
+                case 2:
+                    return "Passed";
             }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
+            return null;
+        }
+    }
 
-                params.put("student_id", studentID);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_all_courses, menu);
+        return true;
+    }
 
-                return params;
-            }
-        };
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
 
-        MySingleton.getMyInstance(AllCoursesActivity.this).addToRequestQueue(stringRequestForAllCoursesList);
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    public String getStudentID() {
+        return studentID;
     }
 }

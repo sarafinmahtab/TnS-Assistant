@@ -2,6 +2,7 @@ package com.sarafinmahtab.tnsassistant.teacher.studentlist;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
+import com.sarafinmahtab.tnsassistant.MySingleton;
 import com.sarafinmahtab.tnsassistant.R;
 
 import java.util.ArrayList;
@@ -132,7 +137,7 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
 
                 for(j = 0; j < stdListItem.get(i).getStdListName().length(); j++)
                 {
-                    if(j+query.length() > stdListItem.get(i).getStdListReg().length()) {
+                    if(j+query.length() > stdListItem.get(i).getStdListName().length()) {
                         break;
                     }
 
