@@ -65,11 +65,11 @@ public class TeacherActivity extends AppCompatActivity {
     CourseListAdapter adapter;
     RecyclerView recyclerView;
 
-    String image_upload_url = "http://192.168.0.63/TnSAssistant/teacher_pic_upload.php";
-    String course_list_url = "http://192.168.0.63/TnSAssistant/generate_courses.php";
-
 //    String image_upload_url = "http://192.168.0.63/TnSAssistant/teacher_pic_upload.php";
 //    String course_list_url = "http://192.168.0.63/TnSAssistant/generate_courses.php";
+
+    String image_upload_url = "http://192.168.43.65/TnSAssistant/teacher_pic_upload.php";
+    String course_list_url = "http://192.168.43.65/TnSAssistant/generate_courses.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

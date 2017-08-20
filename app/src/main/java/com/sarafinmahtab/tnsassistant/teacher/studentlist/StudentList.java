@@ -30,7 +30,9 @@ import java.util.Map;
 
 public class StudentList extends AppCompatActivity {
 
-    String std_list_url = "http://192.168.0.63/TnSAssistant/std_list.php";
+//    String std_list_url = "http://192.168.0.63/TnSAssistant/std_list.php";
+    String std_list_url = "http://192.168.43.65/TnSAssistant/std_list.php";
+
     String courseID, teacherID, stdName;
 
     List<StudentItem> stdListItem;
