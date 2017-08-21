@@ -31,8 +31,8 @@ import java.util.Map;
 
 public class CurrentCourses extends Fragment {
 
-//    String current_courses_list_url = "http://192.168.0.63/TnSAssistant/all_courses_list.php";
-    String current_courses_list_url = "http://192.168.43.65/TnSAssistant/all_courses_list.php";
+    String current_courses_list_url = "http://192.168.0.63/TnSAssistant/all_courses_list.php";
+//    String current_courses_list_url = "http://192.168.43.65/TnSAssistant/all_courses_list.php";
     String studentID;
 
     RecyclerView currentCourseRecyclerView;

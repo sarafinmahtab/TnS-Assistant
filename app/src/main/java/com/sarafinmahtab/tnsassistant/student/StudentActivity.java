@@ -57,8 +57,8 @@ public class StudentActivity extends AppCompatActivity {
     //Grid ImageButtons
     ImageButton all_courses_btn;
 
-//    String image_upload_url = "http://192.168.0.63/TnSAssistant/student_pic_upload.php";
-    String std_image_upload_url = "http://192.168.43.65/TnSAssistant/student_pic_upload.php";
+    String std_image_upload_url = "http://192.168.0.63/TnSAssistant/student_pic_upload.php";
+//    String std_image_upload_url = "http://192.168.43.65/TnSAssistant/student_pic_upload.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

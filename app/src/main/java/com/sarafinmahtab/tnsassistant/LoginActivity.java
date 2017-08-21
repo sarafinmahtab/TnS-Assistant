@@ -40,11 +40,11 @@ public class LoginActivity extends AppCompatActivity {
     RadioButton radioButton;
     Button signIn;
 
-//    String teac_login_url = "http://192.168.0.63/TnSAssistant/teacher_login.php";
-//    String std_login_url = "http://192.168.0.63/TnSAssistant/student_login.php";
+    String teac_login_url = "http://192.168.0.63/TnSAssistant/teacher_login.php";
+    String std_login_url = "http://192.168.0.63/TnSAssistant/student_login.php";
 
-    String teac_login_url = "http://192.168.43.65/TnSAssistant/teacher_login.php";
-    String std_login_url = "http://192.168.43.65/TnSAssistant/student_login.php";
+//    String teac_login_url = "http://192.168.43.65/TnSAssistant/teacher_login.php";
+//    String std_login_url = "http://192.168.43.65/TnSAssistant/student_login.php";
 
     private AlertDialog.Builder builder;
     private int radio_key = 0;
