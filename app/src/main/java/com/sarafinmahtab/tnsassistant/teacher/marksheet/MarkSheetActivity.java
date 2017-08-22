@@ -108,4 +108,16 @@ public class MarkSheetActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
+
+    public String getCourseID() {
+        return courseID;
+    }
+
+    public String getTeacherID() {
+        return teacherID;
+    }
+
+    public String getCourseCode() {
+        return courseCode;
+    }
 }
