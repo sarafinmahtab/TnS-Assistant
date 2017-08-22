@@ -46,6 +46,7 @@
     <string name="title_activity_all_courses">AllCoursesActivity</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_main">MainActivity</string>
     <!--<string name="tns_font_family">sans-serif</string>-->
     <!--<string name="tns_font_family">sans-serif-condensed</string>-->
     <!--<string name="tns_font_family">sans-serif-black</string>-->

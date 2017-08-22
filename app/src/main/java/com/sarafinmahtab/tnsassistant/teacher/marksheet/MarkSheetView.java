@@ -1,4 +1,4 @@
-package com.sarafinmahtab.tnsassistant.student.stdcourses;
+package com.sarafinmahtab.tnsassistant.teacher.marksheet;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,12 +8,11 @@ import android.view.ViewGroup;
 
 import com.sarafinmahtab.tnsassistant.R;
 
-public class DropCourses extends Fragment {
-
+public class MarkSheetView extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_drop_courses, container, false);
+        return inflater.inflate(R.layout.fragment_mark_sheet_view, container, false);
     }
 }

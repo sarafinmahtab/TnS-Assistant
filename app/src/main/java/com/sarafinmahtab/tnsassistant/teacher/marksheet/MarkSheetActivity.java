@@ -1,4 +1,4 @@
-package com.sarafinmahtab.tnsassistant.student.stdcourses;
+package com.sarafinmahtab.tnsassistant.teacher.marksheet;
 
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -21,42 +21,46 @@ import android.widget.TextView;
 
 import com.sarafinmahtab.tnsassistant.R;
 
-import org.w3c.dom.Text;
-
-public class AllCoursesActivity extends AppCompatActivity {
-
-    private String studentID;
+public class MarkSheetActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
+    String courseID, teacherID, courseCode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all_courses);
+        setContentView(R.layout.activity_mark_sheet);
 
-        Toolbar stdListToolbar = (Toolbar) findViewById(R.id.all_courses_toolbar);
-        setSupportActionBar(stdListToolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.mark_sheet_toolbar);
+        setSupportActionBar(toolbar);
 
         if(getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        stdListToolbar.setTitleTextColor(0xFFFFFFFF);
-
-        getSupportActionBar().setTitle("Your Courses");
-
-        Bundle bundle = getIntent().getExtras();
-        studentID = bundle.getString("student_id");
-
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        mViewPager = (ViewPager) findViewById(R.id.courselist_container);
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.mark_sheet_container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.courses_tabs);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.mark_sheet_tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        Bundle courseBundle = getIntent().getExtras();
+
+        courseID = courseBundle.getString("course_id");
+        teacherID = courseBundle.getString("teacher_id");
+        courseCode = courseBundle.getString("course_code");
+
+        toolbar.setTitleTextColor(0xFFFFFFFF);
+
+        getSupportActionBar().setTitle(courseCode + " Result Sheet");
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -67,13 +71,13 @@ public class AllCoursesActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    return new CurrentCourses();
+                    return new MarkSheetView();
                 case 1:
-                    return new PassedCourses();
+                    return new MarkSheetUpdate();
+                case 2:
+                    return new TeacherCustomize();
                 default:
                     return null;
             }
@@ -82,16 +86,18 @@ public class AllCoursesActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            return 3;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Current";
+                    return "View";
                 case 1:
-                    return "Passed";
+                    return "Update";
+                case 2:
+                    return "Customize";
             }
             return null;
         }
@@ -101,9 +107,5 @@ public class AllCoursesActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
-    }
-
-    public String getStudentID() {
-        return studentID;
     }
 }

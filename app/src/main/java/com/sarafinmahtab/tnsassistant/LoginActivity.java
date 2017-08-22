@@ -61,7 +61,6 @@ public class LoginActivity extends AppCompatActivity {
 
         onRadioClickAction();
         onSigninButtonClick();
-//        onRegisterButtonClick();
     }
 
     private void onRadioClickAction() {
@@ -249,27 +248,6 @@ public class LoginActivity extends AppCompatActivity {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-
-//    public void onRegisterButtonClick() {
-//        register = (Button) findViewById(R.id.onstart);
-//        register.setOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Intent intent;
-//                        if(radio_key == 1) {
-//                            intent = new Intent("com.sarafinmahtab.tnsassistant.teacher.RegisterTeacher");
-//                            startActivity(intent);
-//                        } else if(radio_key == 2) {
-//                            intent = new Intent("com.sarafinmahtab.tnsassistant.student.RegisterStudent");
-//                            startActivity(intent);
-//                        } else {
-//                            Toast.makeText(LoginActivity.this, "You haven't checked any profile yet!", Toast.LENGTH_LONG).show();
-//                        }
-//                    }
-//                }
-//        );
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

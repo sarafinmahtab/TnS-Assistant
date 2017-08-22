@@ -22,20 +22,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".teacher.RegisterTeacher">
-            <intent-filter>
-                <action android:name="com.sarafinmahtab.tnsassistant.teacher.RegisterTeacher" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".student.RegisterStudent">
-            <intent-filter>
-                <action android:name="com.sarafinmahtab.tnsassistant.student.RegisterStudent" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".teacher.TeacherActivity"
             android:label="Teacher Activity" />
@@ -43,6 +29,10 @@
         <activity android:name=".teacher.TeacherDashboard" />
         <activity android:name=".teacher.studentlist.StudentList" />
         <activity android:name=".student.stdcourses.AllCoursesActivity" />
+        <activity
+            android:name=".teacher.marksheet.MarkSheetActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

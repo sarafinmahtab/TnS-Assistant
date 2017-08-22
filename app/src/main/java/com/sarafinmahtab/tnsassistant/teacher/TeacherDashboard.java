@@ -9,13 +9,14 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.sarafinmahtab.tnsassistant.R;
+import com.sarafinmahtab.tnsassistant.teacher.marksheet.MarkSheetActivity;
 import com.sarafinmahtab.tnsassistant.teacher.studentlist.StudentList;
 
 public class TeacherDashboard extends AppCompatActivity {
 
-    String course_code, course_id, teacher_id;
+    String courseCode, courseID, teacherID;
 
-    ImageButton students, send_mail, share_files, mark_sheet;
+    ImageButton students, sendMail, shareFiles, markSheet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,15 +35,15 @@ public class TeacherDashboard extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
 
-        course_code = bundle.getString("course_code");
-        course_id = bundle.getString("course_id");
-        teacher_id = bundle.getString("teacher_id");
-        getSupportActionBar().setTitle("Dashboard: " + course_code);
+        courseCode = bundle.getString("course_code");
+        courseID = bundle.getString("course_id");
+        teacherID = bundle.getString("teacher_id");
+        getSupportActionBar().setTitle("Dashboard: " + courseCode);
 
         students = (ImageButton) findViewById(R.id.student_list);
-        send_mail = (ImageButton) findViewById(R.id.teacher_inbox);
-        share_files = (ImageButton) findViewById(R.id.share_files);
-        mark_sheet = (ImageButton) findViewById(R.id.result_sheet);
+        sendMail = (ImageButton) findViewById(R.id.teacher_inbox);
+        shareFiles = (ImageButton) findViewById(R.id.share_files);
+        markSheet = (ImageButton) findViewById(R.id.result_sheet);
 
         students.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,9 +52,9 @@ public class TeacherDashboard extends AppCompatActivity {
 
                 Bundle stdListBundle = new Bundle();
 
-                stdListBundle.putString("course_id", course_id);
-                stdListBundle.putString("teacher_id", teacher_id);
-                stdListBundle.putString("course_code", course_code);
+                stdListBundle.putString("course_id", courseID);
+                stdListBundle.putString("teacher_id", teacherID);
+                stdListBundle.putString("course_code", courseCode);
 
                 intent.putExtras(stdListBundle);
 
@@ -62,24 +63,35 @@ public class TeacherDashboard extends AppCompatActivity {
             }
         });
 
-        send_mail.setOnClickListener(new View.OnClickListener() {
+        sendMail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TeacherDashboard.this, teacher_id, Toast.LENGTH_LONG).show();
+                Toast.makeText(TeacherDashboard.this, teacherID, Toast.LENGTH_LONG).show();
             }
         });
 
-        share_files.setOnClickListener(new View.OnClickListener() {
+        shareFiles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TeacherDashboard.this, course_id, Toast.LENGTH_LONG).show();
+                Toast.makeText(TeacherDashboard.this, courseID, Toast.LENGTH_LONG).show();
             }
         });
 
-        mark_sheet.setOnClickListener(new View.OnClickListener() {
+        markSheet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TeacherDashboard.this, "Marksheet", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(TeacherDashboard.this, MarkSheetActivity.class);
+
+                Bundle stdListBundle = new Bundle();
+
+                stdListBundle.putString("course_id", courseID);
+                stdListBundle.putString("teacher_id", teacherID);
+                stdListBundle.putString("course_code", courseCode);
+
+                intent.putExtras(stdListBundle);
+
+                startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
     }

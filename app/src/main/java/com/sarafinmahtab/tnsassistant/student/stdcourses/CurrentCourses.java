@@ -31,9 +31,10 @@ import java.util.Map;
 
 public class CurrentCourses extends Fragment {
 
-    String current_courses_list_url = "http://192.168.0.63/TnSAssistant/all_courses_list.php";
+    String currentCoursesListURL = "http://192.168.0.63/TnSAssistant/all_courses_list.php";
 //    String current_courses_list_url = "http://192.168.43.65/TnSAssistant/all_courses_list.php";
     String studentID;
+    int isCompleted = 0;
 
     RecyclerView currentCourseRecyclerView;
     CurrentCoursesAdapter currentCoursesAdapter;
@@ -62,7 +63,7 @@ public class CurrentCourses extends Fragment {
         currentCourseRecyclerView.setLayoutManager(new LinearLayoutManager(rootView.getContext()));
         currentCoursesList = new ArrayList<>();
 
-        StringRequest stringRequestForCurrentCoursesList = new StringRequest(Request.Method.POST, current_courses_list_url, new Response.Listener<String>() {
+        StringRequest stringRequestForCurrentCoursesList = new StringRequest(Request.Method.POST, currentCoursesListURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -103,6 +104,7 @@ public class CurrentCourses extends Fragment {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("student_id", studentID);
+                params.put("is_completed", String.valueOf(isCompleted));
 
                 return params;
             }
