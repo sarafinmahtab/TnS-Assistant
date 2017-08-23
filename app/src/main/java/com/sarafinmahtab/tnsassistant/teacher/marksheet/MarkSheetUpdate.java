@@ -41,6 +41,9 @@ public class MarkSheetUpdate extends Fragment {
     String markSheetLoader = "http://192.168.0.63/TnSAssistant/mark_sheet_loader.php";
 //    String markSheetLoader = "http://192.168.0.63/TnSAssistant/mark_sheet_loader.php";
 
+    String customCourseURL = "http://192.168.0.63/TnSAssistant/custom_courses_name.php";
+//    String customCourseURL = "http://192.168.0.63/TnSAssistant/custom_courses_name.php";
+
     RecyclerView markSheetRecyclerView;
     MarkUpdateAdapter markUpdateAdapter;
     List<MarkListItem> stdMarkList;
@@ -48,6 +51,8 @@ public class MarkSheetUpdate extends Fragment {
     SearchView markSheetSearchView;
     EditText markSheetSearchEditText;
     ImageView markSheetCloseButton;
+
+    ExamType examType;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,6 +65,8 @@ public class MarkSheetUpdate extends Fragment {
         courseID = markSheetActivity.getCourseID();
         teacherID = markSheetActivity.getTeacherID();
 
+        examType = new ExamType();
+
         markSheetSearchView = (SearchView) rootView.findViewById(R.id.frag_searchView_mark_update);
         markSheetSearchEditText = (EditText) rootView.findViewById(R.id.search_src_text);
         markSheetCloseButton = (ImageView) rootView.findViewById(R.id.search_close_btn);
@@ -68,6 +75,44 @@ public class MarkSheetUpdate extends Fragment {
         markSheetRecyclerView.setHasFixedSize(true);
         markSheetRecyclerView.setLayoutManager(new LinearLayoutManager(rootView.getContext()));
         stdMarkList = new ArrayList<>();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, customCourseURL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = jsonObject.getJSONArray("custom_courses_names");
+                    JSONObject obj = jsonArray.getJSONObject(0);
+
+                    examType.setTest1(obj.getString("custom_test1_name"));
+                    examType.setTest2(obj.getString("custom_test2_name"));
+                    examType.setAttendance(obj.getString("custom_attendance_name"));
+                    examType.setViva(obj.getString("custom_viva_name"));
+                    examType.setFinal_exam(obj.getString("custom_final_name"));
+
+                } catch (JSONException e) {
+                    Toast.makeText(rootView.getContext(), e.getMessage() + " " + response, Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(rootView.getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                error.printStackTrace();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("course_id", courseID);
+
+                return params;
+            }
+        };
+
+        MySingleton.getMyInstance(rootView.getContext()).addToRequestQueue(stringRequest);
 
         StringRequest stringRequestForStdMarkList = new StringRequest(Request.Method.POST, markSheetLoader, new Response.Listener<String>() {
             @Override
@@ -94,7 +139,7 @@ public class MarkSheetUpdate extends Fragment {
                         stdMarkList.add(markListItem);
                     }
 
-                    markUpdateAdapter = new MarkUpdateAdapter(stdMarkList, rootView.getContext());
+                    markUpdateAdapter = new MarkUpdateAdapter(stdMarkList, rootView.getContext(), examType);
                     markSheetRecyclerView.setAdapter(markUpdateAdapter);
 
                 } catch (JSONException e) {

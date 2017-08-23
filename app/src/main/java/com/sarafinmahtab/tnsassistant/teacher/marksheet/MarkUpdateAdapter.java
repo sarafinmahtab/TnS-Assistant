@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,7 +14,6 @@ import com.sarafinmahtab.tnsassistant.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 /**
  * Created by Arafin on 8/23/2017.
@@ -23,18 +21,20 @@ import java.util.zip.Inflater;
 
 public class MarkUpdateAdapter extends RecyclerView.Adapter<MarkUpdateAdapter.MarkUpdateViewHolder> {
 
-
     private List<MarkListItem> markListItem;
     private Context context;
 
     private ArrayList<MarkListItem> newMarkListItem;
 
-    public MarkUpdateAdapter(List<MarkListItem> markListItem, Context context) {
+    private ExamType examType;
+
+    public MarkUpdateAdapter(List<MarkListItem> markListItem, Context context, ExamType examType) {
         this.markListItem = markListItem;
         this.context = context;
 
         newMarkListItem = new ArrayList<>();
         newMarkListItem.addAll(this.markListItem);
+        this.examType = examType;
     }
 
     @Override
@@ -50,13 +50,13 @@ public class MarkUpdateAdapter extends RecyclerView.Adapter<MarkUpdateAdapter.Ma
 
         final MarkListItem markListItem = newMarkListItem.get(position);
 
-        holder.candidateReg.setText("Reg ID: " + markListItem.getRegNo());
-        holder.termTest1.setText("Term Test 1: " + markListItem.getTermTest1_Mark());
-        holder.termTest2.setText("Term Test 2: " + markListItem.getTermTest2_Mark());
-        holder.attendance.setText("Attendance: " + markListItem.getAttendanceMark());
-        holder.viva.setText("Viva: " + markListItem.getVivaMark());
-        holder.finalExam.setText("Final Exam: " + markListItem.getFinalExamMark());
-        holder.marksOutOf100.setText("Marks in Total: " + markListItem.getMarksOutOf100());
+        holder.candidateReg.setText(String.format("Reg ID - %s", markListItem.getRegNo()));
+        holder.termTest1.setText(examType.getTest1() + ": " + markListItem.getTermTest1_Mark());
+        holder.termTest2.setText(examType.getTest2() + ": " + markListItem.getTermTest2_Mark());
+        holder.attendance.setText(examType.getAttendance() + ": " + markListItem.getAttendanceMark());
+        holder.viva.setText(examType.getViva() + ": " + markListItem.getVivaMark());
+        holder.finalExam.setText(examType.getFinal_exam() + ": " + markListItem.getFinalExamMark());
+        holder.marksOutOf100.setText(String.format("Marks in Total: %s", markListItem.getMarksOutOf100()));
 
         holder.markUpdateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
