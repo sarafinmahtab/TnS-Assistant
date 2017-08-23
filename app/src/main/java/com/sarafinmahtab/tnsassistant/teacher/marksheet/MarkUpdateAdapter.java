@@ -50,8 +50,13 @@ public class MarkUpdateAdapter extends RecyclerView.Adapter<MarkUpdateAdapter.Ma
 
         final MarkListItem markListItem = newMarkListItem.get(position);
 
-        holder.candidateReg.setText(markListItem.getCandidateReg());
-        holder.candidateName.setText(markListItem.getCandidateName());
+        holder.candidateReg.setText("Reg ID: " + markListItem.getRegNo());
+        holder.termTest1.setText("Term Test 1: " + markListItem.getTermTest1_Mark());
+        holder.termTest2.setText("Term Test 2: " + markListItem.getTermTest2_Mark());
+        holder.attendance.setText("Attendance: " + markListItem.getAttendanceMark());
+        holder.viva.setText("Viva: " + markListItem.getVivaMark());
+        holder.finalExam.setText("Final Exam: " + markListItem.getFinalExamMark());
+        holder.marksOutOf100.setText("Marks in Total: " + markListItem.getMarksOutOf100());
 
         holder.markUpdateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +68,7 @@ public class MarkUpdateAdapter extends RecyclerView.Adapter<MarkUpdateAdapter.Ma
         holder.markListConstraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "My Linear", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, markListItem.getCourseRegID(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -75,7 +80,7 @@ public class MarkUpdateAdapter extends RecyclerView.Adapter<MarkUpdateAdapter.Ma
 
     public static class MarkUpdateViewHolder extends RecyclerView.ViewHolder{
 
-        TextView candidateReg, candidateName;
+        TextView candidateReg, termTest1, termTest2, attendance, viva, finalExam, marksOutOf100;
         ImageButton markUpdateBtn;
 
         ConstraintLayout markListConstraintLayout;
@@ -84,7 +89,12 @@ public class MarkUpdateAdapter extends RecyclerView.Adapter<MarkUpdateAdapter.Ma
             super(itemView);
 
             candidateReg = (TextView) itemView.findViewById(R.id.candidate_reg);
-            candidateName = (TextView) itemView.findViewById(R.id.candidate_name);
+            termTest1 = (TextView) itemView.findViewById(R.id.term_test1);
+            termTest2 = (TextView) itemView.findViewById(R.id.term_test2);
+            attendance = (TextView) itemView.findViewById(R.id.attendance);
+            viva = (TextView) itemView.findViewById(R.id.viva);
+            finalExam = (TextView) itemView.findViewById(R.id.final_exam);
+            marksOutOf100 = (TextView) itemView.findViewById(R.id.marks_out_100);
 
             markUpdateBtn = (ImageButton) itemView.findViewById(R.id.mark_update_btn);
 
@@ -92,68 +102,33 @@ public class MarkUpdateAdapter extends RecyclerView.Adapter<MarkUpdateAdapter.Ma
         }
     }
 
-
     public void checkQueryFromList(final String query) {
 
-        int type = 1, i, j, m;
+        int i, j, m;
         newMarkListItem.clear();
 
-        for(i = 0; i < query.length(); i++) {
-            if(query.charAt(i) >= '0' && query.charAt(i) <= '9') {
-                type = 2;
-            }
-        }
-
-        if(type == 1) {
-            for(i = 0; i < markListItem.size(); i++)
-            {
+        for(i = 0; i < markListItem.size(); i++)
+        {
 //				int k = 0;
 
-                for(j = 0; j < markListItem.get(i).getCandidateName().length(); j++)
+            for(j = 0; j < markListItem.get(i).getRegNo().length(); j++)
+            {
+                if(j+query.length() > markListItem.get(i).getRegNo().length()) {
+                    break;
+                }
+
+                boolean ck = true;
+
+                for(m = 0; m < query.length(); m++)
                 {
-                    if(j+query.length() > markListItem.get(i).getCandidateName().length()) {
-                        break;
-                    }
-
-                    boolean ck = true;
-
-                    for(m = 0; m < query.length(); m++)
-                    {
-                        if(query.charAt(m) != markListItem.get(i).getCandidateName().toLowerCase().charAt(j+m)) {
-                            ck = false;
-                        }
-                    }
-
-                    if(ck) {
-                        newMarkListItem.add(markListItem.get(i));
-                        break;
+                    if(query.charAt(m) != markListItem.get(i).getRegNo().toLowerCase().charAt(j+m)) {
+                        ck = false;
                     }
                 }
-            }
-        } else {
-            for(i = 0; i < markListItem.size(); i++)
-            {
-//				int k = 0;
 
-                for(j = 0; j < markListItem.get(i).getCandidateReg().length(); j++)
-                {
-                    if(j+query.length() > markListItem.get(i).getCandidateReg().length()) {
-                        break;
-                    }
-
-                    boolean ck = true;
-
-                    for(m = 0; m < query.length(); m++)
-                    {
-                        if(query.charAt(m) != markListItem.get(i).getCandidateReg().toLowerCase().charAt(j+m)) {
-                            ck = false;
-                        }
-                    }
-
-                    if(ck) {
-                        newMarkListItem.add(markListItem.get(i));
-                        break;
-                    }
+                if(ck) {
+                    newMarkListItem.add(markListItem.get(i));
+                    break;
                 }
             }
         }

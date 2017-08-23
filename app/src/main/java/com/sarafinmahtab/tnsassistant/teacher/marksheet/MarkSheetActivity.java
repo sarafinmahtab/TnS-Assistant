@@ -73,10 +73,8 @@ public class MarkSheetActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new MarkSheetView();
-                case 1:
                     return new MarkSheetUpdate();
-                case 2:
+                case 1:
                     return new TeacherCustomize();
                 default:
                     return null;
@@ -86,17 +84,15 @@ public class MarkSheetActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "View";
-                case 1:
                     return "Update";
-                case 2:
+                case 1:
                     return "Customize";
             }
             return null;

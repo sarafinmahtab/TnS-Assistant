@@ -79,13 +79,17 @@ public class MarkSheetUpdate extends Fragment {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject obj = jsonArray.getJSONObject(i);
 
-                        MarkListItem markListItem = new MarkListItem(
-                                obj.getString("student_id"),
-                                obj.getString("s_first_name"),
-                                obj.getString("s_last_name"),
-                                obj.getString("registration_no"),
-                                obj.getString("marksheet_id")
-                        );
+                        MarkListItem markListItem = new MarkListItem();
+
+                        markListItem.setCourseRegID(obj.getString("course_reg_id"));
+                        markListItem.setRegNo(obj.getString("registration_no"));
+                        markListItem.setMarkSheetID(obj.getString("marksheet_id"));
+                        markListItem.setTermTest1_Mark(obj.getString("term_test_1"));
+                        markListItem.setTermTest2_Mark(obj.getString("term_test_2"));
+                        markListItem.setAttendanceMark(obj.getString("attendance"));
+                        markListItem.setVivaMark(obj.getString("viva"));
+                        markListItem.setFinalExamMark(obj.getString("final_exam"));
+                        markListItem.setMarksOutOf100(obj.getString("marks_out_of_100"));
 
                         stdMarkList.add(markListItem);
                     }
