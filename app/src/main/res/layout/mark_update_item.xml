@@ -1,157 +1,323 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mark_update_linear"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="6dp"
+    android:layout_margin="10dp"
     android:background="@drawable/selector"
-    android:padding="5dp"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="81dp">
+    android:paddingBottom="12dp"
+    android:paddingTop="12dp"
+    tools:layout_editor_absoluteX="6dp"
+    tools:layout_editor_absoluteY="31dp">
 
     <TextView
         android:id="@+id/candidate_reg"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="2dp"
-        android:layout_weight="1"
-        android:text=""
+        android:layout_alignLeft="@+id/linearLayout_exam_details"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/linearLayout_exam_details"
+        android:text="Reg ID: 2014331063"
         android:textAlignment="textStart"
         android:textColor="@color/text_selector"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/mark_update_btn"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteX="5dp"
+        tools:layout_editor_absoluteY="7dp" />
 
-    <TextView
-        android:id="@+id/term_test1"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/linearLayout_exam_details"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="2dp"
-        android:layout_weight="1"
-        android:text=""
-        android:textColor="@color/text_selector2"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/candidate_reg"
-        app:layout_constraintRight_toRightOf="@+id/candidate_reg"
-        app:layout_constraintTop_toBottomOf="@+id/candidate_reg" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/candidate_reg"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="7dp"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/term_test2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="2dp"
-        android:layout_weight="1"
-        android:text=""
-        android:textColor="@color/text_selector2"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/term_test1"
-        app:layout_constraintRight_toRightOf="@+id/term_test1"
-        app:layout_constraintTop_toBottomOf="@+id/term_test1" />
+        <TextView
+            android:id="@+id/term_test1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/term_test_1"
+            android:textAlignment="center"
+            android:textColor="@color/text_selector2"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="45dp"
+            tools:layout_editor_absoluteY="34dp" />
 
-    <TextView
-        android:id="@+id/attendance"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="2dp"
-        android:layout_weight="1"
-        android:text=""
-        android:textColor="@color/text_selector2"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/term_test2"
-        app:layout_constraintRight_toRightOf="@+id/term_test2"
-        app:layout_constraintTop_toBottomOf="@+id/term_test2" />
+        <TextView
+            android:id="@+id/term_test2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/term_test_2"
+            android:textAlignment="center"
+            android:textColor="@color/text_selector2"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="42dp"
+            tools:layout_editor_absoluteY="58dp" />
 
-    <TextView
-        android:id="@+id/viva"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="2dp"
-        android:layout_weight="1"
-        android:text=""
-        android:textColor="@color/text_selector2"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/attendance"
-        app:layout_constraintRight_toRightOf="@+id/attendance"
-        app:layout_constraintTop_toBottomOf="@+id/attendance" />
+        <TextView
+            android:id="@+id/attendance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/attendance"
+            android:textAlignment="center"
+            android:textColor="@color/text_selector2"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="56dp"
+            tools:layout_editor_absoluteY="73dp" />
 
-    <TextView
-        android:id="@+id/final_exam"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="2dp"
-        android:layout_weight="1"
-        android:text=""
-        android:textColor="@color/text_selector2"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/viva"
-        app:layout_constraintRight_toRightOf="@+id/viva"
-        app:layout_constraintTop_toBottomOf="@+id/viva" />
+        <TextView
+            android:id="@+id/viva"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/viva"
+            android:textAlignment="center"
+            android:textColor="@color/text_selector2"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="104dp"
+            tools:layout_editor_absoluteY="97dp" />
 
-    <TextView
-        android:id="@+id/marks_out_100"
-        android:layout_width="0dp"
+        <TextView
+            android:id="@+id/final_exam"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/final_exam"
+            android:textAlignment="center"
+            android:textColor="@color/text_selector2"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="60dp"
+            tools:layout_editor_absoluteY="130dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout_exam_gap"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="2dp"
-        android:layout_weight="1"
-        android:text=""
-        android:textAllCaps="false"
-        android:textColor="@color/text_selector2"
-        android:textSize="16sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/final_exam"
-        app:layout_constraintRight_toRightOf="@+id/final_exam"
-        app:layout_constraintTop_toBottomOf="@+id/final_exam"
-        app:layout_constraintVertical_bias="0.0" />
+        android:layout_alignTop="@+id/linearLayout_exam_details"
+        android:layout_toEndOf="@+id/linearLayout_exam_details"
+        android:layout_toRightOf="@+id/linearLayout_exam_details"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/term_test1_gap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=" - "
+            android:textAlignment="center"
+            android:textColor="@color/text_selector2"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="45dp"
+            tools:layout_editor_absoluteY="34dp" />
+
+        <TextView
+            android:id="@+id/term_test2_gap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=" - "
+            android:textAlignment="center"
+            android:textColor="@color/text_selector2"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="42dp"
+            tools:layout_editor_absoluteY="58dp" />
+
+        <TextView
+            android:id="@+id/attendance_gap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=" - "
+            android:textAlignment="center"
+            android:textColor="@color/text_selector2"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="56dp"
+            tools:layout_editor_absoluteY="73dp" />
+
+        <TextView
+            android:id="@+id/viva_gap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=" - "
+            android:textAlignment="center"
+            android:textColor="@color/text_selector2"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="104dp"
+            tools:layout_editor_absoluteY="97dp" />
+
+        <TextView
+            android:id="@+id/final_exam_gap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=" - "
+            android:textAlignment="center"
+            android:textColor="@color/text_selector2"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="60dp"
+            tools:layout_editor_absoluteY="130dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout_exam_marks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/linearLayout_exam_details"
+        android:layout_toEndOf="@+id/linearLayout_exam_gap"
+        android:layout_toRightOf="@+id/mark_update_btn"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/term_test1_marks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="18"
+            android:textAlignment="center"
+            android:textColor="@color/text_selector2"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="45dp"
+            tools:layout_editor_absoluteY="34dp" />
+
+        <TextView
+            android:id="@+id/term_test2_marks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="15"
+            android:textAlignment="center"
+            android:textColor="@color/text_selector2"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="42dp"
+            tools:layout_editor_absoluteY="58dp" />
+
+        <TextView
+            android:id="@+id/attendance_marks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="10"
+            android:textAlignment="center"
+            android:textColor="@color/text_selector2"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="56dp"
+            tools:layout_editor_absoluteY="73dp" />
+
+        <TextView
+            android:id="@+id/viva_marks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="5"
+            android:textAlignment="center"
+            android:textColor="@color/text_selector2"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="104dp"
+            tools:layout_editor_absoluteY="97dp" />
+
+        <TextView
+            android:id="@+id/final_exam_marks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="100"
+            android:textAlignment="center"
+            android:textColor="@color/text_selector2"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="60dp"
+            tools:layout_editor_absoluteY="130dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout_final_marks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_alignBottom="@+id/linearLayout_exam_marks"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+
+        <TextView
+            android:id="@+id/marks_out_100"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+            android:text="Marks In Total"
+            android:textAlignment="textEnd"
+            android:textAllCaps="false"
+            android:textColor="@color/text_selector2"
+            android:textSize="16sp"
+            android:textStyle="bold|italic"
+            tools:layout_editor_absoluteX="275dp"
+            tools:layout_editor_absoluteY="75dp" />
+
+        <RelativeLayout
+            android:id="@+id/circle_final_marks"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:background="@drawable/oval"
+            tools:layout_editor_absoluteX="270dp"
+            tools:layout_editor_absoluteY="93dp">
+
+            <TextView
+                android:id="@+id/final_marks_oval_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="78"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+    </LinearLayout>
 
     <ImageButton
         android:id="@+id/mark_update_btn"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="0dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="12dp"
-        android:layout_weight="1"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
         android:background="@drawable/icon_selector_oval"
         android:contentDescription="@null"
         android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="@+id/candidate_reg"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/candidate_reg"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/mark_update_icon" />
-</android.support.constraint.ConstraintLayout>
+        app:srcCompat="@drawable/mark_update_icon"
+        tools:layout_editor_absoluteX="286dp"
+        tools:layout_editor_absoluteY="-1dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>

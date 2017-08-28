@@ -47,6 +47,14 @@
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="viva">Viva</string>
+    <string name="final_exam">Final Exam</string>
+    <string name="attendance">Attendance</string>
+    <string name="term_test_2">Term Test 2</string>
+    <string name="term_test_1">Term Test 1</string>
+    <string name="marks_in_total">Marks in Total</string>
+    <string name="set_rules_for_your_course">Set Rules For Your Course</string>
+
     <!--<string name="tns_font_family">sans-serif</string>-->
     <!--<string name="tns_font_family">sans-serif-condensed</string>-->
     <!--<string name="tns_font_family">sans-serif-black</string>-->
