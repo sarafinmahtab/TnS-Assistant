@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sarafinmahtab.tnsassistant.MySingleton;
 import com.sarafinmahtab.tnsassistant.R;
+import com.sarafinmahtab.tnsassistant.ServerAddress;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,8 +32,9 @@ import java.util.Map;
 
 public class CurrentCourses extends Fragment {
 
-    String currentCoursesListURL = "http://192.168.0.63/TnSAssistant/all_courses_list.php";
-//    String current_courses_list_url = "http://192.168.43.65/TnSAssistant/all_courses_list.php";
+    String currentCoursesListURL = ServerAddress.getMyServerAddress().concat("all_courses_list.php");
+//    String currentCoursesListURL = "http://192.168.43.65/TnSAssistant/all_courses_list.php";
+
     String studentID;
     int isCompleted = 0;
 

@@ -35,16 +35,16 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
+    String insLoginURL = ServerAddress.getMyServerAddress().concat("teacher_login.php");
+    String stdLoginURL = ServerAddress.getMyServerAddress().concat("student_login.php");
+
+//    String insLoginURL = "http://192.168.43.65/TnSAssistant/teacher_login.php";
+//    String stdLoginURL = "http://192.168.43.65/TnSAssistant/student_login.php";
+
     EditText Username, Password;
     RadioGroup radioGroup;
     RadioButton radioButton;
     Button signIn;
-
-    String teac_login_url = "http://192.168.0.63/TnSAssistant/teacher_login.php";
-    String std_login_url = "http://192.168.0.63/TnSAssistant/student_login.php";
-
-//    String teac_login_url = "http://192.168.43.65/TnSAssistant/teacher_login.php";
-//    String std_login_url = "http://192.168.43.65/TnSAssistant/student_login.php";
 
     private AlertDialog.Builder builder;
     private int radio_key = 0;
@@ -56,7 +56,6 @@ public class LoginActivity extends AppCompatActivity {
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.home_toolbar);
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("TnS Assistant");
         myToolbar.setTitleTextColor(0xFFFFFFFF);
 
         onRadioClickAction();
@@ -106,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             if(radio_key == 1) {
 
-                                StringRequest stringRequestforTeacLogin = new StringRequest(Request.Method.POST, teac_login_url, new Response.Listener<String>() {
+                                StringRequest stringRequestforTeacLogin = new StringRequest(Request.Method.POST, insLoginURL, new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
                                         progressDialog.dismiss();
@@ -154,7 +153,7 @@ public class LoginActivity extends AppCompatActivity {
                                 }) {
                                     @Override
                                     protected Map<String, String> getParams() throws AuthFailureError {
-                                        Map<String, String> params = new HashMap<String, String>();
+                                        Map<String, String> params = new HashMap<>();
                                         params.put("username", username);
                                         params.put("password", password);
                                         return params;
@@ -165,7 +164,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             } else if(radio_key == 2) {
 
-                                StringRequest stringRequestforStdLogin = new StringRequest(Request.Method.POST, std_login_url, new Response.Listener<String>() {
+                                StringRequest stringRequestforStdLogin = new StringRequest(Request.Method.POST, stdLoginURL, new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
 
@@ -214,7 +213,7 @@ public class LoginActivity extends AppCompatActivity {
                                 }) {
                                     @Override
                                     protected Map<String, String> getParams() throws AuthFailureError {
-                                        Map<String, String> params = new HashMap<String, String>();
+                                        Map<String, String> params = new HashMap<>();
                                         params.put("username", username);
                                         params.put("password", password);
                                         return params;

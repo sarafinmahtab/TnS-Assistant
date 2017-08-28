@@ -48,8 +48,8 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.My
         final Course course = listItem.get(position);
         final int updatedPosition = position;
 
-        course_code = "Code: " + course.getCourse_code();
-        course_title = course.getCourse_title();
+        course_code = "Code: " + course.getCourseCode();
+        course_title = course.getCourseTitle();
         credit = "Credit: " + course.getCredit();
         session = "Session: " + course.getSession();
 
@@ -73,10 +73,10 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.My
                 Intent intent = new Intent(context, TeacherDashboard.class);
 
                 Bundle bundle = new Bundle();
-                bundle.putString("teacher_id", course.getTeacherId());
-                bundle.putString("course_id", course.getCourse_id());
-                bundle.putString("course_code", course.getCourse_code());
-                bundle.putString("course_title", course.getCourse_title());
+                bundle.putString("teacher_id", course.getTeacherID());
+                bundle.putString("course_id", course.getCourseID());
+                bundle.putString("course_code", course.getCourseCode());
+                bundle.putString("course_title", course.getCourseTitle());
                 bundle.putString("credit", course.getCredit());
                 bundle.putString("session", course.getSession());
 

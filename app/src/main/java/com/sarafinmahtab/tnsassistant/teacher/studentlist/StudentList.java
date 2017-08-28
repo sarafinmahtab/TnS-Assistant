@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sarafinmahtab.tnsassistant.MySingleton;
 import com.sarafinmahtab.tnsassistant.R;
+import com.sarafinmahtab.tnsassistant.ServerAddress;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,8 +31,8 @@ import java.util.Map;
 
 public class StudentList extends AppCompatActivity {
 
-    String std_list_url = "http://192.168.0.63/TnSAssistant/std_list.php";
-//    String std_list_url = "http://192.168.43.65/TnSAssistant/std_list.php";
+    String stdListURL = ServerAddress.getMyServerAddress().concat("std_list.php");
+//    String stdListURL = "http://192.168.43.65/TnSAssistant/std_list.php";
 
     String courseID, teacherID, stdName;
 
@@ -75,7 +76,7 @@ public class StudentList extends AppCompatActivity {
 
         stdListItem = new ArrayList<>();
 
-        StringRequest stringRequestForStdList = new StringRequest(Request.Method.POST, std_list_url, new Response.Listener<String>() {
+        StringRequest stringRequestForStdList = new StringRequest(Request.Method.POST, stdListURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {

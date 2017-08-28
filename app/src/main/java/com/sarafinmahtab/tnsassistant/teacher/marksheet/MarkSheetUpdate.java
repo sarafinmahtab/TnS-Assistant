@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.sarafinmahtab.tnsassistant.MySingleton;
 import com.sarafinmahtab.tnsassistant.R;
+import com.sarafinmahtab.tnsassistant.ServerAddress;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,13 +37,13 @@ public class MarkSheetUpdate extends Fragment {
 
     MarkSheetActivity markSheetActivity;
 
+    String markSheetLoader = ServerAddress.getMyServerAddress().concat("mark_sheet_loader.php");
+    String customCourseURL = ServerAddress.getMyServerAddress().concat("custom_courses_name.php");
+
+//    String markSheetLoader = "http://192.168.43.65/TnSAssistant/mark_sheet_loader.php";
+//    String customCourseURL = "http://192.168.43.65/TnSAssistant/custom_courses_name.php";
+
     String courseID, teacherID;
-
-    String markSheetLoader = "http://192.168.0.63/TnSAssistant/mark_sheet_loader.php";
-//    String markSheetLoader = "http://192.168.0.63/TnSAssistant/mark_sheet_loader.php";
-
-    String customCourseURL = "http://192.168.0.63/TnSAssistant/custom_courses_name.php";
-//    String customCourseURL = "http://192.168.0.63/TnSAssistant/custom_courses_name.php";
 
     RecyclerView markSheetRecyclerView;
     MarkUpdateAdapter markUpdateAdapter;

@@ -31,6 +31,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.sarafinmahtab.tnsassistant.LoginActivity;
 import com.sarafinmahtab.tnsassistant.MySingleton;
 import com.sarafinmahtab.tnsassistant.R;
+import com.sarafinmahtab.tnsassistant.ServerAddress;
 import com.sarafinmahtab.tnsassistant.student.stdcourses.AllCoursesActivity;
 
 import java.io.ByteArrayOutputStream;
@@ -40,25 +41,25 @@ import java.util.Map;
 
 public class StudentActivity extends AppCompatActivity {
 
-    TextView std_name, std_email, reg_id, dept_name;
-    Bundle bundle;
+    String stdImageUploadURL = ServerAddress.getMyServerAddress().concat("student_pic_upload.php");
+//    String stdImageUploadURL = "http://192.168.43.65/TnSAssistant/student_pic_upload.php";
 
-    String name, std_id, user_id, std_image_url;
+    String name, stdID, userID, stdImageURL;
+
+    TextView stdName, stdEmail, regID, deptName;
+    Bundle bundle;
 
     private int IMG_REQUEST = 1;
     private Bitmap bitmap;
     boolean imageUploaded = false;
 
-    ProgressDialog loadingDialog2;
-
-    Button change_student_image, choose_student_image, upload_student_image;
-    ImageView student_display_pic, student_image_load;
+    Button changeStudentImage, chooseStudentImage, uploadStudentImage;
+    ImageView stdDisplayPic, stdImageLoad;
 
     //Grid ImageButtons
-    ImageButton all_courses_btn;
+    ImageButton allCoursesBtn;
 
-    String std_image_upload_url = "http://192.168.0.63/TnSAssistant/student_pic_upload.php";
-//    String std_image_upload_url = "http://192.168.43.65/TnSAssistant/student_pic_upload.php";
+    ProgressDialog loadingDialog2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,38 +74,38 @@ public class StudentActivity extends AppCompatActivity {
 
         myToolbar.setTitleTextColor(0xFFFFFFFF);
 
-        std_name = (TextView) findViewById(R.id.student_name);
-        std_email = (TextView) findViewById(R.id.email_of_student);
-        reg_id = (TextView) findViewById(R.id.reg_std);
-        dept_name = (TextView) findViewById(R.id.dept_std);
+        stdName = (TextView) findViewById(R.id.student_name);
+        stdEmail = (TextView) findViewById(R.id.email_of_student);
+        regID = (TextView) findViewById(R.id.reg_std);
+        deptName = (TextView) findViewById(R.id.dept_std);
 
-        all_courses_btn = (ImageButton) findViewById(R.id.all_courses);
+        allCoursesBtn = (ImageButton) findViewById(R.id.all_courses);
 
         name = bundle.getString("s_first_name") + " " + bundle.getString("s_last_name");
-        std_id = bundle.getString("student_id");
-        std_image_url = bundle.getString("std_display_picture");
-        user_id = bundle.getString("user_id");
+        stdID = bundle.getString("student_id");
+        stdImageURL = bundle.getString("std_display_picture");
+        userID = bundle.getString("user_id");
 
-        std_name.setText(name);
-        std_email.setText(bundle.getString("email_no"));
-        reg_id.setText(bundle.getString("registration_no"));
-        dept_name.setText(bundle.getString("dept_name"));
+        stdName.setText(name);
+        stdEmail.setText(bundle.getString("email_no"));
+        regID.setText(bundle.getString("registration_no"));
+        deptName.setText(bundle.getString("dept_name"));
 
-        if(!std_image_url.equals("")) {
-            loadingDialog2 = ProgressDialog.show(this, "Please wait", "Loading All " + bundle.getString("s_first_name") + " data", false, false);
+        if(!stdImageURL.equals("")) {
+            loadingDialog2 = ProgressDialog.show(this, "Please wait", "Loading " + bundle.getString("s_first_name") + " data", false, false);
 
             loadDisplayImage();
         }
 
         displayImageUpload();
 
-        all_courses_btn.setOnClickListener(new View.OnClickListener() {
+        allCoursesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudentActivity.this, AllCoursesActivity.class);
 
                 Bundle allCoursesBundle = new Bundle();
-                allCoursesBundle.putString("student_id", std_id);
+                allCoursesBundle.putString("student_id", stdID);
                 intent.putExtras(allCoursesBundle);
 
                 startActivity(intent);
@@ -114,13 +115,13 @@ public class StudentActivity extends AppCompatActivity {
     }
 
     private void loadDisplayImage() {
-        student_display_pic = (ImageView) findViewById(R.id.student_display_pic);
+        stdDisplayPic = (ImageView) findViewById(R.id.student_display_pic);
 
-        ImageRequest imageLoadRequest = new ImageRequest(std_image_url, new Response.Listener<Bitmap>() {
+        ImageRequest imageLoadRequest = new ImageRequest(stdImageURL, new Response.Listener<Bitmap>() {
             @Override
             public void onResponse(Bitmap response) {
                 loadingDialog2.dismiss();
-                student_display_pic.setImageBitmap(response);
+                stdDisplayPic.setImageBitmap(response);
             }
         }, 0, 0, ImageView.ScaleType.CENTER_INSIDE, null, new Response.ErrorListener() {
             @Override
@@ -135,9 +136,9 @@ public class StudentActivity extends AppCompatActivity {
     }
 
     private void displayImageUpload() {
-        change_student_image = (Button) findViewById(R.id.change_student_image);
+        changeStudentImage = (Button) findViewById(R.id.change_student_image);
 
-        change_student_image.setOnClickListener(new View.OnClickListener() {
+        changeStudentImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(StudentActivity.this);
@@ -145,18 +146,18 @@ public class StudentActivity extends AppCompatActivity {
                 LayoutInflater inflater = LayoutInflater.from(StudentActivity.this);
                 final View customView2 = inflater.inflate(R.layout.upload_img_dialog_layout, null);
 
-                choose_student_image = (Button) customView2.findViewById(R.id.student_choose_btn);
-                choose_student_image.setOnClickListener(new View.OnClickListener() {
+                chooseStudentImage = (Button) customView2.findViewById(R.id.student_choose_btn);
+                chooseStudentImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         selectImage();
                     }
                 });
 
-                student_image_load = (ImageView) customView2.findViewById(R.id.student_image_load);
+                stdImageLoad = (ImageView) customView2.findViewById(R.id.student_image_load);
 
-                upload_student_image = (Button) customView2.findViewById(R.id.student_upload_btn);
-                upload_student_image.setOnClickListener(new View.OnClickListener() {
+                uploadStudentImage = (Button) customView2.findViewById(R.id.student_upload_btn);
+                uploadStudentImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         uploadImage();
@@ -166,8 +167,7 @@ public class StudentActivity extends AppCompatActivity {
                 builder.setView(customView2).setNegativeButton("Close", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         if(imageUploaded) {
-                            student_display_pic = (ImageView) findViewById(R.id.student_display_pic);
-                            student_display_pic.setImageBitmap(bitmap);
+                            loadDisplayImage();
                         }
                         dialog.cancel();
                     }
@@ -196,7 +196,7 @@ public class StudentActivity extends AppCompatActivity {
 
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), path);
-                student_image_load.setImageBitmap(bitmap);
+                stdImageLoad.setImageBitmap(bitmap);
             } catch (IOException e) {
                 Toast.makeText(StudentActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 e.printStackTrace();
@@ -210,7 +210,7 @@ public class StudentActivity extends AppCompatActivity {
     private void uploadImage() {
         final ProgressDialog uploadProgressDialog2 = ProgressDialog.show(this,"Uploading...", "Please wait...", false, false);
 
-        StringRequest imageUploadStringRequest = new StringRequest(Request.Method.POST, std_image_upload_url,
+        StringRequest imageUploadStringRequest = new StringRequest(Request.Method.POST, stdImageUploadURL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -234,7 +234,7 @@ public class StudentActivity extends AppCompatActivity {
 
                 String imageNameGenerator = "";
                 char ch;
-                int id = Integer.parseInt(user_id);
+                int id = Integer.parseInt(userID);
 
                 while(id > 0)
                 {
@@ -244,7 +244,7 @@ public class StudentActivity extends AppCompatActivity {
                 }
 
                 params.put("student_display_image_name", imageNameGenerator);
-                params.put("student_id", std_id);
+                params.put("student_id", stdID);
 
                 return params;
             }

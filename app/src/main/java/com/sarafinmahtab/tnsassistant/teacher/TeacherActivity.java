@@ -32,6 +32,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.sarafinmahtab.tnsassistant.LoginActivity;
 import com.sarafinmahtab.tnsassistant.MySingleton;
 import com.sarafinmahtab.tnsassistant.R;
+import com.sarafinmahtab.tnsassistant.ServerAddress;
 import com.sarafinmahtab.tnsassistant.teacher.courselist.Course;
 import com.sarafinmahtab.tnsassistant.teacher.courselist.CourseListAdapter;
 
@@ -49,11 +50,18 @@ import java.util.Map;
 
 public class TeacherActivity extends AppCompatActivity {
 
-    TextView name, code_name, designation, dept_name, email;
-    Button course_loader, change_teacher_image, choose_teacher_image, upload_teacher_image;
+    String imageUploadURL = ServerAddress.getMyServerAddress().concat("teacher_pic_upload.php");
+    String courseListURL = ServerAddress.getMyServerAddress().concat("generate_courses.php");
 
-    ImageView teacher_display_pic, teacher_image_load;
-    String full_name, teacher_id, user_id, image_url;
+//    String imageUploadURL = "http://192.168.43.65/TnSAssistant/teacher_pic_upload.php";
+//    String courseListURL = "http://192.168.43.65/TnSAssistant/generate_courses.php";
+
+    String fullName, teacherID, userID, imageURL;
+
+    TextView name, codeName, designation, deptName, email;
+    Button courseLoader, changeTeacherImage, chooseTeacherImage, uploadTeacherImage;
+
+    ImageView teacherDisplayPic, teacherImageLoad;
 
     ProgressDialog loadingDialog;
 
@@ -64,12 +72,6 @@ public class TeacherActivity extends AppCompatActivity {
     List<Course> listItem;
     CourseListAdapter adapter;
     RecyclerView recyclerView;
-
-    String image_upload_url = "http://192.168.0.63/TnSAssistant/teacher_pic_upload.php";
-    String course_list_url = "http://192.168.0.63/TnSAssistant/generate_courses.php";
-
-//    String image_upload_url = "http://192.168.43.65/TnSAssistant/teacher_pic_upload.php";
-//    String course_list_url = "http://192.168.43.65/TnSAssistant/generate_courses.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,36 +84,36 @@ public class TeacherActivity extends AppCompatActivity {
         myToolbar.setTitleTextColor(0xFFFFFFFF);
 
         name = (TextView) findViewById(R.id.teacher_name);
-        code_name = (TextView) findViewById(R.id.teacher_code);
+        codeName = (TextView) findViewById(R.id.teacher_code);
         designation = (TextView) findViewById(R.id.designation);
-        dept_name = (TextView) findViewById(R.id.dept_name);
+        deptName = (TextView) findViewById(R.id.dept_name);
         email = (TextView) findViewById(R.id.email_of_teacher);
 
         Bundle bundle = getIntent().getExtras();
 
-        teacher_id = bundle.getString("teacher_id");
-        user_id = bundle.getString("user_id");
-        full_name = bundle.getString("t_first_name") + " " + bundle.getString("t_last_name");
-        image_url = bundle.getString("display_picture");
+        teacherID = bundle.getString("teacher_id");
+        userID = bundle.getString("user_id");
+        fullName = bundle.getString("t_first_name") + " " + bundle.getString("t_last_name");
+        imageURL = bundle.getString("display_picture");
 
-        getSupportActionBar().setTitle(bundle.getString("t_first_name") + " Activity");
+        getSupportActionBar().setTitle(String.format("%s Activity", bundle.getString("t_first_name")));
 
-        name.setText(full_name);
-        code_name.setText("Code Name: " + bundle.getString("employee_code"));
+        name.setText(fullName);
+        codeName.setText(String.format("Code Name: %s", bundle.getString("employee_code")));
         designation.setText(bundle.getString("desig_name"));
-        dept_name.setText(bundle.getString("dept_name"));
+        deptName.setText(bundle.getString("dept_name"));
         email.setText(bundle.getString("email"));
 
-        if(!image_url.equals("")) {
-            loadingDialog = ProgressDialog.show(this, "Please wait", "Loading All " + bundle.getString("t_first_name") + " data", false, false);
+        if(!imageURL.equals("")) {
+            loadingDialog = ProgressDialog.show(this, "Please wait", "Loading " + bundle.getString("t_first_name") + " data", false, false);
 
             loadDisplayImage();
         }
 
         displayImageUpload();
 
-        course_loader = (Button) findViewById(R.id.course_loader);
-        course_loader.setOnClickListener(
+        courseLoader = (Button) findViewById(R.id.course_loader);
+        courseLoader.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -128,13 +130,13 @@ public class TeacherActivity extends AppCompatActivity {
     }
 
     private void loadDisplayImage() {
-        teacher_display_pic = (ImageView) findViewById(R.id.teacher_display_pic);
+        teacherDisplayPic = (ImageView) findViewById(R.id.teacher_display_pic);
 
-        ImageRequest imageLoadRequest = new ImageRequest(image_url, new Response.Listener<Bitmap>() {
+        ImageRequest imageLoadRequest = new ImageRequest(imageURL, new Response.Listener<Bitmap>() {
             @Override
             public void onResponse(Bitmap response) {
                 loadingDialog.dismiss();
-                teacher_display_pic.setImageBitmap(response);
+                teacherDisplayPic.setImageBitmap(response);
             }
         }, 0, 0, ImageView.ScaleType.CENTER_INSIDE, null, new Response.ErrorListener() {
             @Override
@@ -149,9 +151,9 @@ public class TeacherActivity extends AppCompatActivity {
     }
 
     private void displayImageUpload() {
-        change_teacher_image = (Button) findViewById(R.id.change_teacher_image);
+        changeTeacherImage = (Button) findViewById(R.id.change_teacher_image);
 
-        change_teacher_image.setOnClickListener(new View.OnClickListener() {
+        changeTeacherImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(TeacherActivity.this);
@@ -159,18 +161,18 @@ public class TeacherActivity extends AppCompatActivity {
                 LayoutInflater inflater = LayoutInflater.from(TeacherActivity.this);
                 final View customView = inflater.inflate(R.layout.upload_image_dialog_layout, null);
 
-                choose_teacher_image = (Button) customView.findViewById(R.id.teacher_choose_btn);
-                choose_teacher_image.setOnClickListener(new View.OnClickListener() {
+                chooseTeacherImage = (Button) customView.findViewById(R.id.teacher_choose_btn);
+                chooseTeacherImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         selectImage();
                     }
                 });
 
-                teacher_image_load = (ImageView) customView.findViewById(R.id.teacher_image_load);
+                teacherImageLoad = (ImageView) customView.findViewById(R.id.teacher_image_load);
 
-                upload_teacher_image = (Button) customView.findViewById(R.id.teacher_upload_btn);
-                upload_teacher_image.setOnClickListener(new View.OnClickListener() {
+                uploadTeacherImage = (Button) customView.findViewById(R.id.teacher_upload_btn);
+                uploadTeacherImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         uploadImage();
@@ -180,8 +182,7 @@ public class TeacherActivity extends AppCompatActivity {
                 builder.setView(customView).setNegativeButton("Close", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         if(imageUploaded) {
-                            teacher_display_pic = (ImageView) findViewById(R.id.teacher_display_pic);
-                            teacher_display_pic.setImageBitmap(bitmap);
+                            loadDisplayImage();
                         }
                         dialog.cancel();
                     }
@@ -210,7 +211,7 @@ public class TeacherActivity extends AppCompatActivity {
 
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), path);
-                teacher_image_load.setImageBitmap(bitmap);
+                teacherImageLoad.setImageBitmap(bitmap);
             } catch (IOException e) {
                 Toast.makeText(TeacherActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                 e.printStackTrace();
@@ -225,7 +226,7 @@ public class TeacherActivity extends AppCompatActivity {
     private void uploadImage() {
         final ProgressDialog uploadProgressDialog = ProgressDialog.show(this,"Uploading...", "Please wait...", false, false);
 
-        StringRequest imageUploadStringRequest = new StringRequest(Request.Method.POST, image_upload_url,
+        StringRequest imageUploadStringRequest = new StringRequest(Request.Method.POST, imageUploadURL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -249,7 +250,7 @@ public class TeacherActivity extends AppCompatActivity {
 
                 String imageNameGenerator = "";
                 char ch;
-                int id = Integer.parseInt(user_id);
+                int id = Integer.parseInt(userID);
 
                 while(id > 0)
                 {
@@ -259,7 +260,7 @@ public class TeacherActivity extends AppCompatActivity {
                 }
 
                 params.put("teacher_display_image_name", imageNameGenerator);
-                params.put("teacher_id", teacher_id);
+                params.put("teacher_id", teacherID);
 
                 return params;
             }
@@ -281,7 +282,7 @@ public class TeacherActivity extends AppCompatActivity {
         progressDialog.setMessage("Loading Courses!!");
         progressDialog.show();
 
-        StringRequest stringRequestforJSONArray = new StringRequest(Request.Method.POST, course_list_url, new Response.Listener<String>() {
+        StringRequest stringRequestJSONArray = new StringRequest(Request.Method.POST, courseListURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 progressDialog.dismiss();
@@ -292,7 +293,7 @@ public class TeacherActivity extends AppCompatActivity {
 
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject obj = jsonArray.getJSONObject(i);
-                        Course courses = new Course(teacher_id,
+                        Course courses = new Course(teacherID,
                                 obj.getString("course_id"),
                                 obj.getString("course_code"),
                                 obj.getString("course_title"),
@@ -318,13 +319,13 @@ public class TeacherActivity extends AppCompatActivity {
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("instructor_id", teacher_id);
+                Map<String, String> params = new HashMap<>();
+                params.put("instructor_id", teacherID);
                 return params;
             }
         };
 
-        MySingleton.getMyInstance(TeacherActivity.this).addToRequestQueue(stringRequestforJSONArray);
+        MySingleton.getMyInstance(TeacherActivity.this).addToRequestQueue(stringRequestJSONArray);
     }
 
     @Override
