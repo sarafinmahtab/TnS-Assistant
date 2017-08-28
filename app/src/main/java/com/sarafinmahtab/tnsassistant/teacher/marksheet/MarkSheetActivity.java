@@ -23,10 +23,10 @@ import com.sarafinmahtab.tnsassistant.R;
 
 public class MarkSheetActivity extends AppCompatActivity {
 
+    String courseID, teacherID, courseCode;
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
-
-    String courseID, teacherID, courseCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
