@@ -1,19 +1,20 @@
 package com.sarafinmahtab.tnsassistant.teacher.marksheet;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Arafin on 8/31/2017.
  */
 
-public class CourseCustomize {
+public class CourseCustomize implements Serializable {
 
     private boolean[] checkedAvgArray = new boolean[5];
 
     private String customTT1Name, customTT2Name, customAttendanceName, customVivaName, customFinalName;
     private String customTT1Percent, customTT2Percent, customAttendancePercent, customVivaPercent, customFinalPercent;
 
-    CourseCustomize() {
+    public CourseCustomize() {
         for (int i = 0; i < 5; i++) {
             checkedAvgArray[i] = false;
         }

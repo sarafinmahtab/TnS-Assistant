@@ -1,5 +1,6 @@
 package com.sarafinmahtab.tnsassistant.teacher.marksheet;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -28,6 +29,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.sarafinmahtab.tnsassistant.MySingleton;
 import com.sarafinmahtab.tnsassistant.R;
 import com.sarafinmahtab.tnsassistant.ServerAddress;
+import com.sarafinmahtab.tnsassistant.teacher.TeacherDashboard;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,6 +49,8 @@ public class MarkSheetActivity extends AppCompatActivity {
     private ViewPager mViewPager;
 
     private CourseCustomize courseCustomize;
+
+    Bundle courseBundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +76,7 @@ public class MarkSheetActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.mark_sheet_tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        Bundle courseBundle = getIntent().getExtras();
+        courseBundle = getIntent().getExtras();
 
         courseID = courseBundle.getString("course_id");
         teacherID = courseBundle.getString("teacher_id");
@@ -81,6 +85,11 @@ public class MarkSheetActivity extends AppCompatActivity {
         toolbar.setTitleTextColor(0xFFFFFFFF);
 
         getSupportActionBar().setTitle(courseCode + " Result Sheet");
+
+//        TabLayout.Tab tab = tabLayout.getTabAt(courseBundle.getInt("tab_id"));
+//        if (tab != null) {
+//            tab.select();
+//        }
 
         courseCustomize = new CourseCustomize();
         callCustomCourseData();
@@ -120,12 +129,6 @@ public class MarkSheetActivity extends AppCompatActivity {
             }
             return null;
         }
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
     }
 
     private void callCustomCourseData() {
@@ -234,5 +237,36 @@ public class MarkSheetActivity extends AppCompatActivity {
 
     public String getCourseCode() {
         return courseCode;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+//        if(courseBundle.getInt("tab_id") == 0) {
+//            super.onBackPressed();
+//        } else {
+//            Intent intent = new Intent(MarkSheetActivity.this, TeacherDashboard.class);
+//
+//            Bundle bundle = new Bundle();
+//            bundle.putString("course_code", courseCode);
+//            bundle.putString("course_id", courseID);
+//            bundle.putString("teacher_id", teacherID);
+//            intent.putExtras(bundle);
+//
+//            startActivity(intent);
+//        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        callCustomCourseData();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

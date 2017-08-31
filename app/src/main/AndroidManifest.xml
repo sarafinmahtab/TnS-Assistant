@@ -31,8 +31,9 @@
         <activity android:name=".student.stdcourses.AllCoursesActivity" />
         <activity
             android:name=".teacher.marksheet.MarkSheetActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".teacher.marksheet.UpdateCustomExam" />
+        <activity android:name=".teacher.marksheet.AvgFuncCheck"></activity>
     </application>
 
 </manifest>

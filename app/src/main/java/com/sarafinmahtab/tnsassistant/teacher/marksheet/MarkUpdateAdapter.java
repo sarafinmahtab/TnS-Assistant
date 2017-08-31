@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,13 +33,14 @@ public class MarkUpdateAdapter extends RecyclerView.Adapter<MarkUpdateAdapter.Ma
 
     private CourseCustomize courseCustomize;
 
-    public MarkUpdateAdapter(List<MarkListItem> markListItem, Context context, CourseCustomize courseCustomize) {
+    public MarkUpdateAdapter(List<MarkListItem> markListItem, Context context, MarkSheetActivity markSheetActivity) {
         this.markListItem = markListItem;
         this.context = context;
 
         newMarkListItem = new ArrayList<>();
         newMarkListItem.addAll(this.markListItem);
-        this.courseCustomize = courseCustomize;
+
+        courseCustomize = markSheetActivity.getCourseCustomize();
     }
 
     @Override
@@ -72,6 +74,9 @@ public class MarkUpdateAdapter extends RecyclerView.Adapter<MarkUpdateAdapter.Ma
         holder.finalExamMark.setText(markListItem.getFinalExamMark());
 
         //Can Do the Calculation
+
+
+
         holder.marksOutOf100Mark.setText(markListItem.getMarksOutOf100());
         int[] randomColors = context.getResources().getIntArray(R.array.gpa_colors);
 

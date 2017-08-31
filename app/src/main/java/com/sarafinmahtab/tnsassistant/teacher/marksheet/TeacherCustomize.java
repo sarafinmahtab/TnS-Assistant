@@ -1,16 +1,15 @@
 package com.sarafinmahtab.tnsassistant.teacher.marksheet;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +27,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,40 +35,31 @@ public class TeacherCustomize extends Fragment {
     private MarkSheetActivity markSheetActivity;
     private CourseCustomize courseCustomize;
 
-    String courseID, teacherID;
+    String courseID, teacherID, courseCode;
 
     String examDataLoadUrl = ServerAddress.getMyServerAddress().concat("custom_exam_data_loader.php");
-    String avgFunctionsUrl = ServerAddress.getMyServerAddress().concat("avg_func_loader.php");
 
-    String avgFuncUpdateUrl = ServerAddress.getMyServerAddress().concat("avg_func_update.php");
-
-    String tt1LoadUrl = ServerAddress.getMyServerAddress().concat(".php");
-    String tt2LoadUrl = ServerAddress.getMyServerAddress().concat(".php");
-    String attendanceLoadUrl = ServerAddress.getMyServerAddress().concat(".php");
-    String vivaLoadUrl = ServerAddress.getMyServerAddress().concat(".php");
-    String finalLoadUrl = ServerAddress.getMyServerAddress().concat(".php");
+    String tt1LoadUrl = ServerAddress.getMyServerAddress().concat("custom_tt1_data_update.php");
+    String tt2LoadUrl = ServerAddress.getMyServerAddress().concat("custom_tt2_data_update.php");
+    String attendanceLoadUrl = ServerAddress.getMyServerAddress().concat("custom_attendance_data_update.php");
+    String vivaLoadUrl = ServerAddress.getMyServerAddress().concat("custom_viva_data_update.php");
+    String finalLoadUrl = ServerAddress.getMyServerAddress().concat("custom_final_data_update.php");
 
     TextView customTT1Name, customTT1Percent;
     ImageButton customTT1Btn;
-
     TextView customTT2Name, customTT2Percent;
     ImageButton customTT2Btn;
-
     TextView customAttendanceName, customAttendancePercent;
     ImageButton customAttendanceBtn;
-
     TextView customVivaName, customVivaPercent;
     ImageButton customVivaBtn;
-
     TextView customFinalName, customFinalPercent;
     ImageButton customFinalBtn;
 
-    Button avgFunction, updateBtn;
-
-    CheckBox tt1CheckBox, tt2CheckBox, attendanceCheckBox, vivaCheckBox, finalCheckBox;
+    Button avgFunction;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_teacher_customize, container, false);
 
@@ -79,6 +68,7 @@ public class TeacherCustomize extends Fragment {
 
         courseID = markSheetActivity.getCourseID();
         teacherID = markSheetActivity.getTeacherID();
+        courseCode = markSheetActivity.getCourseCode();
 
         customTT1Name = (TextView) rootView.findViewById(R.id.custom_tt1_name);
         customTT1Percent = (TextView) rootView.findViewById(R.id.custom_tt1_percent);
@@ -105,35 +95,85 @@ public class TeacherCustomize extends Fragment {
         customTT1Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDialog(tt1LoadUrl, customTT1Name.getText().toString(), customTT1Percent.getText().toString());
+                Intent intent = new Intent(markSheetActivity, UpdateCustomExam.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("url", tt1LoadUrl);
+                bundle.putString("name", customTT1Name.getText().toString());
+                bundle.putString("percent", customTT1Percent.getText().toString());
+                bundle.putString("course_id", courseID);
+                bundle.putString("course_code", courseCode);
+                intent.putExtras(bundle);
+
+                startActivity(intent);
             }
         });
 
         customTT2Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDialog(tt2LoadUrl, customTT2Name.getText().toString(), customTT2Percent.getText().toString());
+                Intent intent = new Intent(markSheetActivity, UpdateCustomExam.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("url", tt2LoadUrl);
+                bundle.putString("name", customTT2Name.getText().toString());
+                bundle.putString("percent", customTT2Percent.getText().toString());
+                bundle.putString("course_id", courseID);
+                bundle.putString("course_code", courseCode);
+                intent.putExtras(bundle);
+
+                startActivity(intent);
             }
         });
 
         customAttendanceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDialog(attendanceLoadUrl, customAttendanceName.getText().toString(), customAttendancePercent.getText().toString());
+                Intent intent = new Intent(markSheetActivity, UpdateCustomExam.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("url", attendanceLoadUrl);
+                bundle.putString("name", customAttendanceName.getText().toString());
+                bundle.putString("percent", customAttendancePercent.getText().toString());
+                bundle.putString("course_id", courseID);
+                bundle.putString("course_code", courseCode);
+                intent.putExtras(bundle);
+
+                startActivity(intent);
             }
         });
 
         customVivaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDialog(vivaLoadUrl, customVivaName.getText().toString(), customVivaPercent.getText().toString());
+                Intent intent = new Intent(markSheetActivity, UpdateCustomExam.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("url", vivaLoadUrl);
+                bundle.putString("name", customVivaName.getText().toString());
+                bundle.putString("percent", customVivaPercent.getText().toString());
+                bundle.putString("course_id", courseID);
+                bundle.putString("course_code", courseCode);
+                intent.putExtras(bundle);
+
+                startActivity(intent);
             }
         });
 
         customFinalBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openDialog(finalLoadUrl, customFinalName.getText().toString(), customFinalPercent.getText().toString());
+                Intent intent = new Intent(markSheetActivity, UpdateCustomExam.class);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("url", finalLoadUrl);
+                bundle.putString("name", customFinalName.getText().toString());
+                bundle.putString("percent", customFinalPercent.getText().toString());
+                bundle.putString("course_id", courseID);
+                bundle.putString("course_code", courseCode);
+                intent.putExtras(bundle);
+
+                startActivity(intent);
             }
         });
 
@@ -142,168 +182,21 @@ public class TeacherCustomize extends Fragment {
         avgFunction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(markSheetActivity);
+                Intent intent = new Intent(markSheetActivity, AvgFuncCheck.class);
 
-                LayoutInflater dialogInflater = LayoutInflater.from(markSheetActivity);
-                final View customView = dialogInflater.inflate(R.layout.avg_func_check_dialog, null);
+                Bundle bundle = new Bundle();
+                bundle.putString("url", vivaLoadUrl);
 
-                tt1CheckBox = (CheckBox) customView.findViewById(R.id.tt1_check_avg);
-                tt2CheckBox = (CheckBox) customView.findViewById(R.id.tt2_check_avg);
-                attendanceCheckBox = (CheckBox) customView.findViewById(R.id.attendance_check_avg);
-                vivaCheckBox = (CheckBox) customView.findViewById(R.id.viva_check_avg);
-                finalCheckBox = (CheckBox) customView.findViewById(R.id.final_check_avg);
+                bundle.putString("course_id", courseID);
+                bundle.putString("course_code", courseCode);
+                intent.putExtras(bundle);
+                intent.putExtra("course_customize", courseCustomize);
 
-                callAvgFunc();
-
-                builder.setView(customView)
-                        .setTitle("Set Your Averages")
-                        .setPositiveButton("Update", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(final DialogInterface dialog, int which) {
-                                StringRequest stringRequestForAvgUpdate = new StringRequest(Request.Method.POST, avgFuncUpdateUrl, new Response.Listener<String>() {
-                                    @Override
-                                    public void onResponse(String response) {
-                                        switch (response) {
-                                            case "success":
-                                                Toast.makeText(markSheetActivity, "Updated Successfully", Toast.LENGTH_LONG).show();
-                                                dialog.cancel();
-                                                break;
-                                            case "failed":
-                                                Toast.makeText(markSheetActivity, "Update Failed!! Please Try Again.", Toast.LENGTH_LONG).show();
-                                                break;
-                                            default:
-                                                Toast.makeText(markSheetActivity, "No Operation Occurred!! Please Try Again.", Toast.LENGTH_LONG).show();
-                                                break;
-                                        }
-                                    }
-                                }, new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                        Toast.makeText(markSheetActivity, error.getMessage(), Toast.LENGTH_LONG).show();
-                                        error.printStackTrace();
-                                    }
-                                }) {
-                                    @Override
-                                    protected Map<String, String> getParams() throws AuthFailureError {
-                                        Map<String, String> params = new HashMap<>();
-
-                                        if(tt1CheckBox.isChecked()) {
-                                            params.put("tt1_check_box", "1");
-                                        } else {
-                                            params.put("tt1_check_box", "0");
-                                        }
-
-                                        if(tt2CheckBox.isChecked()) {
-                                            params.put("tt2_check_box", "1");
-                                        } else {
-                                            params.put("tt2_check_box", "0");
-                                        }
-
-                                        if(attendanceCheckBox.isChecked()) {
-                                            params.put("attendance_check_box", "1");
-                                        } else {
-                                            params.put("attendance_check_box", "0");
-                                        }
-
-                                        if(vivaCheckBox.isChecked()) {
-                                            params.put("viva_check_box", "1");
-                                        } else {
-                                            params.put("viva_check_box", "0");
-                                        }
-
-                                        if(finalCheckBox.isChecked()) {
-                                            params.put("final_check_box", "1");
-                                        } else {
-                                            params.put("final_check_box", "0");
-                                        }
-
-                                        params.put("course_id", courseID);
-
-                                        return params;
-                                    }
-                                };
-
-                                MySingleton.getMyInstance(markSheetActivity).addToRequestQueue(stringRequestForAvgUpdate);
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-
-                AlertDialog alert = builder.create();
-                alert.show();
-            }
-        });
-
-        updateBtn = (Button) rootView.findViewById(R.id.update_btn_custom);
-
-        updateBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                callCustomCourseData();
-                callAvgFunc();
+                startActivity(intent);
             }
         });
 
         return rootView;
-    }
-
-    private void openDialog(final String url, final String name, final String percent) {
-        EditText examName, examPercent;
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(markSheetActivity);
-
-        LayoutInflater dialogInflater = LayoutInflater.from(markSheetActivity);
-        final View customView = dialogInflater.inflate(R.layout.custom_exam_edit_dialog, null);
-
-        examName = (EditText) customView.findViewById(R.id.edit_custom_name);
-        examPercent = (EditText) customView.findViewById(R.id.edit_custom_percent);
-
-        examName.setText(name);
-        examPercent.setText(percent);
-
-        builder.setView(customView)
-                .setPositiveButton("Update", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(final DialogInterface dialog, int which) {
-                        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-
-                                dialog.cancel();
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Toast.makeText(markSheetActivity, error.getMessage(), Toast.LENGTH_LONG).show();
-                                error.printStackTrace();
-                            }
-                        }) {
-                            @Override
-                            protected Map<String, String> getParams() throws AuthFailureError {
-                                Map<String, String> params = new HashMap<>();
-
-                                params.put("course_id", courseID);
-
-                                return params;
-                            }
-                        };
-
-                        MySingleton.getMyInstance(markSheetActivity).addToRequestQueue(stringRequest);
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-        AlertDialog alert = builder.create();
-        alert.show();
     }
 
     private void callCustomCourseData() {
@@ -366,63 +259,10 @@ public class TeacherCustomize extends Fragment {
         MySingleton.getMyInstance(markSheetActivity).addToRequestQueue(stringRequest);
     }
 
-    private void callAvgFunc() {
+    @Override
+    public void onResume() {
+        super.onResume();
 
-        StringRequest stringRequestForAvgFunc = new StringRequest(Request.Method.POST, avgFunctionsUrl, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    JSONArray jsonArray = jsonObject.getJSONArray("avg_func_loader");
-                    JSONObject obj = jsonArray.getJSONObject(0);
-
-                    boolean[] checkedAvgArray = new boolean[5];
-
-                    checkedAvgArray[0] = obj.getString("custom_test1_avg_check").equals("1");
-                    checkedAvgArray[1] = obj.getString("custom_test2_avg_check").equals("1");
-                    checkedAvgArray[2] = obj.getString("custom_attendance_avg_check").equals("1");
-                    checkedAvgArray[3] = obj.getString("custom_viva_avg_check").equals("1");
-                    checkedAvgArray[4] = obj.getString("custom_final_avg_check").equals("1");
-
-                    courseCustomize.setCheckedAvgArray(checkedAvgArray);
-
-                    tt1CheckBox.setChecked(checkedAvgArray[0]);
-                    tt1CheckBox.setText(courseCustomize.getCustomTT1Name());
-
-                    tt2CheckBox.setChecked(checkedAvgArray[1]);
-                    tt2CheckBox.setText(courseCustomize.getCustomTT2Name());
-
-                    attendanceCheckBox.setChecked(checkedAvgArray[2]);
-                    attendanceCheckBox.setText(courseCustomize.getCustomAttendanceName());
-
-                    vivaCheckBox.setChecked(checkedAvgArray[3]);
-                    vivaCheckBox.setText(courseCustomize.getCustomVivaName());
-
-                    finalCheckBox.setChecked(checkedAvgArray[4]);
-                    finalCheckBox.setText(courseCustomize.getCustomFinalName());
-
-                } catch (JSONException e) {
-                    Toast.makeText(markSheetActivity, e.getMessage(), Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(markSheetActivity, error.getMessage(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-
-                params.put("course_id", courseID);
-
-                return params;
-            }
-        };
-
-        MySingleton.getMyInstance(markSheetActivity).addToRequestQueue(stringRequestForAvgFunc);
+        callCustomCourseData();
     }
 }

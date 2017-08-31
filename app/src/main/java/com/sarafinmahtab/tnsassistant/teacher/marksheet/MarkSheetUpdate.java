@@ -98,7 +98,7 @@ public class MarkSheetUpdate extends Fragment {
                         stdMarkList.add(markListItem);
                     }
 
-                    markUpdateAdapter = new MarkUpdateAdapter(stdMarkList, rootView.getContext(), courseCustomize);
+                    markUpdateAdapter = new MarkUpdateAdapter(stdMarkList, rootView.getContext(), markSheetActivity);
                     markSheetRecyclerView.setAdapter(markUpdateAdapter);
 
                 } catch (JSONException e) {

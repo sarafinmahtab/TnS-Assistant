@@ -60,10 +60,12 @@
     <string name="change_exam_percent_out_of_100">Change Exam Percent Out of 100</string>
     <string name="change_exam_name">Change Exam Name</string>
     <string name="count_as_average">Count as Average</string>
-    <string name="avg_functions">Avg Functions</string>
+    <string name="avg_functions">Update Average Functions</string>
     <string name="update_rules">Update Rules</string>
     <string name="as_per_rules">Marks Out Of 100 (As Per Rules):</string>
     <string name="checked_items_as_average">*** Checked items will be counted as average!!</string>
+    <string name="update">Update</string>
+    <string name="cancel">Cancel</string>
 
     <!--<string name="tns_font_family">sans-serif</string>-->
     <!--<string name="tns_font_family">sans-serif-condensed</string>-->

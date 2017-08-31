@@ -87,7 +87,7 @@ public class TeacherDashboard extends AppCompatActivity {
                 stdListBundle.putString("course_id", courseID);
                 stdListBundle.putString("teacher_id", teacherID);
                 stdListBundle.putString("course_code", courseCode);
-
+//                stdListBundle.putInt("tab_id", 0);
                 intent.putExtras(stdListBundle);
 
                 startActivity(intent);
@@ -101,14 +101,4 @@ public class TeacherDashboard extends AppCompatActivity {
         onBackPressed();
         return true;
     }
-
-//    Method 2:
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        if (item.getItemId() == android.R.id.home) {
-//            finish();
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
 }
