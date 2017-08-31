@@ -12,7 +12,7 @@
     <color name="colorControlEffect">#82a4ab</color>
     <color name="colorIconSelect">#c9c9c9</color>
 
-    <color name="orange">#c94d20</color>
+    <color name="orange">#bf4518</color>
     <color name="sweet">#992f08</color>
     <color name="light_sweet">#783e46</color>
     <color name="fox_red">#b90621</color>
@@ -49,6 +49,16 @@
         <item>@color/navy_blue</item>
         <item>@color/deep_blue</item>
         <item>@color/fade_blue</item>
+        <item>@color/purple</item>
+    </integer-array>
+
+    <integer-array name="gpa_colors">
+        <item>@color/green</item>
+        <item>@color/orange</item>
+        <item>@color/red</item>
+        <item>@color/light_sweet</item>
+        <item>@color/fade_blue</item>
+        <item>@color/blue</item>
         <item>@color/purple</item>
     </integer-array>
 

@@ -17,6 +17,7 @@ import com.sarafinmahtab.tnsassistant.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Arafin on 8/23/2017.
@@ -29,15 +30,15 @@ public class MarkUpdateAdapter extends RecyclerView.Adapter<MarkUpdateAdapter.Ma
 
     private ArrayList<MarkListItem> newMarkListItem;
 
-    private ExamType examType;
+    private CourseCustomize courseCustomize;
 
-    public MarkUpdateAdapter(List<MarkListItem> markListItem, Context context, ExamType examType) {
+    public MarkUpdateAdapter(List<MarkListItem> markListItem, Context context, CourseCustomize courseCustomize) {
         this.markListItem = markListItem;
         this.context = context;
 
         newMarkListItem = new ArrayList<>();
         newMarkListItem.addAll(this.markListItem);
-        this.examType = examType;
+        this.courseCustomize = courseCustomize;
     }
 
     @Override
@@ -55,35 +56,34 @@ public class MarkUpdateAdapter extends RecyclerView.Adapter<MarkUpdateAdapter.Ma
 
         holder.candidateReg.setText(String.format("Reg ID - %s", markListItem.getRegNo()));
 
-        holder.termTest1.setText(examType.getTest1());
+        holder.termTest1.setText(courseCustomize.getCustomTT1Name());
         holder.termTest1Mark.setText(markListItem.getTermTest1_Mark());
 
-        holder.termTest2.setText(examType.getTest2());
+        holder.termTest2.setText(courseCustomize.getCustomTT2Name());
         holder.termTest1Mark.setText(markListItem.getTermTest2_Mark());
 
-        holder.attendance.setText(examType.getAttendance());
+        holder.attendance.setText(courseCustomize.getCustomAttendanceName());
         holder.attendanceMark.setText(markListItem.getAttendanceMark());
 
-        holder.viva.setText(examType.getViva());
+        holder.viva.setText(courseCustomize.getCustomVivaName());
         holder.vivaMark.setText(markListItem.getVivaMark());
 
-        holder.finalExam.setText(examType.getFinal_exam());
+        holder.finalExam.setText(courseCustomize.getCustomFinalName());
         holder.finalExamMark.setText(markListItem.getFinalExamMark());
 
         //Can Do the Calculation
         holder.marksOutOf100Mark.setText(markListItem.getMarksOutOf100());
-        int[] randomColors = context.getResources().getIntArray(R.array.random_colors);
+        int[] randomColors = context.getResources().getIntArray(R.array.gpa_colors);
 
         //Selects random colors from color Array
-//        int randomSelectedColor = randomColors[new Random().nextInt(randomColors.length)];
+        int randomSelectedColor = randomColors[new Random().nextInt(randomColors.length)];
 
         //Maintains the sorted colors from color Array
-        int randomSelectedColor = randomColors[position];
+//        int randomSelectedColor = randomColors[position];
 
         GradientDrawable bgShape = (GradientDrawable)holder.circleFinalMarks.getBackground();
         bgShape.mutate();
         bgShape.setColor(randomSelectedColor);
-
 
         holder.markUpdateBtn.setOnClickListener(new View.OnClickListener() {
             @Override

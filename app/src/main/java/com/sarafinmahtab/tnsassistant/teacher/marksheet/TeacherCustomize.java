@@ -33,13 +33,14 @@ import java.util.Map;
 
 public class TeacherCustomize extends Fragment {
 
-    MarkSheetActivity markSheetActivity;
-    CourseCustomize courseCustomize;
+    private MarkSheetActivity markSheetActivity;
+    private CourseCustomize courseCustomize;
 
     String courseID, teacherID;
 
     String examDataLoadUrl = ServerAddress.getMyServerAddress().concat("custom_exam_data_loader.php");
     String avgFunctionsUrl = ServerAddress.getMyServerAddress().concat("avg_func_loader.php");
+
     String avgFuncUpdateUrl = ServerAddress.getMyServerAddress().concat("avg_func_update.php");
 
     String tt1LoadUrl = ServerAddress.getMyServerAddress().concat(".php");
@@ -73,7 +74,7 @@ public class TeacherCustomize extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_teacher_customize, container, false);
 
         markSheetActivity = (MarkSheetActivity) getActivity();
-        courseCustomize = new CourseCustomize();
+        courseCustomize = markSheetActivity.getCourseCustomize();
 
         courseID = markSheetActivity.getCourseID();
         teacherID = markSheetActivity.getTeacherID();
@@ -98,62 +99,7 @@ public class TeacherCustomize extends Fragment {
         customFinalPercent = (TextView) rootView.findViewById(R.id.custom_final_percent);
         customFinalBtn = (ImageButton) rootView.findViewById(R.id.customize_final);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, examDataLoadUrl, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    JSONArray jsonArray = jsonObject.getJSONArray("custom_exam_data_loader");
-                    JSONObject obj = jsonArray.getJSONObject(0);
-
-                    courseCustomize.setCustomTT1Name(obj.getString("custom_test1_name"));
-                    customTT1Name.setText(courseCustomize.getCustomTT1Name());
-                    courseCustomize.setCustomTT1Percent(obj.getString("custom_test1_percent"));
-                    customTT1Percent.setText(courseCustomize.getCustomTT1Percent());
-
-                    courseCustomize.setCustomTT2Name(obj.getString("custom_test2_name"));
-                    customTT2Name.setText(courseCustomize.getCustomTT2Name());
-                    courseCustomize.setCustomTT2Percent(obj.getString("custom_test2_percent"));
-                    customTT2Percent.setText(courseCustomize.getCustomTT2Percent());
-
-                    courseCustomize.setCustomAttendanceName(obj.getString("custom_attendance_name"));
-                    customAttendanceName.setText(courseCustomize.getCustomAttendanceName());
-                    courseCustomize.setCustomAttendancePercent(obj.getString("custom_attendance_percent"));
-                    customAttendancePercent.setText(courseCustomize.getCustomAttendancePercent());
-
-                    courseCustomize.setCustomVivaName(obj.getString("custom_viva_name"));
-                    customVivaName.setText(courseCustomize.getCustomVivaName());
-                    courseCustomize.setCustomVivaPercent(obj.getString("custom_viva_percent"));
-                    customVivaPercent.setText(courseCustomize.getCustomVivaPercent());
-
-                    courseCustomize.setCustomFinalName(obj.getString("custom_final_name"));
-                    customFinalName.setText(courseCustomize.getCustomFinalName());
-                    courseCustomize.setCustomFinalPercent(obj.getString("custom_final_percent"));
-                    customFinalPercent.setText(courseCustomize.getCustomFinalPercent());
-
-                } catch (JSONException e) {
-                    Toast.makeText(markSheetActivity, e.getMessage(), Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(markSheetActivity, error.getMessage(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-
-                params.put("course_id", courseID);
-
-                return params;
-            }
-        };
-
-        MySingleton.getMyInstance(markSheetActivity).addToRequestQueue(stringRequest);
+        callCustomCourseData();
 
         customTT1Btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,52 +152,7 @@ public class TeacherCustomize extends Fragment {
                 vivaCheckBox = (CheckBox) customView.findViewById(R.id.viva_check_avg);
                 finalCheckBox = (CheckBox) customView.findViewById(R.id.final_check_avg);
 
-                StringRequest stringRequestForAvgFunc = new StringRequest(Request.Method.POST, avgFunctionsUrl, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            JSONArray jsonArray = jsonObject.getJSONArray("avg_func_loader");
-                            JSONObject obj = jsonArray.getJSONObject(0);
-
-                            tt1CheckBox.setChecked(Boolean.parseBoolean(obj.getString("custom_test1_avg_check")));
-                            tt1CheckBox.setText(courseCustomize.getCustomTT1Name());
-
-                            tt2CheckBox.setChecked(Boolean.parseBoolean(obj.getString("custom_test2_avg_check")));
-                            tt2CheckBox.setText(courseCustomize.getCustomTT2Name());
-
-                            attendanceCheckBox.setChecked(Boolean.parseBoolean(obj.getString("custom_attendance_avg_check")));
-                            attendanceCheckBox.setText(courseCustomize.getCustomAttendanceName());
-
-                            vivaCheckBox.setChecked(Boolean.parseBoolean(obj.getString("custom_viva_avg_check")));
-                            vivaCheckBox.setText(courseCustomize.getCustomVivaName());
-
-                            finalCheckBox.setChecked(Boolean.parseBoolean(obj.getString("custom_final_avg_check")));
-                            finalCheckBox.setText(courseCustomize.getCustomFinalName());
-
-                        } catch (JSONException e) {
-                            Toast.makeText(markSheetActivity, e.getMessage(), Toast.LENGTH_LONG).show();
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(markSheetActivity, error.getMessage(), Toast.LENGTH_LONG).show();
-                        error.printStackTrace();
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<>();
-
-                        params.put("course_id", courseID);
-
-                        return params;
-                    }
-                };
-
-                MySingleton.getMyInstance(markSheetActivity).addToRequestQueue(stringRequestForAvgFunc);
+                callAvgFunc();
 
                 builder.setView(customView)
                         .setTitle("Set Your Averages")
@@ -261,25 +162,18 @@ public class TeacherCustomize extends Fragment {
                                 StringRequest stringRequestForAvgUpdate = new StringRequest(Request.Method.POST, avgFuncUpdateUrl, new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
-                                        try {
-                                            JSONObject jsonObject = new JSONObject(response);
-
-                                            switch (jsonObject.getString("data_report")) {
-                                                case "success":
-                                                    Toast.makeText(markSheetActivity, "Updated Successfully", Toast.LENGTH_LONG).show();
-                                                    break;
-                                                case "failed":
-                                                    Toast.makeText(markSheetActivity, "Update Failed", Toast.LENGTH_LONG).show();
-                                                    break;
-                                                default:
-                                                    Toast.makeText(markSheetActivity, "Update Failed", Toast.LENGTH_LONG).show();
-                                                    break;
-                                            }
-                                        } catch (JSONException e) {
-                                            Toast.makeText(markSheetActivity, e.getMessage(), Toast.LENGTH_LONG).show();
-                                            e.printStackTrace();
+                                        switch (response) {
+                                            case "success":
+                                                Toast.makeText(markSheetActivity, "Updated Successfully", Toast.LENGTH_LONG).show();
+                                                dialog.cancel();
+                                                break;
+                                            case "failed":
+                                                Toast.makeText(markSheetActivity, "Update Failed!! Please Try Again.", Toast.LENGTH_LONG).show();
+                                                break;
+                                            default:
+                                                Toast.makeText(markSheetActivity, "No Operation Occurred!! Please Try Again.", Toast.LENGTH_LONG).show();
+                                                break;
                                         }
-                                        dialog.cancel();
                                     }
                                 }, new Response.ErrorListener() {
                                     @Override
@@ -345,6 +239,14 @@ public class TeacherCustomize extends Fragment {
 
         updateBtn = (Button) rootView.findViewById(R.id.update_btn_custom);
 
+        updateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callCustomCourseData();
+                callAvgFunc();
+            }
+        });
+
         return rootView;
     }
 
@@ -401,5 +303,122 @@ public class TeacherCustomize extends Fragment {
 
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    private void callCustomCourseData() {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, examDataLoadUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = jsonObject.getJSONArray("custom_exam_data_loader");
+                    JSONObject obj = jsonArray.getJSONObject(0);
+
+                    courseCustomize.setCustomTT1Name(obj.getString("custom_test1_name"));
+                    customTT1Name.setText(courseCustomize.getCustomTT1Name());
+                    courseCustomize.setCustomTT1Percent(obj.getString("custom_test1_percent"));
+                    customTT1Percent.setText(courseCustomize.getCustomTT1Percent());
+
+                    courseCustomize.setCustomTT2Name(obj.getString("custom_test2_name"));
+                    customTT2Name.setText(courseCustomize.getCustomTT2Name());
+                    courseCustomize.setCustomTT2Percent(obj.getString("custom_test2_percent"));
+                    customTT2Percent.setText(courseCustomize.getCustomTT2Percent());
+
+                    courseCustomize.setCustomAttendanceName(obj.getString("custom_attendance_name"));
+                    customAttendanceName.setText(courseCustomize.getCustomAttendanceName());
+                    courseCustomize.setCustomAttendancePercent(obj.getString("custom_attendance_percent"));
+                    customAttendancePercent.setText(courseCustomize.getCustomAttendancePercent());
+
+                    courseCustomize.setCustomVivaName(obj.getString("custom_viva_name"));
+                    customVivaName.setText(courseCustomize.getCustomVivaName());
+                    courseCustomize.setCustomVivaPercent(obj.getString("custom_viva_percent"));
+                    customVivaPercent.setText(courseCustomize.getCustomVivaPercent());
+
+                    courseCustomize.setCustomFinalName(obj.getString("custom_final_name"));
+                    customFinalName.setText(courseCustomize.getCustomFinalName());
+                    courseCustomize.setCustomFinalPercent(obj.getString("custom_final_percent"));
+                    customFinalPercent.setText(courseCustomize.getCustomFinalPercent());
+
+                } catch (JSONException e) {
+                    Toast.makeText(markSheetActivity, e.getMessage(), Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(markSheetActivity, error.getMessage(), Toast.LENGTH_LONG).show();
+                error.printStackTrace();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("course_id", courseID);
+
+                return params;
+            }
+        };
+
+        MySingleton.getMyInstance(markSheetActivity).addToRequestQueue(stringRequest);
+    }
+
+    private void callAvgFunc() {
+
+        StringRequest stringRequestForAvgFunc = new StringRequest(Request.Method.POST, avgFunctionsUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = jsonObject.getJSONArray("avg_func_loader");
+                    JSONObject obj = jsonArray.getJSONObject(0);
+
+                    courseCustomize.getCheckedAvgArray().set(0, Boolean.parseBoolean(obj.getString("custom_test1_avg_check")));
+                    courseCustomize.getCheckedAvgArray().set(1, Boolean.parseBoolean(obj.getString("custom_test2_avg_check")));
+                    courseCustomize.getCheckedAvgArray().set(2, Boolean.parseBoolean(obj.getString("custom_attendance_avg_check")));
+                    courseCustomize.getCheckedAvgArray().set(3, Boolean.parseBoolean(obj.getString("custom_viva_avg_check")));
+                    courseCustomize.getCheckedAvgArray().set(4, Boolean.parseBoolean(obj.getString("custom_final_avg_check")));
+
+//                    tt1CheckBox.setChecked(Boolean.parseBoolean(obj.getString("custom_test1_avg_check")));
+                    tt1CheckBox.setChecked(courseCustomize.getCheckedAvgArray().get(0));
+                    tt1CheckBox.setText(courseCustomize.getCustomTT1Name());
+
+                    tt2CheckBox.setChecked(courseCustomize.getCheckedAvgArray().get(1));
+                    tt2CheckBox.setText(courseCustomize.getCustomTT2Name());
+
+                    attendanceCheckBox.setChecked(courseCustomize.getCheckedAvgArray().get(2));
+                    attendanceCheckBox.setText(courseCustomize.getCustomAttendanceName());
+
+                    vivaCheckBox.setChecked(courseCustomize.getCheckedAvgArray().get(3));
+                    vivaCheckBox.setText(courseCustomize.getCustomVivaName());
+
+                    finalCheckBox.setChecked(courseCustomize.getCheckedAvgArray().get(4));
+                    finalCheckBox.setText(courseCustomize.getCustomFinalName());
+
+                } catch (JSONException e) {
+                    Toast.makeText(markSheetActivity, e.getMessage(), Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(markSheetActivity, error.getMessage(), Toast.LENGTH_LONG).show();
+                error.printStackTrace();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("course_id", courseID);
+
+                return params;
+            }
+        };
+
+        MySingleton.getMyInstance(markSheetActivity).addToRequestQueue(stringRequestForAvgFunc);
     }
 }
