@@ -29,6 +29,7 @@
             android:id="@+id/mark_sheet_tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorTnSPrimary"
             style="@style/MyCustomTabLayout" />
 
     </android.support.design.widget.AppBarLayout>

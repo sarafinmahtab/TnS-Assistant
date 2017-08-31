@@ -92,7 +92,7 @@ public class MarkSheetUpdate extends Fragment {
                     examType.setFinal_exam(obj.getString("custom_final_name"));
 
                 } catch (JSONException e) {
-                    Toast.makeText(rootView.getContext(), e.getMessage() + " " + response, Toast.LENGTH_LONG).show();
+                    Toast.makeText(rootView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
             }

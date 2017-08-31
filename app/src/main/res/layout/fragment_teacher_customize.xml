@@ -1,128 +1,416 @@
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sarafinmahtab.tnsassistant.teacher.marksheet.TeacherCustomize">
+    android:fillViewport="true">
 
-
-    <Button
-        android:id="@+id/update_btn_custom"
-        android:layout_width="88dp"
-        android:layout_height="0dp"
-        android:text="Update"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/help_btn_custom"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/help_btn_custom"
-        app:layout_constraintTop_toTopOf="@+id/help_btn_custom"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/help_btn_custom"
-        android:layout_width="88dp"
-        android:layout_height="48dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Help"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textSize="12sp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginEnd="8dp" />
-
-    <TextView
-        android:id="@+id/custom_header"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="14dp"
-        android:gravity="center"
-        android:text="@string/set_rules_for_your_course"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/help_btn_custom"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
-
-    <LinearLayout
-        android:layout_width="0dp"
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/custom_header"
-        app:layout_constraintVertical_bias="0.0">
+        tools:context="com.sarafinmahtab.tnsassistant.teacher.marksheet.TeacherCustomize">
+
+        <TextView
+            android:id="@+id/custom_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/header_border"
+            android:fontFamily="@string/tns_font_family"
+            android:gravity="center"
+            android:text="@string/set_rules_for_your_course"
+            android:textAlignment="center"
+            android:textColor="@color/colorTnSText"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:stretchColumns="*"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/custom_header">
+
+            <TableRow
+                android:id="@+id/table_row_custom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                tools:layout_editor_absoluteX="71dp"
+                tools:layout_editor_absoluteY="184dp">
+
+                <TextView
+                    android:id="@+id/custom_name_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_border"
+                    android:gravity="center"
+                    android:text="@string/custom_exam_name"
+                    android:textColor="@color/colorTnSText"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/custom_percent_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_border"
+                    android:gravity="center"
+                    android:text="@string/exam_percent"
+                    android:textColor="@color/colorTnSText"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="228dp" />
+
+                <TextView
+                    android:id="@+id/customize_icon_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_border"
+                    android:gravity="center"
+                    android:text="@string/update_data"
+                    android:textColor="@color/colorTnSText"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="228dp" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/table_row_custom_tt1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                tools:layout_editor_absoluteX="71dp"
+                tools:layout_editor_absoluteY="184dp">
+
+                <TextView
+                    android:id="@+id/custom_tt1_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_border"
+                    android:gravity="center"
+                    android:text="@string/term_test_1"
+                    android:textColor="@color/colorTnSText"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/custom_tt1_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_border"
+                    android:gravity="center"
+                    android:textColor="@color/colorTnSText"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="228dp" />
+
+                <ImageButton
+                    android:id="@+id/customize_tt1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/icon_selector2"
+                    android:contentDescription="@null"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/mark_update_icon2"
+                    tools:layout_editor_absoluteY="102dp" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/table_row_custom_tt2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                tools:layout_editor_absoluteX="71dp"
+                tools:layout_editor_absoluteY="184dp">
+
+                <TextView
+                    android:id="@+id/custom_tt2_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_border"
+                    android:gravity="center"
+                    android:text="@string/term_test_2"
+                    android:textColor="@color/colorTnSText"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/custom_tt2_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_border"
+                    android:gravity="center"
+                    android:textColor="@color/colorTnSText"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="228dp" />
+
+                <ImageButton
+                    android:id="@+id/customize_tt2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/icon_selector2"
+                    android:contentDescription="@null"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/mark_update_icon2"
+                    tools:layout_editor_absoluteY="102dp" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/table_row_custom_attendance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                tools:layout_editor_absoluteX="71dp"
+                tools:layout_editor_absoluteY="184dp">
+
+                <TextView
+                    android:id="@+id/custom_attendance_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_border"
+                    android:gravity="center"
+                    android:text="@string/attendance"
+                    android:textColor="@color/colorTnSText"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/custom_attendance_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_border"
+                    android:gravity="center"
+                    android:textColor="@color/colorTnSText"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="228dp" />
+
+                <ImageButton
+                    android:id="@+id/customize_attendance"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/icon_selector2"
+                    android:contentDescription="@null"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/mark_update_icon2"
+                    tools:layout_editor_absoluteY="102dp" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/table_row_custom_viva"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                tools:layout_editor_absoluteX="71dp"
+                tools:layout_editor_absoluteY="184dp">
+
+                <TextView
+                    android:id="@+id/custom_viva_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_border"
+                    android:gravity="center"
+                    android:text="@string/viva"
+                    android:textColor="@color/colorTnSText"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/custom_viva_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_border"
+                    android:gravity="center"
+                    android:textColor="@color/colorTnSText"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="228dp" />
+
+                <ImageButton
+                    android:id="@+id/customize_viva"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/icon_selector2"
+                    android:contentDescription="@null"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/mark_update_icon2"
+                    tools:layout_editor_absoluteY="102dp" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/table_row_custom_final"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                tools:layout_editor_absoluteX="71dp"
+                tools:layout_editor_absoluteY="184dp">
+
+                <TextView
+                    android:id="@+id/custom_final_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_border"
+                    android:gravity="center"
+                    android:text="@string/final_exam"
+                    android:textColor="@color/colorTnSText"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/custom_final_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_border"
+                    android:gravity="center"
+                    android:textColor="@color/colorTnSText"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="228dp" />
+
+                <ImageButton
+                    android:id="@+id/customize_final"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/icon_selector2"
+                    android:contentDescription="@null"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/mark_update_icon2"
+                    tools:layout_editor_absoluteY="102dp" />
+            </TableRow>
+        </TableLayout>
+
+        <!--<TextView-->
+            <!--android:id="@+id/rules_header"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="8dp"-->
+            <!--android:layout_marginRight="8dp"-->
+            <!--android:layout_marginTop="4dp"-->
+            <!--android:text="@string/as_per_rules"-->
+            <!--android:textColor="@color/deep_red"-->
+            <!--app:layout_constraintHorizontal_bias="0.0"-->
+            <!--app:layout_constraintLeft_toLeftOf="@+id/tableLayout"-->
+            <!--app:layout_constraintRight_toRightOf="@+id/tableLayout"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/tableLayout"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--android:layout_marginEnd="8dp" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/rules_result"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="2dp"-->
+            <!--android:background="@drawable/header_border"-->
+            <!--android:gravity="center"-->
+            <!--android:text=""-->
+            <!--app:layout_constraintHorizontal_bias="0.0"-->
+            <!--app:layout_constraintLeft_toLeftOf="@+id/rules_header"-->
+            <!--app:layout_constraintRight_toRightOf="@+id/rules_header"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/rules_header" />-->
 
         <LinearLayout
-            android:id="@+id/linearLayout_custom_tt1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            tools:layout_editor_absoluteX="71dp"
-            tools:layout_editor_absoluteY="184dp">
+            android:layout_margin="1dp"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="@+id/tableLayout"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="@+id/tableLayout"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/tableLayout"
+            app:layout_constraintVertical_bias="0.07999998">
 
-            <TextView
-                android:id="@+id/custom_tt1_name"
+            <Button
+                android:id="@+id/avg_check_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="Term Test 1"
-                app:layout_constraintBottom_toBottomOf="@+id/tt1_percent_sign"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tt1_percent_sign"
-                app:layout_constraintVertical_bias="0.0" />
+                android:layout_margin="1dp"
+                style="?android:attr/buttonBarButtonStyle"
+                android:background="@color/colorTnSPrimary"
+                android:padding="8dp"
+                android:text="@string/avg_functions"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/custom_tt1_percent"
+            <Button
+                android:id="@+id/update_btn_custom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="20"
-                app:layout_constraintBottom_toBottomOf="@+id/customize_tt1"
-                app:layout_constraintTop_toTopOf="@+id/customize_tt1"
-                app:layout_constraintVertical_bias="0.0"
-                tools:layout_editor_absoluteX="228dp" />
-
-            <TextView
-                android:id="@+id/tt1_percent_sign"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="left|center"
-                android:text="%"
-                app:layout_constraintBottom_toBottomOf="@+id/custom_tt1_percent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintLeft_toRightOf="@+id/custom_tt1_name"
-                app:layout_constraintRight_toLeftOf="@+id/custom_tt1_percent"
-                app:layout_constraintTop_toTopOf="@+id/custom_tt1_percent"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <ImageButton
-                android:id="@+id/customize_tt1"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:contentDescription="@null"
-                android:scaleType="centerInside"
-                app:layout_constraintRight_toRightOf="parent"
-                app:srcCompat="@drawable/mark_update_icon2"
-                tools:layout_editor_absoluteY="102dp" />
+                android:layout_margin="1dp"
+                style="?android:attr/buttonBarButtonStyle"
+                android:background="@color/colorTnSPrimary"
+                android:padding="8dp"
+                android:text="@string/update_rules"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold" />
         </LinearLayout>
-    </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

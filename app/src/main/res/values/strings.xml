@@ -54,6 +54,16 @@
     <string name="term_test_1">Term Test 1</string>
     <string name="marks_in_total">Marks in Total</string>
     <string name="set_rules_for_your_course">Set Rules For Your Course</string>
+    <string name="custom_exam_name">Custom Exam Name</string>
+    <string name="update_data">Update Data</string>
+    <string name="exam_percent">Exam Percent</string>
+    <string name="change_exam_percent_out_of_100">Change Exam Percent Out of 100</string>
+    <string name="change_exam_name">Change Exam Name</string>
+    <string name="count_as_average">Count as Average</string>
+    <string name="avg_functions">Avg Functions</string>
+    <string name="update_rules">Update Rules</string>
+    <string name="as_per_rules">Marks Out Of 100 (As Per Rules):</string>
+    <string name="checked_items_as_average">*** Checked items will be counted as average!!</string>
 
     <!--<string name="tns_font_family">sans-serif</string>-->
     <!--<string name="tns_font_family">sans-serif-condensed</string>-->
