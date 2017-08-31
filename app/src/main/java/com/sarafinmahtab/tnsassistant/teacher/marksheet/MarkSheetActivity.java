@@ -185,11 +185,15 @@ public class MarkSheetActivity extends AppCompatActivity {
                     JSONArray jsonArray = jsonObject.getJSONArray("avg_func_loader");
                     JSONObject obj = jsonArray.getJSONObject(0);
 
-                    courseCustomize.getCheckedAvgArray().set(0, Boolean.parseBoolean(obj.getString("custom_test1_avg_check")));
-                    courseCustomize.getCheckedAvgArray().set(1, Boolean.parseBoolean(obj.getString("custom_test2_avg_check")));
-                    courseCustomize.getCheckedAvgArray().set(2, Boolean.parseBoolean(obj.getString("custom_attendance_avg_check")));
-                    courseCustomize.getCheckedAvgArray().set(3, Boolean.parseBoolean(obj.getString("custom_viva_avg_check")));
-                    courseCustomize.getCheckedAvgArray().set(4, Boolean.parseBoolean(obj.getString("custom_final_avg_check")));
+                    boolean[] checkedAvgArray = new boolean[5];
+
+                    checkedAvgArray[0] = obj.getString("custom_test1_avg_check").equals("1");
+                    checkedAvgArray[1] = obj.getString("custom_test2_avg_check").equals("1");
+                    checkedAvgArray[2] = obj.getString("custom_attendance_avg_check").equals("1");
+                    checkedAvgArray[3] = obj.getString("custom_viva_avg_check").equals("1");
+                    checkedAvgArray[4] = obj.getString("custom_final_avg_check").equals("1");
+
+                    courseCustomize.setCheckedAvgArray(checkedAvgArray);
 
                 } catch (JSONException e) {
                     Toast.makeText(MarkSheetActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();

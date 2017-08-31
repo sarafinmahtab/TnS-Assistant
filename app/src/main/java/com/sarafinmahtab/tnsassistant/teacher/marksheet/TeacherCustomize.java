@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -375,26 +376,29 @@ public class TeacherCustomize extends Fragment {
                     JSONArray jsonArray = jsonObject.getJSONArray("avg_func_loader");
                     JSONObject obj = jsonArray.getJSONObject(0);
 
-                    courseCustomize.getCheckedAvgArray().set(0, Boolean.parseBoolean(obj.getString("custom_test1_avg_check")));
-                    courseCustomize.getCheckedAvgArray().set(1, Boolean.parseBoolean(obj.getString("custom_test2_avg_check")));
-                    courseCustomize.getCheckedAvgArray().set(2, Boolean.parseBoolean(obj.getString("custom_attendance_avg_check")));
-                    courseCustomize.getCheckedAvgArray().set(3, Boolean.parseBoolean(obj.getString("custom_viva_avg_check")));
-                    courseCustomize.getCheckedAvgArray().set(4, Boolean.parseBoolean(obj.getString("custom_final_avg_check")));
+                    boolean[] checkedAvgArray = new boolean[5];
 
-//                    tt1CheckBox.setChecked(Boolean.parseBoolean(obj.getString("custom_test1_avg_check")));
-                    tt1CheckBox.setChecked(courseCustomize.getCheckedAvgArray().get(0));
+                    checkedAvgArray[0] = obj.getString("custom_test1_avg_check").equals("1");
+                    checkedAvgArray[1] = obj.getString("custom_test2_avg_check").equals("1");
+                    checkedAvgArray[2] = obj.getString("custom_attendance_avg_check").equals("1");
+                    checkedAvgArray[3] = obj.getString("custom_viva_avg_check").equals("1");
+                    checkedAvgArray[4] = obj.getString("custom_final_avg_check").equals("1");
+
+                    courseCustomize.setCheckedAvgArray(checkedAvgArray);
+
+                    tt1CheckBox.setChecked(checkedAvgArray[0]);
                     tt1CheckBox.setText(courseCustomize.getCustomTT1Name());
 
-                    tt2CheckBox.setChecked(courseCustomize.getCheckedAvgArray().get(1));
+                    tt2CheckBox.setChecked(checkedAvgArray[1]);
                     tt2CheckBox.setText(courseCustomize.getCustomTT2Name());
 
-                    attendanceCheckBox.setChecked(courseCustomize.getCheckedAvgArray().get(2));
+                    attendanceCheckBox.setChecked(checkedAvgArray[2]);
                     attendanceCheckBox.setText(courseCustomize.getCustomAttendanceName());
 
-                    vivaCheckBox.setChecked(courseCustomize.getCheckedAvgArray().get(3));
+                    vivaCheckBox.setChecked(checkedAvgArray[3]);
                     vivaCheckBox.setText(courseCustomize.getCustomVivaName());
 
-                    finalCheckBox.setChecked(courseCustomize.getCheckedAvgArray().get(4));
+                    finalCheckBox.setChecked(checkedAvgArray[4]);
                     finalCheckBox.setText(courseCustomize.getCustomFinalName());
 
                 } catch (JSONException e) {

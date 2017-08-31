@@ -8,21 +8,19 @@ import java.util.ArrayList;
 
 public class CourseCustomize {
 
-    private ArrayList<Boolean> checkedAvgArray = new ArrayList<>();
+    private boolean[] checkedAvgArray = new boolean[5];
 
     private String customTT1Name, customTT2Name, customAttendanceName, customVivaName, customFinalName;
     private String customTT1Percent, customTT2Percent, customAttendancePercent, customVivaPercent, customFinalPercent;
 
     CourseCustomize() {
-        checkedAvgArray.add(false);
-        checkedAvgArray.add(true);
-        checkedAvgArray.add(false);
-        checkedAvgArray.add(false);
-        checkedAvgArray.add(false);
+        for (int i = 0; i < 5; i++) {
+            checkedAvgArray[i] = false;
+        }
     }
 
     //SETTERS
-    public void setCheckedAvgArray(ArrayList<Boolean> checkedAvgArray) {
+    public void setCheckedAvgArray(boolean[] checkedAvgArray) {
         this.checkedAvgArray = checkedAvgArray;
     }
 
@@ -68,7 +66,7 @@ public class CourseCustomize {
 
     //GETTERS
 
-    public ArrayList<Boolean> getCheckedAvgArray() {
+    public boolean[] getCheckedAvgArray() {
         return checkedAvgArray;
     }
 
