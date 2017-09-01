@@ -1,15 +1,11 @@
-package com.sarafinmahtab.tnsassistant.teacher.marksheet;
+package com.sarafinmahtab.tnsassistant.teacher.examsetup;
 
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.view.LayoutInflater;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,9 +26,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TeacherCustomize extends Fragment {
+public class ExamSetupActivity extends AppCompatActivity {
 
-    private MarkSheetActivity markSheetActivity;
     private CourseCustomize courseCustomize;
 
     String courseID, teacherID, courseCode;
@@ -58,44 +53,61 @@ public class TeacherCustomize extends Fragment {
 
     Button avgFunction;
 
+    TextView rulesResult;
+
     @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_teacher_customize, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_exam_setup);
 
-        markSheetActivity = (MarkSheetActivity) getActivity();
-        courseCustomize = markSheetActivity.getCourseCustomize();
+        Toolbar toolbar = (Toolbar) findViewById(R.id.exam_setup_toolbar);
+        setSupportActionBar(toolbar);
 
-        courseID = markSheetActivity.getCourseID();
-        teacherID = markSheetActivity.getTeacherID();
-        courseCode = markSheetActivity.getCourseCode();
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
-        customTT1Name = (TextView) rootView.findViewById(R.id.custom_tt1_name);
-        customTT1Percent = (TextView) rootView.findViewById(R.id.custom_tt1_percent);
-        customTT1Btn = (ImageButton) rootView.findViewById(R.id.customize_tt1);
+        Bundle courseBundle = getIntent().getExtras();
 
-        customTT2Name = (TextView) rootView.findViewById(R.id.custom_tt2_name);
-        customTT2Percent = (TextView) rootView.findViewById(R.id.custom_tt2_percent);
-        customTT2Btn = (ImageButton) rootView.findViewById(R.id.customize_tt2);
+        courseID = courseBundle.getString("course_id");
+        teacherID = courseBundle.getString("teacher_id");
+        courseCode = courseBundle.getString("course_code");
 
-        customAttendanceName = (TextView) rootView.findViewById(R.id.custom_attendance_name);
-        customAttendancePercent = (TextView) rootView.findViewById(R.id.custom_attendance_percent);
-        customAttendanceBtn = (ImageButton) rootView.findViewById(R.id.customize_attendance);
+        toolbar.setTitleTextColor(0xFFFFFFFF);
 
-        customVivaName = (TextView) rootView.findViewById(R.id.custom_viva_name);
-        customVivaPercent = (TextView) rootView.findViewById(R.id.custom_viva_percent);
-        customVivaBtn = (ImageButton) rootView.findViewById(R.id.customize_viva);
+        getSupportActionBar().setTitle(String.format("Set Exam Rules of %s", courseCode));
 
-        customFinalName = (TextView) rootView.findViewById(R.id.custom_final_name);
-        customFinalPercent = (TextView) rootView.findViewById(R.id.custom_final_percent);
-        customFinalBtn = (ImageButton) rootView.findViewById(R.id.customize_final);
+        courseCustomize = new CourseCustomize();
+
+        customTT1Name = (TextView) findViewById(R.id.custom_tt1_name);
+        customTT1Percent = (TextView) findViewById(R.id.custom_tt1_percent);
+        customTT1Btn = (ImageButton) findViewById(R.id.customize_tt1);
+
+        customTT2Name = (TextView) findViewById(R.id.custom_tt2_name);
+        customTT2Percent = (TextView) findViewById(R.id.custom_tt2_percent);
+        customTT2Btn = (ImageButton) findViewById(R.id.customize_tt2);
+
+        customAttendanceName = (TextView) findViewById(R.id.custom_attendance_name);
+        customAttendancePercent = (TextView) findViewById(R.id.custom_attendance_percent);
+        customAttendanceBtn = (ImageButton) findViewById(R.id.customize_attendance);
+
+        customVivaName = (TextView) findViewById(R.id.custom_viva_name);
+        customVivaPercent = (TextView) findViewById(R.id.custom_viva_percent);
+        customVivaBtn = (ImageButton) findViewById(R.id.customize_viva);
+
+        customFinalName = (TextView) findViewById(R.id.custom_final_name);
+        customFinalPercent = (TextView) findViewById(R.id.custom_final_percent);
+        customFinalBtn = (ImageButton) findViewById(R.id.customize_final);
 
         callCustomCourseData();
+
+        rulesResult = (TextView) findViewById(R.id.rules_result);
 
         customTT1Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(markSheetActivity, UpdateCustomExam.class);
+                Intent intent = new Intent(ExamSetupActivity.this, UpdateCustomExam.class);
 
                 Bundle bundle = new Bundle();
                 bundle.putString("url", tt1LoadUrl);
@@ -112,7 +124,7 @@ public class TeacherCustomize extends Fragment {
         customTT2Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(markSheetActivity, UpdateCustomExam.class);
+                Intent intent = new Intent(ExamSetupActivity.this, UpdateCustomExam.class);
 
                 Bundle bundle = new Bundle();
                 bundle.putString("url", tt2LoadUrl);
@@ -129,7 +141,7 @@ public class TeacherCustomize extends Fragment {
         customAttendanceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(markSheetActivity, UpdateCustomExam.class);
+                Intent intent = new Intent(ExamSetupActivity.this, UpdateCustomExam.class);
 
                 Bundle bundle = new Bundle();
                 bundle.putString("url", attendanceLoadUrl);
@@ -146,7 +158,7 @@ public class TeacherCustomize extends Fragment {
         customVivaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(markSheetActivity, UpdateCustomExam.class);
+                Intent intent = new Intent(ExamSetupActivity.this, UpdateCustomExam.class);
 
                 Bundle bundle = new Bundle();
                 bundle.putString("url", vivaLoadUrl);
@@ -163,7 +175,7 @@ public class TeacherCustomize extends Fragment {
         customFinalBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(markSheetActivity, UpdateCustomExam.class);
+                Intent intent = new Intent(ExamSetupActivity.this, UpdateCustomExam.class);
 
                 Bundle bundle = new Bundle();
                 bundle.putString("url", finalLoadUrl);
@@ -177,12 +189,12 @@ public class TeacherCustomize extends Fragment {
             }
         });
 
-        avgFunction = (Button) rootView.findViewById(R.id.avg_check_btn);
+        avgFunction = (Button) findViewById(R.id.avg_check_btn);
 
         avgFunction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(markSheetActivity, AvgFuncCheck.class);
+                Intent intent = new Intent(ExamSetupActivity.this, AvgFuncCheck.class);
 
                 Bundle bundle = new Bundle();
                 bundle.putString("url", vivaLoadUrl);
@@ -195,8 +207,6 @@ public class TeacherCustomize extends Fragment {
                 startActivity(intent);
             }
         });
-
-        return rootView;
     }
 
     private void callCustomCourseData() {
@@ -234,15 +244,21 @@ public class TeacherCustomize extends Fragment {
                     courseCustomize.setCustomFinalPercent(obj.getString("custom_final_percent"));
                     customFinalPercent.setText(courseCustomize.getCustomFinalPercent());
 
+                    rulesResult.setText("(" + courseCustomize.getCustomTT1Name() + ")*" + courseCustomize.getCustomTT1Percent() + "% + " +
+                            "(" + courseCustomize.getCustomTT2Name() + ")*" + courseCustomize.getCustomTT2Percent() + "% + " +
+                            "(" + courseCustomize.getCustomAttendanceName() + ")*" + courseCustomize.getCustomAttendancePercent() + "% + " +
+                            "(" + courseCustomize.getCustomVivaName() + ")*" + courseCustomize.getCustomVivaPercent() + "% + " +
+                            "(" + courseCustomize.getCustomFinalName() + ")*" + courseCustomize.getCustomFinalPercent() + "% + Avg Function");
+
                 } catch (JSONException e) {
-                    Toast.makeText(markSheetActivity, e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(ExamSetupActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(markSheetActivity, error.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(ExamSetupActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
                 error.printStackTrace();
             }
         }) {
@@ -256,7 +272,7 @@ public class TeacherCustomize extends Fragment {
             }
         };
 
-        MySingleton.getMyInstance(markSheetActivity).addToRequestQueue(stringRequest);
+        MySingleton.getMyInstance(ExamSetupActivity.this).addToRequestQueue(stringRequest);
     }
 
     @Override
@@ -264,5 +280,11 @@ public class TeacherCustomize extends Fragment {
         super.onResume();
 
         callCustomCourseData();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

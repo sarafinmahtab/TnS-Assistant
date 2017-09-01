@@ -1,4 +1,4 @@
-package com.sarafinmahtab.tnsassistant.teacher.marksheet;
+package com.sarafinmahtab.tnsassistant.teacher.examsetup;
 
 import java.io.Serializable;
 import java.util.ArrayList;

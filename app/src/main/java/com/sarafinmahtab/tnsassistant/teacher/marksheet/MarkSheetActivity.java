@@ -1,23 +1,16 @@
 package com.sarafinmahtab.tnsassistant.teacher.marksheet;
 
-import android.content.Intent;
-import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,28 +22,34 @@ import com.android.volley.toolbox.StringRequest;
 import com.sarafinmahtab.tnsassistant.MySingleton;
 import com.sarafinmahtab.tnsassistant.R;
 import com.sarafinmahtab.tnsassistant.ServerAddress;
-import com.sarafinmahtab.tnsassistant.teacher.TeacherDashboard;
+import com.sarafinmahtab.tnsassistant.teacher.examsetup.CourseCustomize;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MarkSheetActivity extends AppCompatActivity {
 
-    String examDataLoadUrl = ServerAddress.getMyServerAddress().concat("custom_exam_data_loader.php");
-    String avgFunctionsUrl = ServerAddress.getMyServerAddress().concat("avg_func_loader.php");
-
-    String courseID, teacherID, courseCode;
-
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-    private ViewPager mViewPager;
+    private String examDataLoadUrl = ServerAddress.getMyServerAddress().concat("custom_exam_data_loader.php");
+    private String avgFunctionsUrl = ServerAddress.getMyServerAddress().concat("avg_func_loader.php");
+    private String markSheetLoader = ServerAddress.getMyServerAddress().concat("mark_sheet_loader.php");
 
     private CourseCustomize courseCustomize;
 
-    Bundle courseBundle;
+    String courseID, teacherID, courseCode;
+
+    RecyclerView markSheetRecyclerView;
+    MarkSheetAdapter markSheetAdapter;
+    List<MarkListItem> stdMarkList;
+
+    SearchView markSheetSearchView;
+    EditText markSheetSearchEditText;
+    ImageView markSheetCloseButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,18 +64,7 @@ public class MarkSheetActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.mark_sheet_container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.mark_sheet_tabs);
-        tabLayout.setupWithViewPager(mViewPager);
-
-        courseBundle = getIntent().getExtras();
+        Bundle courseBundle = getIntent().getExtras();
 
         courseID = courseBundle.getString("course_id");
         teacherID = courseBundle.getString("teacher_id");
@@ -86,52 +74,109 @@ public class MarkSheetActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle(courseCode + " Result Sheet");
 
-//        TabLayout.Tab tab = tabLayout.getTabAt(courseBundle.getInt("tab_id"));
-//        if (tab != null) {
-//            tab.select();
-//        }
-
         courseCustomize = new CourseCustomize();
-        callCustomCourseData();
+
+        viewCustomCourseData();
+
+        markSheetSearchView = (SearchView) findViewById(R.id.frag_searchView_mark_update);
+        markSheetSearchEditText = (EditText) findViewById(R.id.search_src_text);
+        markSheetCloseButton = (ImageView) findViewById(R.id.search_close_btn);
+
+        markSheetRecyclerView = (RecyclerView) findViewById(R.id.frag_recyclerView_mark_update);
+        markSheetRecyclerView.setHasFixedSize(true);
+        markSheetRecyclerView.setLayoutManager(new LinearLayoutManager(MarkSheetActivity.this));
+        stdMarkList = new ArrayList<>();
+
+        StringRequest stringRequestForStdMarkList = new StringRequest(Request.Method.POST, markSheetLoader, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = jsonObject.getJSONArray("mark_sheet_loader");
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject obj = jsonArray.getJSONObject(i);
+
+                        MarkListItem markListItem = new MarkListItem();
+
+                        markListItem.setCourseRegID(obj.getString("course_reg_id"));
+                        markListItem.setRegNo(obj.getString("registration_no"));
+                        markListItem.setMarkSheetID(obj.getString("marksheet_id"));
+                        markListItem.setTermTest1_Mark(obj.getString("term_test_1"));
+                        markListItem.setTermTest2_Mark(obj.getString("term_test_2"));
+                        markListItem.setAttendanceMark(obj.getString("attendance"));
+                        markListItem.setVivaMark(obj.getString("viva"));
+                        markListItem.setFinalExamMark(obj.getString("final_exam"));
+                        markListItem.setMarksOutOf100(obj.getString("marks_out_of_100"));
+
+                        stdMarkList.add(markListItem);
+                    }
+
+                    markSheetAdapter = new MarkSheetAdapter(stdMarkList, MarkSheetActivity.this, courseCustomize);
+                    markSheetRecyclerView.setAdapter(markSheetAdapter);
+
+                } catch (JSONException e) {
+                    Toast.makeText(MarkSheetActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(MarkSheetActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                error.printStackTrace();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("course_id", courseID);
+
+                return params;
+            }
+        };
+
+        MySingleton.getMyInstance(MarkSheetActivity.this).addToRequestQueue(stringRequestForStdMarkList);
+
+        markSheetSearchView.onActionViewExpanded();
+        markSheetSearchView.setIconified(false);
+        markSheetSearchView.setQueryHint("Search by Reg ID or Name");
+
+        if(!markSheetSearchView.isFocused()) {
+            markSheetSearchView.clearFocus();
+        }
+
+        markSheetSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                markSheetAdapter.checkQueryFromList(newText.toLowerCase());
+
+                return true;
+            }
+        });
+
+        markSheetCloseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Clear the text from EditText view
+                markSheetSearchEditText.setText("");
+
+                //Clear query
+                markSheetSearchView.setQuery("", false);
+                markSheetAdapter.notifyDataSetChanged();
+                markSheetSearchView.clearFocus();
+            }
+        });
     }
 
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            switch (position) {
-                case 0:
-                    return new MarkSheetUpdate();
-                case 1:
-                    return new TeacherCustomize();
-                default:
-                    return null;
-            }
-        }
-
-        @Override
-        public int getCount() {
-            // Show 2 total pages.
-            return 2;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "Update";
-                case 1:
-                    return "Customize";
-            }
-            return null;
-        }
-    }
-
-    private void callCustomCourseData() {
+    private void viewCustomCourseData() {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, examDataLoadUrl, new Response.Listener<String>() {
             @Override
@@ -223,45 +268,15 @@ public class MarkSheetActivity extends AppCompatActivity {
         MySingleton.getMyInstance(MarkSheetActivity.this).addToRequestQueue(stringRequestForAvgFunc);
     }
 
-    public CourseCustomize getCourseCustomize() {
-        return courseCustomize;
-    }
-
-    public String getCourseID() {
-        return courseID;
-    }
-
-    public String getTeacherID() {
-        return teacherID;
-    }
-
-    public String getCourseCode() {
-        return courseCode;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        viewCustomCourseData();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-//        if(courseBundle.getInt("tab_id") == 0) {
-//            super.onBackPressed();
-//        } else {
-//            Intent intent = new Intent(MarkSheetActivity.this, TeacherDashboard.class);
-//
-//            Bundle bundle = new Bundle();
-//            bundle.putString("course_code", courseCode);
-//            bundle.putString("course_id", courseID);
-//            bundle.putString("teacher_id", teacherID);
-//            intent.putExtras(bundle);
-//
-//            startActivity(intent);
-//        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        callCustomCourseData();
     }
 
     @Override

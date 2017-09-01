@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.sarafinmahtab.tnsassistant.R;
+import com.sarafinmahtab.tnsassistant.teacher.examsetup.ExamSetupActivity;
 import com.sarafinmahtab.tnsassistant.teacher.marksheet.MarkSheetActivity;
 import com.sarafinmahtab.tnsassistant.teacher.studentlist.StudentList;
 
@@ -16,7 +17,7 @@ public class TeacherDashboard extends AppCompatActivity {
 
     String courseCode, courseID, teacherID;
 
-    ImageButton students, sendMail, shareFiles, markSheet;
+    ImageButton students, sendMail, shareFiles, markSheet, examSetup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class TeacherDashboard extends AppCompatActivity {
         sendMail = (ImageButton) findViewById(R.id.teacher_inbox);
         shareFiles = (ImageButton) findViewById(R.id.share_files);
         markSheet = (ImageButton) findViewById(R.id.result_sheet);
+        examSetup = (ImageButton) findViewById(R.id.exam_setup);
 
         students.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,8 +89,24 @@ public class TeacherDashboard extends AppCompatActivity {
                 stdListBundle.putString("course_id", courseID);
                 stdListBundle.putString("teacher_id", teacherID);
                 stdListBundle.putString("course_code", courseCode);
-//                stdListBundle.putInt("tab_id", 0);
                 intent.putExtras(stdListBundle);
+
+                startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            }
+        });
+
+        examSetup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TeacherDashboard.this, ExamSetupActivity.class);
+
+                Bundle examSetupBundle = new Bundle();
+
+                examSetupBundle.putString("course_id", courseID);
+                examSetupBundle.putString("teacher_id", teacherID);
+                examSetupBundle.putString("course_code", courseCode);
+                intent.putExtras(examSetupBundle);
 
                 startActivity(intent);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);

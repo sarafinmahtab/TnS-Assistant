@@ -57,6 +57,11 @@ public class AllCoursesActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.courses_tabs);
         tabLayout.setupWithViewPager(mViewPager);
+//        TabLayout.Tab tab = tabLayout.getTabAt(bundle.getInt("tab_id"));
+//        if (tab != null) {
+//            tab.select();
+//        }
+
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {

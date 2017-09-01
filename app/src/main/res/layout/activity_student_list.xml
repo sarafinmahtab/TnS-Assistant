@@ -12,6 +12,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorTnSPrimary"
         android:theme="@style/AppTheme"
+        app:layout_scrollFlags="scroll|enterAlways"
         app:contentInsetStartWithNavigation="0dp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"

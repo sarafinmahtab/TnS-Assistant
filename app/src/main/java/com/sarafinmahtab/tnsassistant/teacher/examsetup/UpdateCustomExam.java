@@ -1,4 +1,4 @@
-package com.sarafinmahtab.tnsassistant.teacher.marksheet;
+package com.sarafinmahtab.tnsassistant.teacher.examsetup;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

@@ -2,29 +2,26 @@ package com.sarafinmahtab.tnsassistant.teacher.marksheet;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sarafinmahtab.tnsassistant.R;
+import com.sarafinmahtab.tnsassistant.teacher.examsetup.CourseCustomize;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by Arafin on 8/23/2017.
  */
 
-public class MarkUpdateAdapter extends RecyclerView.Adapter<MarkUpdateAdapter.MarkUpdateViewHolder> {
+public class MarkSheetAdapter extends RecyclerView.Adapter<MarkSheetAdapter.MarkUpdateViewHolder> {
 
     private List<MarkListItem> markListItem;
     private Context context;
@@ -33,14 +30,14 @@ public class MarkUpdateAdapter extends RecyclerView.Adapter<MarkUpdateAdapter.Ma
 
     private CourseCustomize courseCustomize;
 
-    public MarkUpdateAdapter(List<MarkListItem> markListItem, Context context, MarkSheetActivity markSheetActivity) {
+    public MarkSheetAdapter(List<MarkListItem> markListItem, Context context, CourseCustomize courseCustomize) {
         this.markListItem = markListItem;
         this.context = context;
 
         newMarkListItem = new ArrayList<>();
         newMarkListItem.addAll(this.markListItem);
 
-        courseCustomize = markSheetActivity.getCourseCustomize();
+        this.courseCustomize = courseCustomize;
     }
 
     @Override
@@ -75,13 +72,31 @@ public class MarkUpdateAdapter extends RecyclerView.Adapter<MarkUpdateAdapter.Ma
 
         //Can Do the Calculation
 
-
+        final int finalMark = Integer.parseInt(markListItem.getMarksOutOf100());
+        int pos;
 
         holder.marksOutOf100Mark.setText(markListItem.getMarksOutOf100());
+
+        if(finalMark >= 80) {
+            pos = 0;
+        } else if(finalMark >= 70 && finalMark <= 79) {
+            pos = 1;
+        } else if(finalMark >= 60 && finalMark <= 69) {
+            pos = 2;
+        } else if(finalMark >= 50 && finalMark <= 59) {
+            pos = 3;
+        } else if(finalMark >= 40 && finalMark <= 49) {
+            pos = 4;
+        } else if(finalMark < 40){
+            pos = 5;
+        } else {
+            pos = 6;
+        }
+
         int[] randomColors = context.getResources().getIntArray(R.array.gpa_colors);
 
         //Selects random colors from color Array
-        int randomSelectedColor = randomColors[new Random().nextInt(randomColors.length)];
+        int randomSelectedColor = randomColors[pos];
 
         //Maintains the sorted colors from color Array
 //        int randomSelectedColor = randomColors[position];

@@ -60,9 +60,6 @@
                     android:id="@+id/students_list_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="0dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
                     android:text="@string/students_icon"
                     android:textAlignment="center"
                     android:textAllCaps="false"
@@ -94,10 +91,6 @@
                     android:id="@+id/teacher_inbox_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="0dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginTop="0dp"
                     android:text="@string/inbox_icon"
                     android:textAlignment="center"
                     android:textAllCaps="false"
@@ -128,10 +121,6 @@
                     android:id="@+id/notice_board_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="0dp"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="0dp"
-                    android:layout_marginTop="0dp"
                     android:text="@string/notice_board_icon"
                     android:textAlignment="center"
                     android:textAllCaps="false"
@@ -173,9 +162,6 @@
                     android:id="@+id/result_sheet_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="0dp"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="0dp"
                     android:text="@string/result_sheet_icon"
                     android:textAlignment="center"
                     android:textAllCaps="false"
@@ -184,6 +170,108 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintLeft_toLeftOf="@+id/result_sheet"
                     app:layout_constraintRight_toRightOf="@+id/result_sheet" />
+
+                <ImageButton
+                    android:id="@+id/exam_setup"
+                    android:layout_width="90dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginStart="30dp"
+                    android:background="@drawable/icon_selector"
+                    android:contentDescription="@null"
+                    android:scaleType="centerInside"
+                    app:layout_constraintBottom_toBottomOf="@+id/result_sheet"
+                    app:layout_constraintLeft_toRightOf="@+id/result_sheet"
+                    app:layout_constraintRight_toLeftOf="@+id/attendance"
+                    app:layout_constraintTop_toTopOf="@+id/result_sheet"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:srcCompat="@drawable/exam_setup" />
+
+                <TextView
+                    android:id="@+id/exam_setup_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/exam_setup"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorTnSText"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="@+id/exam_setup"
+                    app:layout_constraintRight_toRightOf="@+id/exam_setup"
+                    app:layout_constraintTop_toBottomOf="@+id/exam_setup"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <ImageButton
+                    android:id="@+id/attendance"
+                    android:layout_width="90dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/icon_selector"
+                    android:contentDescription="@null"
+                    android:scaleType="centerInside"
+                    app:layout_constraintBottom_toBottomOf="@+id/exam_setup"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/exam_setup"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:srcCompat="@drawable/attendance" />
+
+                <TextView
+                    android:id="@+id/attendance_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/attendance_icon"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorTnSText"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="@+id/attendance"
+                    app:layout_constraintRight_toRightOf="@+id/attendance"
+                    app:layout_constraintTop_toBottomOf="@+id/exam_setup"
+                    app:layout_constraintVertical_bias="0.0" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/third_column2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp">
+
+                <ImageButton
+                    android:id="@+id/t_statistics"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/icon_selector"
+                    android:contentDescription="@null"
+                    android:scaleType="centerInside"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/t_statistics_title"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.195"
+                    app:srcCompat="@drawable/statistics" />
+
+                <TextView
+                    android:id="@+id/t_statistics_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statistics_icon"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorTnSText"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="@+id/t_statistics"
+                    app:layout_constraintRight_toRightOf="@+id/t_statistics" />
 
                 <ImageButton
                     android:id="@+id/syllabus"
@@ -196,10 +284,10 @@
                     android:background="@drawable/icon_selector"
                     android:contentDescription="@null"
                     android:scaleType="centerInside"
-                    app:layout_constraintBottom_toBottomOf="@+id/result_sheet"
-                    app:layout_constraintLeft_toRightOf="@+id/result_sheet"
+                    app:layout_constraintBottom_toBottomOf="@+id/t_statistics"
+                    app:layout_constraintLeft_toRightOf="@+id/t_statistics"
                     app:layout_constraintRight_toLeftOf="@+id/share_files"
-                    app:layout_constraintTop_toTopOf="@+id/result_sheet"
+                    app:layout_constraintTop_toTopOf="@+id/t_statistics"
                     app:layout_constraintVertical_bias="0.0"
                     app:srcCompat="@drawable/syllabus" />
 
@@ -207,10 +295,6 @@
                     android:id="@+id/syllabus_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="0dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginTop="0dp"
                     android:text="@string/syllabus_icon"
                     android:textAlignment="center"
                     android:textAllCaps="false"
@@ -241,10 +325,6 @@
                     android:id="@+id/share_files_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="0dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginTop="0dp"
                     android:text="@string/share_files_icon"
                     android:textAlignment="center"
                     android:textAllCaps="false"
@@ -255,46 +335,6 @@
                     app:layout_constraintRight_toRightOf="@+id/share_files"
                     app:layout_constraintTop_toBottomOf="@+id/syllabus"
                     app:layout_constraintVertical_bias="0.0" />
-
-            </android.support.constraint.ConstraintLayout>
-
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/third_column2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp">
-
-                <ImageButton
-                    android:id="@+id/attendance"
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:layout_marginBottom="0dp"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginRight="0dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/icon_selector"
-                    android:contentDescription="@null"
-                    android:scaleType="centerInside"
-                    app:layout_constraintBottom_toTopOf="@+id/attendance_title"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="1.0"
-                    app:srcCompat="@drawable/attendance" />
-
-                <TextView
-                    android:id="@+id/attendance_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="0dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:text="@string/attendance_icon"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorTnSText"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="@+id/attendance"
-                    app:layout_constraintRight_toRightOf="@+id/attendance" />
 
             </android.support.constraint.ConstraintLayout>
 
