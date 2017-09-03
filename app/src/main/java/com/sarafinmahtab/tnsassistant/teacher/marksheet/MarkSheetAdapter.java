@@ -1,14 +1,19 @@
 package com.sarafinmahtab.tnsassistant.teacher.marksheet;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.ActivityChooserView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -88,7 +93,7 @@ public class MarkSheetAdapter extends RecyclerView.Adapter<MarkSheetAdapter.Mark
     }
 
     @Override
-    public void onBindViewHolder(MarkUpdateViewHolder holder, int position) {
+    public void onBindViewHolder(final MarkUpdateViewHolder holder, int position) {
 
         final MarkListItem markListItem = newMarkListItem.get(position);
 
@@ -210,17 +215,44 @@ public class MarkSheetAdapter extends RecyclerView.Adapter<MarkSheetAdapter.Mark
         bgShape.mutate();
         bgShape.setColor(randomSelectedColor);
 
-        holder.markUpdateBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, markListItem.getMarkSheetID(), Toast.LENGTH_LONG).show();
-            }
-        });
-
         holder.markListRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, markListItem.getCourseRegID(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        holder.markUpdateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View view = LayoutInflater.from(context).inflate(R.layout.result_update_dialog, null);
+
+                int width = ViewGroup.LayoutParams.MATCH_PARENT, height = ViewGroup.LayoutParams.WRAP_CONTENT;
+
+                EditText textTT1 = (EditText) view.findViewById(R.id.tt1_result_edit);
+                textTT1.setText(markListItem.getTermTest1_Mark());
+
+                EditText textTT2 = (EditText) view.findViewById(R.id.tt2_result_edit);
+                textTT2.setText(markListItem.getTermTest2_Mark());
+
+                EditText textAttendance = (EditText) view.findViewById(R.id.attendance_result_edit);
+                textAttendance.setText(markListItem.getAttendanceMark());
+
+                EditText textViva = (EditText) view.findViewById(R.id.viva_result_edit);
+                textViva.setText(markListItem.getVivaMark());
+
+                EditText textFinal = (EditText) view.findViewById(R.id.final_result_edit);
+                textFinal.setText(markListItem.getFinalExamMark());
+
+                final Dialog bottomSheetDialog = new Dialog(context, R.style.MaterialDialogSheet);
+                bottomSheetDialog.setContentView(view);
+                bottomSheetDialog.setCancelable(true);
+
+                if(bottomSheetDialog.getWindow() != null) {
+                    bottomSheetDialog.getWindow().setLayout(width, height);
+                    bottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+                    bottomSheetDialog.show ();
+                }
             }
         });
     }

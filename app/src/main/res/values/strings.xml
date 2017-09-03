@@ -67,6 +67,19 @@
     <string name="update">Update</string>
     <string name="cancel">Cancel</string>
     <string name="exam_setup">Exam Setup</string>
+    <string name="upload">Upload</string>
+    <string name="choose">Choose</string>
+    <string name="upload_image_less_than">* Upload Image less than 5MB Size</string>
+    <string name="close">Close</string>
+    <string name="running_courses">Running Courses</string>
+    <string name="load">Load</string>
+    <string name="update_details">Update Details</string>
+    <string name="upload_image">Upload Image</string>
+    <string name="dept">Dept</string>
+    <string name="desig">Desig</string>
+    <string name="teacher_s_name">Teacher\'s Name</string>
+    <string name="code">Code</string>
+    <string name="email">Email</string>
 
     <!--<string name="tns_font_family">sans-serif</string>-->
     <!--<string name="tns_font_family">sans-serif-condensed</string>-->
