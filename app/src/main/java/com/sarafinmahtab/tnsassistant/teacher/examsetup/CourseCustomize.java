@@ -1,113 +1,106 @@
 package com.sarafinmahtab.tnsassistant.teacher.examsetup;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * Created by Arafin on 8/31/2017.
  */
 
-public class CourseCustomize implements Serializable {
+public class CourseCustomize {
 
-    private boolean[] checkedAvgArray = new boolean[5];
+    private static boolean[] checkedAvgArray = new boolean[5];
 
-    private String customTT1Name, customTT2Name, customAttendanceName, customVivaName, customFinalName;
-    private String customTT1Percent, customTT2Percent, customAttendancePercent, customVivaPercent, customFinalPercent;
-
-    public CourseCustomize() {
-        for (int i = 0; i < 5; i++) {
-            checkedAvgArray[i] = false;
-        }
-    }
+    private static String customTT1Name, customTT2Name, customAttendanceName, customVivaName, customFinalName;
+    private static String customTT1Percent, customTT2Percent, customAttendancePercent, customVivaPercent, customFinalPercent;
 
     //SETTERS
-    public void setCheckedAvgArray(boolean[] checkedAvgArray) {
-        this.checkedAvgArray = checkedAvgArray;
+    public static void setCheckedAvgArray(boolean[] checkedAvgArray) {
+        CourseCustomize.checkedAvgArray = checkedAvgArray;
     }
 
-    public void setCustomTT1Name(String customTT1Name) {
-        this.customTT1Name = customTT1Name;
+    public static void setCustomTT1Name(String customTT1Name) {
+        CourseCustomize.customTT1Name = customTT1Name;
     }
 
-    public void setCustomTT2Name(String customTT2Name) {
-        this.customTT2Name = customTT2Name;
+    public static void setCustomTT2Name(String customTT2Name) {
+        CourseCustomize.customTT2Name = customTT2Name;
     }
 
-    public void setCustomAttendanceName(String customAttendanceName) {
-        this.customAttendanceName = customAttendanceName;
+    public static void setCustomAttendanceName(String customAttendanceName) {
+        CourseCustomize.customAttendanceName = customAttendanceName;
     }
 
-    public void setCustomVivaName(String customVivaName) {
-        this.customVivaName = customVivaName;
+    public static void setCustomVivaName(String customVivaName) {
+        CourseCustomize.customVivaName = customVivaName;
     }
 
-    public void setCustomFinalName(String customFinalName) {
-        this.customFinalName = customFinalName;
+    public static void setCustomFinalName(String customFinalName) {
+        CourseCustomize.customFinalName = customFinalName;
     }
 
-    public void setCustomTT1Percent(String customTT1Percent) {
-        this.customTT1Percent = customTT1Percent;
+    public static void setCustomTT1Percent(String customTT1Percent) {
+        CourseCustomize.customTT1Percent = customTT1Percent;
     }
 
-    public void setCustomTT2Percent(String customTT2Percent) {
-        this.customTT2Percent = customTT2Percent;
+    public static void setCustomTT2Percent(String customTT2Percent) {
+        CourseCustomize.customTT2Percent = customTT2Percent;
     }
 
-    public void setCustomAttendancePercent(String customAttendancePercent) {
-        this.customAttendancePercent = customAttendancePercent;
+    public static void setCustomAttendancePercent(String customAttendancePercent) {
+        CourseCustomize.customAttendancePercent = customAttendancePercent;
     }
 
-    public void setCustomVivaPercent(String customVivaPercent) {
-        this.customVivaPercent = customVivaPercent;
+    public static void setCustomVivaPercent(String customVivaPercent) {
+        CourseCustomize.customVivaPercent = customVivaPercent;
     }
 
-    public void setCustomFinalPercent(String customFinalPercent) {
-        this.customFinalPercent = customFinalPercent;
+    public static void setCustomFinalPercent(String customFinalPercent) {
+        CourseCustomize.customFinalPercent = customFinalPercent;
     }
 
     //GETTERS
 
-    public boolean[] getCheckedAvgArray() {
+    public static boolean[] getCheckedAvgArray() {
         return checkedAvgArray;
     }
 
-    public String getCustomTT1Name() {
+    public static String getCustomTT1Name() {
         return customTT1Name;
     }
 
-    public String getCustomTT2Name() {
+    public static String getCustomTT2Name() {
         return customTT2Name;
     }
 
-    public String getCustomAttendanceName() {
+    public static String getCustomAttendanceName() {
         return customAttendanceName;
     }
 
-    public String getCustomVivaName() {
+    public static String getCustomVivaName() {
         return customVivaName;
     }
 
-    public String getCustomFinalName() {
+    public static String getCustomFinalName() {
         return customFinalName;
     }
 
-    public String getCustomTT1Percent() {
+    public static String getCustomTT1Percent() {
         return customTT1Percent;
     }
 
-    public String getCustomTT2Percent() {
+    public static String getCustomTT2Percent() {
         return customTT2Percent;
     }
 
-    public String getCustomAttendancePercent() {
+    public static String getCustomAttendancePercent() {
         return customAttendancePercent;
     }
 
-    public String getCustomVivaPercent() {
+    public static String getCustomVivaPercent() {
         return customVivaPercent;
     }
 
-    public String getCustomFinalPercent() {
+    public static String getCustomFinalPercent() {
         return customFinalPercent;
     }
 }

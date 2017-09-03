@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -35,11 +34,8 @@ import java.util.Map;
 
 public class MarkSheetActivity extends AppCompatActivity {
 
-    private String examDataLoadUrl = ServerAddress.getMyServerAddress().concat("custom_exam_data_loader.php");
-    private String avgFunctionsUrl = ServerAddress.getMyServerAddress().concat("avg_func_loader.php");
+    private String examFullDataLoadUrl = ServerAddress.getMyServerAddress().concat("custom_full_exam_data_loader.php");
     private String markSheetLoader = ServerAddress.getMyServerAddress().concat("mark_sheet_loader.php");
-
-    private CourseCustomize courseCustomize;
 
     String courseID, teacherID, courseCode;
 
@@ -73,8 +69,6 @@ public class MarkSheetActivity extends AppCompatActivity {
         toolbar.setTitleTextColor(0xFFFFFFFF);
 
         getSupportActionBar().setTitle(courseCode + " Result Sheet");
-
-        courseCustomize = new CourseCustomize();
 
         viewCustomCourseData();
 
@@ -112,7 +106,7 @@ public class MarkSheetActivity extends AppCompatActivity {
                         stdMarkList.add(markListItem);
                     }
 
-                    markSheetAdapter = new MarkSheetAdapter(stdMarkList, MarkSheetActivity.this, courseCustomize);
+                    markSheetAdapter = new MarkSheetAdapter(stdMarkList, MarkSheetActivity.this);
                     markSheetRecyclerView.setAdapter(markSheetAdapter);
 
                 } catch (JSONException e) {
@@ -178,28 +172,37 @@ public class MarkSheetActivity extends AppCompatActivity {
 
     private void viewCustomCourseData() {
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, examDataLoadUrl, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, examFullDataLoadUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    JSONArray jsonArray = jsonObject.getJSONArray("custom_exam_data_loader");
+                    JSONArray jsonArray = jsonObject.getJSONArray("custom_full_exam_data_loader");
                     JSONObject obj = jsonArray.getJSONObject(0);
 
-                    courseCustomize.setCustomTT1Name(obj.getString("custom_test1_name"));
-                    courseCustomize.setCustomTT1Percent(obj.getString("custom_test1_percent"));
+                    boolean[] checkedAvgArray = new boolean[5];
 
-                    courseCustomize.setCustomTT2Name(obj.getString("custom_test2_name"));
-                    courseCustomize.setCustomTT2Percent(obj.getString("custom_test2_percent"));
+                    CourseCustomize.setCustomTT1Name(obj.getString("custom_test1_name"));
+                    CourseCustomize.setCustomTT1Percent(obj.getString("custom_test1_percent"));
+                    checkedAvgArray[0] = obj.getString("custom_test1_avg_check").equals("1");
 
-                    courseCustomize.setCustomAttendanceName(obj.getString("custom_attendance_name"));
-                    courseCustomize.setCustomAttendancePercent(obj.getString("custom_attendance_percent"));
+                    CourseCustomize.setCustomTT2Name(obj.getString("custom_test2_name"));
+                    CourseCustomize.setCustomTT2Percent(obj.getString("custom_test2_percent"));
+                    checkedAvgArray[1] = obj.getString("custom_test2_avg_check").equals("1");
 
-                    courseCustomize.setCustomVivaName(obj.getString("custom_viva_name"));
-                    courseCustomize.setCustomVivaPercent(obj.getString("custom_viva_percent"));
+                    CourseCustomize.setCustomAttendanceName(obj.getString("custom_attendance_name"));
+                    CourseCustomize.setCustomAttendancePercent(obj.getString("custom_attendance_percent"));
+                    checkedAvgArray[2] = obj.getString("custom_attendance_avg_check").equals("1");
 
-                    courseCustomize.setCustomFinalName(obj.getString("custom_final_name"));
-                    courseCustomize.setCustomFinalPercent(obj.getString("custom_final_percent"));
+                    CourseCustomize.setCustomVivaName(obj.getString("custom_viva_name"));
+                    CourseCustomize.setCustomVivaPercent(obj.getString("custom_viva_percent"));
+                    checkedAvgArray[3] = obj.getString("custom_viva_avg_check").equals("1");
+
+                    CourseCustomize.setCustomFinalName(obj.getString("custom_final_name"));
+                    CourseCustomize.setCustomFinalPercent(obj.getString("custom_final_percent"));
+                    checkedAvgArray[4] = obj.getString("custom_final_avg_check").equals("1");
+
+                    CourseCustomize.setCheckedAvgArray(checkedAvgArray);
 
                 } catch (JSONException e) {
                     Toast.makeText(MarkSheetActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
@@ -225,47 +228,47 @@ public class MarkSheetActivity extends AppCompatActivity {
 
         MySingleton.getMyInstance(MarkSheetActivity.this).addToRequestQueue(stringRequest);
 
-        StringRequest stringRequestForAvgFunc = new StringRequest(Request.Method.POST, avgFunctionsUrl, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    JSONArray jsonArray = jsonObject.getJSONArray("avg_func_loader");
-                    JSONObject obj = jsonArray.getJSONObject(0);
-
-                    boolean[] checkedAvgArray = new boolean[5];
-
-                    checkedAvgArray[0] = obj.getString("custom_test1_avg_check").equals("1");
-                    checkedAvgArray[1] = obj.getString("custom_test2_avg_check").equals("1");
-                    checkedAvgArray[2] = obj.getString("custom_attendance_avg_check").equals("1");
-                    checkedAvgArray[3] = obj.getString("custom_viva_avg_check").equals("1");
-                    checkedAvgArray[4] = obj.getString("custom_final_avg_check").equals("1");
-
-                    courseCustomize.setCheckedAvgArray(checkedAvgArray);
-
-                } catch (JSONException e) {
-                    Toast.makeText(MarkSheetActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MarkSheetActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-
-                params.put("course_id", courseID);
-
-                return params;
-            }
-        };
-
-        MySingleton.getMyInstance(MarkSheetActivity.this).addToRequestQueue(stringRequestForAvgFunc);
+//        StringRequest stringRequestForAvgFunc = new StringRequest(Request.Method.POST, avgFunctionsUrl, new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                try {
+//                    JSONObject jsonObject = new JSONObject(response);
+//                    JSONArray jsonArray = jsonObject.getJSONArray("avg_func_loader");
+//                    JSONObject obj = jsonArray.getJSONObject(0);
+//
+//                    boolean[] checkedAvgArray = new boolean[5];
+//
+//                    checkedAvgArray[0] = obj.getString("custom_test1_avg_check").equals("1");
+//                    checkedAvgArray[1] = obj.getString("custom_test2_avg_check").equals("1");
+//                    checkedAvgArray[2] = obj.getString("custom_attendance_avg_check").equals("1");
+//                    checkedAvgArray[3] = obj.getString("custom_viva_avg_check").equals("1");
+//                    checkedAvgArray[4] = obj.getString("custom_final_avg_check").equals("1");
+//
+//                    courseCustomize.setCheckedAvgArray(checkedAvgArray);
+//
+//                } catch (JSONException e) {
+//                    Toast.makeText(MarkSheetActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(MarkSheetActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+//                error.printStackTrace();
+//            }
+//        }) {
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                Map<String, String> params = new HashMap<>();
+//
+//                params.put("course_id", courseID);
+//
+//                return params;
+//            }
+//        };
+//
+//        MySingleton.getMyInstance(MarkSheetActivity.this).addToRequestQueue(stringRequestForAvgFunc);
     }
 
     @Override

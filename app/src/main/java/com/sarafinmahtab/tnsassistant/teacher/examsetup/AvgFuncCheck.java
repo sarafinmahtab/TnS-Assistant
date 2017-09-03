@@ -33,8 +33,6 @@ public class AvgFuncCheck extends AppCompatActivity {
     CheckBox tt1CheckBox, tt2CheckBox, attendanceCheckBox, vivaCheckBox, finalCheckBox;
     Button updateBtn, cancelBtn;
 
-    CourseCustomize courseCustomize;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +43,7 @@ public class AvgFuncCheck extends AppCompatActivity {
 
         courseID = bundle.getString("course_id");
         courseCode = bundle.getString("course_code");
-        courseCustomize = (CourseCustomize) getIntent().getSerializableExtra("course_customize");
+//        courseCustomize = (CourseCustomize) getIntent().getSerializableExtra("course_customize");
 
         tt1CheckBox = (CheckBox) findViewById(R.id.tt1_check_avg);
         tt2CheckBox = (CheckBox) findViewById(R.id.tt2_check_avg);
@@ -53,11 +51,11 @@ public class AvgFuncCheck extends AppCompatActivity {
         vivaCheckBox = (CheckBox) findViewById(R.id.viva_check_avg);
         finalCheckBox = (CheckBox) findViewById(R.id.final_check_avg);
 
-        tt1CheckBox.setText(courseCustomize.getCustomTT1Name());
-        tt2CheckBox.setText(courseCustomize.getCustomTT2Name());
-        attendanceCheckBox.setText(courseCustomize.getCustomAttendanceName());
-        vivaCheckBox.setText(courseCustomize.getCustomVivaName());
-        finalCheckBox.setText(courseCustomize.getCustomFinalName());
+        tt1CheckBox.setText(CourseCustomize.getCustomTT1Name());
+        tt2CheckBox.setText(CourseCustomize.getCustomTT2Name());
+        attendanceCheckBox.setText(CourseCustomize.getCustomAttendanceName());
+        vivaCheckBox.setText(CourseCustomize.getCustomVivaName());
+        finalCheckBox.setText(CourseCustomize.getCustomFinalName());
 
         updateBtn = (Button) findViewById(R.id.update_btn2);
         cancelBtn = (Button) findViewById(R.id.cancel_btn2);
@@ -159,22 +157,22 @@ public class AvgFuncCheck extends AppCompatActivity {
                     checkedAvgArray[3] = obj.getString("custom_viva_avg_check").equals("1");
                     checkedAvgArray[4] = obj.getString("custom_final_avg_check").equals("1");
 
-                    courseCustomize.setCheckedAvgArray(checkedAvgArray);
+                    CourseCustomize.setCheckedAvgArray(checkedAvgArray);
 
                     tt1CheckBox.setChecked(checkedAvgArray[0]);
-                    tt1CheckBox.setText(courseCustomize.getCustomTT1Name());
+                    tt1CheckBox.setText(CourseCustomize.getCustomTT1Name());
 
                     tt2CheckBox.setChecked(checkedAvgArray[1]);
-                    tt2CheckBox.setText(courseCustomize.getCustomTT2Name());
+                    tt2CheckBox.setText(CourseCustomize.getCustomTT2Name());
 
                     attendanceCheckBox.setChecked(checkedAvgArray[2]);
-                    attendanceCheckBox.setText(courseCustomize.getCustomAttendanceName());
+                    attendanceCheckBox.setText(CourseCustomize.getCustomAttendanceName());
 
                     vivaCheckBox.setChecked(checkedAvgArray[3]);
-                    vivaCheckBox.setText(courseCustomize.getCustomVivaName());
+                    vivaCheckBox.setText(CourseCustomize.getCustomVivaName());
 
                     finalCheckBox.setChecked(checkedAvgArray[4]);
-                    finalCheckBox.setText(courseCustomize.getCustomFinalName());
+                    finalCheckBox.setText(CourseCustomize.getCustomFinalName());
 
                 } catch (JSONException e) {
                     Toast.makeText(AvgFuncCheck.this, e.getMessage(), Toast.LENGTH_LONG).show();

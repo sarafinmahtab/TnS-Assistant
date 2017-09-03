@@ -2,7 +2,9 @@ package com.sarafinmahtab.tnsassistant.teacher.marksheet;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
+import android.support.v7.widget.ActivityChooserView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,8 @@ import android.widget.Toast;
 import com.sarafinmahtab.tnsassistant.R;
 import com.sarafinmahtab.tnsassistant.teacher.examsetup.CourseCustomize;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,16 +32,51 @@ public class MarkSheetAdapter extends RecyclerView.Adapter<MarkSheetAdapter.Mark
 
     private ArrayList<MarkListItem> newMarkListItem;
 
-    private CourseCustomize courseCustomize;
+    private ArrayList<String> nonAvgArray, avgArray;
 
-    public MarkSheetAdapter(List<MarkListItem> markListItem, Context context, CourseCustomize courseCustomize) {
+    private final NumberFormat formatter = new DecimalFormat("#0");
+
+    public MarkSheetAdapter(List<MarkListItem> markListItem, Context context) {
         this.markListItem = markListItem;
         this.context = context;
 
         newMarkListItem = new ArrayList<>();
         newMarkListItem.addAll(this.markListItem);
 
-        this.courseCustomize = courseCustomize;
+        nonAvgArray = new ArrayList<>();
+        avgArray = new ArrayList<>();
+
+        boolean[] checkedAvgArray = CourseCustomize.getCheckedAvgArray();
+
+        if(checkedAvgArray[0]) {
+            avgArray.add("tt1");
+        } else {
+            nonAvgArray.add("tt1");
+        }
+
+        if(checkedAvgArray[1]) {
+            avgArray.add("tt2");
+        } else {
+            nonAvgArray.add("tt2");
+        }
+
+        if(checkedAvgArray[2]) {
+            avgArray.add("presence");
+        } else {
+            nonAvgArray.add("presence");
+        }
+
+        if(checkedAvgArray[3]) {
+            avgArray.add("viva");
+        } else {
+            nonAvgArray.add("viva");
+        }
+
+        if(checkedAvgArray[4]) {
+            avgArray.add("final");
+        } else {
+            nonAvgArray.add("final");
+        }
     }
 
     @Override
@@ -55,24 +94,90 @@ public class MarkSheetAdapter extends RecyclerView.Adapter<MarkSheetAdapter.Mark
 
         holder.candidateReg.setText(String.format("Reg ID - %s", markListItem.getRegNo()));
 
-        holder.termTest1.setText(courseCustomize.getCustomTT1Name());
+        holder.termTest1.setText(CourseCustomize.getCustomTT1Name());
         holder.termTest1Mark.setText(markListItem.getTermTest1_Mark());
 
-        holder.termTest2.setText(courseCustomize.getCustomTT2Name());
-        holder.termTest1Mark.setText(markListItem.getTermTest2_Mark());
+        holder.termTest2.setText(CourseCustomize.getCustomTT2Name());
+        holder.termTest2Mark.setText(markListItem.getTermTest2_Mark());
 
-        holder.attendance.setText(courseCustomize.getCustomAttendanceName());
+        holder.attendance.setText(CourseCustomize.getCustomAttendanceName());
         holder.attendanceMark.setText(markListItem.getAttendanceMark());
 
-        holder.viva.setText(courseCustomize.getCustomVivaName());
+        holder.viva.setText(CourseCustomize.getCustomVivaName());
         holder.vivaMark.setText(markListItem.getVivaMark());
 
-        holder.finalExam.setText(courseCustomize.getCustomFinalName());
+        holder.finalExam.setText(CourseCustomize.getCustomFinalName());
         holder.finalExamMark.setText(markListItem.getFinalExamMark());
 
-        //Can Do the Calculation
+        double addMark = 0, avgMark = 0;
+        double mark, percent;
 
-        final int finalMark = Integer.parseInt(markListItem.getMarksOutOf100());
+        //Do the Calculation
+        for (int i = 0; i < nonAvgArray.size(); i++) {
+            if (nonAvgArray.get(i).equals("tt1")) {
+                mark = Double.valueOf(markListItem.getTermTest1_Mark());
+                percent = Double.valueOf(CourseCustomize.getCustomTT1Percent());
+
+                addMark = addMark + mark * percent / 100;
+            } else if (nonAvgArray.get(i).equals("tt2")) {
+                mark = Double.valueOf(markListItem.getTermTest2_Mark());
+                percent = Double.valueOf(CourseCustomize.getCustomTT2Percent());
+
+                addMark = addMark + mark * percent / 100;
+            } else if (nonAvgArray.get(i).equals("presence")) {
+                mark = Double.valueOf(markListItem.getAttendanceMark());
+                percent = Double.valueOf(CourseCustomize.getCustomAttendancePercent());
+
+                addMark = addMark + mark * percent / 100;
+            } else if (nonAvgArray.get(i).equals("viva")) {
+                mark = Double.valueOf(markListItem.getVivaMark());
+                percent = Double.valueOf(CourseCustomize.getCustomVivaPercent());
+
+                addMark = addMark + mark * percent / 100;
+            } else if (nonAvgArray.get(i).equals("final")) {
+                mark = Double.valueOf(markListItem.getFinalExamMark());
+                percent = Double.valueOf(CourseCustomize.getCustomFinalPercent());
+
+                addMark = addMark + mark * percent / 100;
+            }
+        }
+
+        for (int i = 0; i < avgArray.size(); i++) {
+            if (avgArray.get(i).equals("tt1")) {
+                mark = Double.valueOf(markListItem.getTermTest1_Mark());
+                percent = Double.valueOf(CourseCustomize.getCustomTT1Percent());
+
+                avgMark = avgMark + mark * percent / 100;
+            } else if (avgArray.get(i).equals("tt2")) {
+                mark = Double.valueOf(markListItem.getTermTest2_Mark());
+                percent = Double.valueOf(CourseCustomize.getCustomTT2Percent());
+
+                avgMark = avgMark + mark * percent / 100;
+            } else if (avgArray.get(i).equals("presence")) {
+                mark = Double.valueOf(markListItem.getAttendanceMark());
+                percent = Double.valueOf(CourseCustomize.getCustomAttendancePercent());
+
+                avgMark = avgMark + mark * percent / 100;
+            } else if (avgArray.get(i).equals("viva")) {
+                mark = Double.valueOf(markListItem.getVivaMark());
+                percent = Double.valueOf(CourseCustomize.getCustomVivaPercent());
+
+                avgMark = avgMark + mark * percent / 100;
+            } else if (avgArray.get(i).equals("final")) {
+                mark = Double.valueOf(markListItem.getFinalExamMark());
+                percent = Double.valueOf(CourseCustomize.getCustomFinalPercent());
+
+                avgMark = avgMark + mark * percent / 100;
+            }
+        }
+
+        if (avgArray.size() != 0) {
+            addMark = addMark + (avgMark / avgArray.size());
+        }
+
+        markListItem.setMarksOutOf100(String.valueOf(formatter.format(addMark)));
+
+        final double finalMark = Double.parseDouble(markListItem.getMarksOutOf100());
         int pos;
 
         holder.marksOutOf100Mark.setText(markListItem.getMarksOutOf100());

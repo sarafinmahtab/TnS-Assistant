@@ -28,8 +28,6 @@ import java.util.Map;
 
 public class ExamSetupActivity extends AppCompatActivity {
 
-    private CourseCustomize courseCustomize;
-
     String courseID, teacherID, courseCode;
 
     String examDataLoadUrl = ServerAddress.getMyServerAddress().concat("custom_exam_data_loader.php");
@@ -77,8 +75,6 @@ public class ExamSetupActivity extends AppCompatActivity {
         toolbar.setTitleTextColor(0xFFFFFFFF);
 
         getSupportActionBar().setTitle(String.format("Set Exam Rules of %s", courseCode));
-
-        courseCustomize = new CourseCustomize();
 
         customTT1Name = (TextView) findViewById(R.id.custom_tt1_name);
         customTT1Percent = (TextView) findViewById(R.id.custom_tt1_percent);
@@ -202,7 +198,7 @@ public class ExamSetupActivity extends AppCompatActivity {
                 bundle.putString("course_id", courseID);
                 bundle.putString("course_code", courseCode);
                 intent.putExtras(bundle);
-                intent.putExtra("course_customize", courseCustomize);
+//                intent.putExtra("course_customize", courseCustomize);
 
                 startActivity(intent);
             }
@@ -219,36 +215,36 @@ public class ExamSetupActivity extends AppCompatActivity {
                     JSONArray jsonArray = jsonObject.getJSONArray("custom_exam_data_loader");
                     JSONObject obj = jsonArray.getJSONObject(0);
 
-                    courseCustomize.setCustomTT1Name(obj.getString("custom_test1_name"));
-                    customTT1Name.setText(courseCustomize.getCustomTT1Name());
-                    courseCustomize.setCustomTT1Percent(obj.getString("custom_test1_percent"));
-                    customTT1Percent.setText(courseCustomize.getCustomTT1Percent());
+                    CourseCustomize.setCustomTT1Name(obj.getString("custom_test1_name"));
+                    customTT1Name.setText(CourseCustomize.getCustomTT1Name());
+                    CourseCustomize.setCustomTT1Percent(obj.getString("custom_test1_percent"));
+                    customTT1Percent.setText(CourseCustomize.getCustomTT1Percent());
 
-                    courseCustomize.setCustomTT2Name(obj.getString("custom_test2_name"));
-                    customTT2Name.setText(courseCustomize.getCustomTT2Name());
-                    courseCustomize.setCustomTT2Percent(obj.getString("custom_test2_percent"));
-                    customTT2Percent.setText(courseCustomize.getCustomTT2Percent());
+                    CourseCustomize.setCustomTT2Name(obj.getString("custom_test2_name"));
+                    customTT2Name.setText(CourseCustomize.getCustomTT2Name());
+                    CourseCustomize.setCustomTT2Percent(obj.getString("custom_test2_percent"));
+                    customTT2Percent.setText(CourseCustomize.getCustomTT2Percent());
 
-                    courseCustomize.setCustomAttendanceName(obj.getString("custom_attendance_name"));
-                    customAttendanceName.setText(courseCustomize.getCustomAttendanceName());
-                    courseCustomize.setCustomAttendancePercent(obj.getString("custom_attendance_percent"));
-                    customAttendancePercent.setText(courseCustomize.getCustomAttendancePercent());
+                    CourseCustomize.setCustomAttendanceName(obj.getString("custom_attendance_name"));
+                    customAttendanceName.setText(CourseCustomize.getCustomAttendanceName());
+                    CourseCustomize.setCustomAttendancePercent(obj.getString("custom_attendance_percent"));
+                    customAttendancePercent.setText(CourseCustomize.getCustomAttendancePercent());
 
-                    courseCustomize.setCustomVivaName(obj.getString("custom_viva_name"));
-                    customVivaName.setText(courseCustomize.getCustomVivaName());
-                    courseCustomize.setCustomVivaPercent(obj.getString("custom_viva_percent"));
-                    customVivaPercent.setText(courseCustomize.getCustomVivaPercent());
+                    CourseCustomize.setCustomVivaName(obj.getString("custom_viva_name"));
+                    customVivaName.setText(CourseCustomize.getCustomVivaName());
+                    CourseCustomize.setCustomVivaPercent(obj.getString("custom_viva_percent"));
+                    customVivaPercent.setText(CourseCustomize.getCustomVivaPercent());
 
-                    courseCustomize.setCustomFinalName(obj.getString("custom_final_name"));
-                    customFinalName.setText(courseCustomize.getCustomFinalName());
-                    courseCustomize.setCustomFinalPercent(obj.getString("custom_final_percent"));
-                    customFinalPercent.setText(courseCustomize.getCustomFinalPercent());
+                    CourseCustomize.setCustomFinalName(obj.getString("custom_final_name"));
+                    customFinalName.setText(CourseCustomize.getCustomFinalName());
+                    CourseCustomize.setCustomFinalPercent(obj.getString("custom_final_percent"));
+                    customFinalPercent.setText(CourseCustomize.getCustomFinalPercent());
 
-                    rulesResult.setText("(" + courseCustomize.getCustomTT1Name() + ")*" + courseCustomize.getCustomTT1Percent() + "% + " +
-                            "(" + courseCustomize.getCustomTT2Name() + ")*" + courseCustomize.getCustomTT2Percent() + "% + " +
-                            "(" + courseCustomize.getCustomAttendanceName() + ")*" + courseCustomize.getCustomAttendancePercent() + "% + " +
-                            "(" + courseCustomize.getCustomVivaName() + ")*" + courseCustomize.getCustomVivaPercent() + "% + " +
-                            "(" + courseCustomize.getCustomFinalName() + ")*" + courseCustomize.getCustomFinalPercent() + "% + Avg Function");
+                    rulesResult.setText("(" + CourseCustomize.getCustomTT1Name() + ")*" + CourseCustomize.getCustomTT1Percent() + "% + " +
+                            "(" + CourseCustomize.getCustomTT2Name() + ")*" + CourseCustomize.getCustomTT2Percent() + "% + " +
+                            "(" + CourseCustomize.getCustomAttendanceName() + ")*" + CourseCustomize.getCustomAttendancePercent() + "% + " +
+                            "(" + CourseCustomize.getCustomVivaName() + ")*" + CourseCustomize.getCustomVivaPercent() + "% + " +
+                            "(" + CourseCustomize.getCustomFinalName() + ")*" + CourseCustomize.getCustomFinalPercent() + "% + Avg Function");
 
                 } catch (JSONException e) {
                     Toast.makeText(ExamSetupActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
