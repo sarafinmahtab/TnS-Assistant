@@ -172,6 +172,8 @@ public class MarkSheetActivity extends AppCompatActivity {
 
     private void viewCustomCourseData() {
 
+        //Need to send this request from TeacherDashboard.java and bring here by Bundle.
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, examFullDataLoadUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

@@ -8,24 +8,79 @@
     android:layout_margin="10dp"
     android:background="@drawable/selector"
     android:paddingBottom="12dp"
-    android:paddingTop="12dp"
     tools:layout_editor_absoluteX="6dp"
     tools:layout_editor_absoluteY="31dp">
 
-    <TextView
-        android:id="@+id/candidate_reg"
-        android:layout_width="wrap_content"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/result_title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/linearLayout_exam_details"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/linearLayout_exam_details"
-        android:text="Reg ID: 2014331001"
-        android:textAlignment="textStart"
-        android:textColor="@color/text_selector"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="5dp"
-        tools:layout_editor_absoluteY="7dp" />
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/candidate_reg"
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Reg ID: 2014331001"
+            android:textAlignment="textStart"
+            android:textColor="@color/text_selector"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/update_status"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="0dp"
+            android:gravity="center"
+            android:text="Updated"
+            android:textColor="@color/green"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/candidate_reg"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toRightOf="@+id/candidate_reg"
+            app:layout_constraintRight_toLeftOf="@+id/mark_update_btn"
+            app:layout_constraintTop_toTopOf="@+id/candidate_reg"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageButton
+            android:id="@+id/mark_update_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="0dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/icon_selector_oval"
+            android:contentDescription="@null"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/mark_update_icon2" />
+    </android.support.constraint.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout_exam_details"
@@ -33,10 +88,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/candidate_reg"
+        android:layout_below="@+id/result_title"
         android:layout_marginLeft="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="7dp"
         android:orientation="vertical">
 
         <TextView
@@ -186,7 +239,6 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/linearLayout_exam_details"
         android:layout_toEndOf="@+id/linearLayout_exam_gap"
-        android:layout_toRightOf="@+id/mark_update_btn"
         android:orientation="vertical">
 
         <TextView
@@ -259,21 +311,18 @@
         android:id="@+id/linearLayout_final_marks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical"
-        android:layout_marginRight="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_alignBottom="@+id/linearLayout_exam_marks"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        android:layout_alignRight="@+id/result_title"
+        android:layout_alignEnd="@+id/result_title">
 
         <TextView
             android:id="@+id/marks_out_100"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:text="@string/marks_in_total"
-            android:textAlignment="textEnd"
             android:textAllCaps="false"
             android:textColor="@color/text_selector2"
             android:textSize="16sp"
@@ -285,7 +334,7 @@
             android:id="@+id/circle_final_marks"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_gravity="center"
+            android:layout_margin="4dp"
             android:background="@drawable/oval"
             tools:layout_editor_absoluteX="270dp"
             tools:layout_editor_absoluteY="93dp">
@@ -305,19 +354,4 @@
 
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/mark_update_btn"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_above="@+id/linearLayout_final_marks"
-        android:layout_alignEnd="@+id/linearLayout_final_marks"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/linearLayout_final_marks"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/icon_selector_oval"
-        android:contentDescription="@null"
-        android:scaleType="centerInside"
-        app:srcCompat="@drawable/mark_update_icon"
-        tools:layout_editor_absoluteX="286dp"
-        tools:layout_editor_absoluteY="-1dp" />
 </RelativeLayout>

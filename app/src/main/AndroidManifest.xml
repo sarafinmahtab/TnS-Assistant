@@ -34,7 +34,7 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".teacher.examsetup.UpdateCustomExam" />
         <activity android:name=".teacher.examsetup.AvgFuncCheck" />
-        <activity android:name=".teacher.examsetup.ExamSetupActivity"></activity>
+        <activity android:name=".teacher.examsetup.ExamSetupActivity" />
     </application>
 
 </manifest>
