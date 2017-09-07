@@ -80,6 +80,7 @@
     <string name="teacher_s_name">Teacher\'s Name</string>
     <string name="code">Code</string>
     <string name="email">Email</string>
+    <string name="updated">Updated</string>
 
     <!--<string name="tns_font_family">sans-serif</string>-->
     <!--<string name="tns_font_family">sans-serif-condensed</string>-->

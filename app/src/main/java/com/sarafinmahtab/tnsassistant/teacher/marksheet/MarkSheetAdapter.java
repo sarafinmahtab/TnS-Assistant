@@ -174,32 +174,9 @@ public class MarkSheetAdapter extends RecyclerView.Adapter<MarkSheetAdapter.Mark
                 View view = LayoutInflater.from(context).inflate(R.layout.result_update_dialog, null);
 
                 final int width = ViewGroup.LayoutParams.MATCH_PARENT, height = ViewGroup.LayoutParams.WRAP_CONTENT;
-
-                final Button updateBtn = (Button) view.findViewById(R.id.update_btn_dialog);
-
-                final TextView regText = (TextView) view.findViewById(R.id.reg_id_dialog);
-                regText.setText(String.format("Reg ID: %s", markListItem.getRegNo()));
-
-                final EditText textTT1 = (EditText) view.findViewById(R.id.tt1_result_edit);
-                textTT1.setText(markListItem.getTermTest1_Mark());
-
-                final EditText textTT2 = (EditText) view.findViewById(R.id.tt2_result_edit);
-                textTT2.setText(markListItem.getTermTest2_Mark());
-
-                final EditText textAttendance = (EditText) view.findViewById(R.id.attendance_result_edit);
-                textAttendance.setText(markListItem.getAttendanceMark());
-                Log.d("Value", markListItem.getAttendanceMark());
-
-                final EditText textViva = (EditText) view.findViewById(R.id.viva_result_edit);
-                textViva.setText(markListItem.getVivaMark());
-                Log.d("Value", markListItem.getVivaMark());
-
-                final EditText textFinal = (EditText) view.findViewById(R.id.final_result_edit);
-                textFinal.setText(markListItem.getFinalExamMark());
-
                 final Dialog bottomSheetDialog = new Dialog(context, R.style.MaterialDialogSheet);
                 bottomSheetDialog.setContentView(view);
-                bottomSheetDialog.setCancelable(true);
+                bottomSheetDialog.setCancelable(false);
 
                 if(bottomSheetDialog.getWindow() != null) {
                     bottomSheetDialog.getWindow().setLayout(width, height);
@@ -207,6 +184,37 @@ public class MarkSheetAdapter extends RecyclerView.Adapter<MarkSheetAdapter.Mark
                     bottomSheetDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
                     bottomSheetDialog.show ();
                 }
+
+                final Button updateBtn = (Button) view.findViewById(R.id.update_btn_dialog);
+                final ImageButton closeBtn = (ImageButton) view.findViewById(R.id.result_dialog_close);
+
+                final TextView regText = (TextView) view.findViewById(R.id.reg_id_dialog);
+                regText.setText(String.format("Reg ID: %s", markListItem.getRegNo()));
+
+                final TextView textViewTT1 = (TextView) view.findViewById(R.id.tt1_result_update);
+                textViewTT1.setText(CourseCustomize.getCustomTT1Name());
+                final EditText textTT1 = (EditText) view.findViewById(R.id.tt1_result_edit);
+                textTT1.setText(markListItem.getTermTest1_Mark());
+
+                final TextView textViewTT2 = (TextView) view.findViewById(R.id.tt2_result_update);
+                textViewTT2.setText(CourseCustomize.getCustomTT2Name());
+                final EditText textTT2 = (EditText) view.findViewById(R.id.tt2_result_edit);
+                textTT2.setText(markListItem.getTermTest2_Mark());
+
+                final TextView textViewAttendance = (TextView) view.findViewById(R.id.attendance_result_update);
+                textViewAttendance.setText(CourseCustomize.getCustomAttendanceName());
+                final EditText textAttendance = (EditText) view.findViewById(R.id.attendance_result_edit);
+                textAttendance.setText(markListItem.getAttendanceMark());
+
+                final TextView textViewViva = (TextView) view.findViewById(R.id.viva_result_update);
+                textViewViva.setText(CourseCustomize.getCustomVivaName());
+                final EditText textViva = (EditText) view.findViewById(R.id.viva_result_edit);
+                textViva.setText(markListItem.getVivaMark());
+
+                final TextView textViewFinal = (TextView) view.findViewById(R.id.final_result_update);
+                textViewFinal.setText(CourseCustomize.getCustomFinalName());
+                final EditText textFinal = (EditText) view.findViewById(R.id.final_result_edit);
+                textFinal.setText(markListItem.getFinalExamMark());
 
                 updateBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -219,7 +227,14 @@ public class MarkSheetAdapter extends RecyclerView.Adapter<MarkSheetAdapter.Mark
                                     case "success":
                                         bottomSheetDialog.cancel();
                                         holder.updateStatus.setVisibility(View.VISIBLE);
-                                        holder.updateStatus.setText("Updated");
+                                        holder.updateStatus.setText(R.string.updated);
+
+                                        holder.termTest1Mark.setText(markListItem.getTermTest1_Mark());
+                                        holder.termTest2Mark.setText(markListItem.getTermTest2_Mark());
+                                        holder.attendanceMark.setText(markListItem.getAttendanceMark());
+                                        holder.vivaMark.setText(markListItem.getVivaMark());
+                                        holder.finalExamMark.setText(markListItem.getFinalExamMark());
+                                        holder.marksOutOf100Mark.setText(markListItem.getMarksOutOf100());
 
                                         final double finalMark = Double.parseDouble(markListItem.getMarksOutOf100());
                                         int pos;
@@ -241,22 +256,19 @@ public class MarkSheetAdapter extends RecyclerView.Adapter<MarkSheetAdapter.Mark
                                         }
 
                                         int[] randomColors = context.getResources().getIntArray(R.array.gpa_colors);
-
-                                        //Selects random colors from color Array
                                         int randomSelectedColor = randomColors[pos];
 
                                         GradientDrawable bgShape = (GradientDrawable) holder.circleFinalMarks.getBackground();
                                         bgShape.mutate();
                                         bgShape.setColor(randomSelectedColor);
-                                        holder.marksOutOf100Mark.setText(markListItem.getMarksOutOf100());
 
                                         Toast.makeText(context, "Result Updated Successfully", Toast.LENGTH_LONG).show();
                                         break;
                                     case "failed":
-                                        Toast.makeText(context, response, Toast.LENGTH_LONG).show();
+                                        Toast.makeText(context, "Result Update Failed", Toast.LENGTH_LONG).show();
                                         break;
                                     default:
-                                        Toast.makeText(context, response, Toast.LENGTH_LONG).show();
+                                        Toast.makeText(context, "An Error Occurred", Toast.LENGTH_LONG).show();
                                         break;
                                 }
                             }
@@ -281,83 +293,18 @@ public class MarkSheetAdapter extends RecyclerView.Adapter<MarkSheetAdapter.Mark
 
                                 markListItem.setAttendanceMark(textAttendance.getText().toString());
                                 params.put("attendance", markListItem.getAttendanceMark());
-                                Log.d("Value", markListItem.getAttendanceMark());
 
-                                markListItem.setAttendanceMark(textViva.getText().toString());
+                                markListItem.setVivaMark(textViva.getText().toString());
                                 params.put("viva", markListItem.getVivaMark());
 
                                 markListItem.setFinalExamMark(textFinal.getText().toString());
                                 params.put("final_exam", markListItem.getFinalExamMark());
 
-                                //Do the Calculation
-                                double addMark = 0, avgMark = 0;
-                                double mark, percent;
+                                String markOutOf100Final = doTheCalculation(markListItem.getTermTest1_Mark(),
+                                        markListItem.getTermTest2_Mark(), markListItem.getAttendanceMark(), markListItem.getVivaMark(),
+                                        markListItem.getFinalExamMark());
 
-                                for (int i = 0; i < nonAvgArray.size(); i++) {
-                                    if (nonAvgArray.get(i).equals("tt1")) {
-                                        mark = Double.valueOf(markListItem.getTermTest1_Mark());
-                                        percent = Double.valueOf(CourseCustomize.getCustomTT1Percent());
-
-                                        addMark = addMark + mark * percent / 100;
-                                    } else if (nonAvgArray.get(i).equals("tt2")) {
-                                        mark = Double.valueOf(markListItem.getTermTest2_Mark());
-                                        percent = Double.valueOf(CourseCustomize.getCustomTT2Percent());
-
-                                        addMark = addMark + mark * percent / 100;
-                                    } else if (nonAvgArray.get(i).equals("presence")) {
-                                        mark = Double.valueOf(markListItem.getAttendanceMark());
-                                        percent = Double.valueOf(CourseCustomize.getCustomAttendancePercent());
-
-                                        addMark = addMark + mark * percent / 100;
-                                    } else if (nonAvgArray.get(i).equals("viva")) {
-                                        mark = Double.valueOf(markListItem.getVivaMark());
-                                        percent = Double.valueOf(CourseCustomize.getCustomVivaPercent());
-
-                                        addMark = addMark + mark * percent / 100;
-                                    } else if (nonAvgArray.get(i).equals("final")) {
-                                        mark = Double.valueOf(markListItem.getFinalExamMark());
-                                        percent = Double.valueOf(CourseCustomize.getCustomFinalPercent());
-
-                                        addMark = addMark + mark * percent / 100;
-                                    }
-                                }
-
-                                for (int i = 0; i < avgArray.size(); i++) {
-                                    if (avgArray.get(i).equals("tt1")) {
-                                        mark = Double.valueOf(markListItem.getTermTest1_Mark());
-                                        percent = Double.valueOf(CourseCustomize.getCustomTT1Percent());
-
-                                        avgMark = avgMark + mark * percent / 100;
-                                    } else if (avgArray.get(i).equals("tt2")) {
-                                        mark = Double.valueOf(markListItem.getTermTest2_Mark());
-                                        percent = Double.valueOf(CourseCustomize.getCustomTT2Percent());
-
-                                        avgMark = avgMark + mark * percent / 100;
-                                    } else if (avgArray.get(i).equals("presence")) {
-                                        mark = Double.valueOf(markListItem.getAttendanceMark());
-                                        percent = Double.valueOf(CourseCustomize.getCustomAttendancePercent());
-
-                                        avgMark = avgMark + mark * percent / 100;
-                                    } else if (avgArray.get(i).equals("viva")) {
-                                        mark = Double.valueOf(markListItem.getVivaMark());
-                                        percent = Double.valueOf(CourseCustomize.getCustomVivaPercent());
-
-                                        avgMark = avgMark + mark * percent / 100;
-                                    } else if (avgArray.get(i).equals("final")) {
-                                        mark = Double.valueOf(markListItem.getFinalExamMark());
-                                        percent = Double.valueOf(CourseCustomize.getCustomFinalPercent());
-
-                                        avgMark = avgMark + mark * percent / 100;
-                                    }
-                                }
-
-                                if (avgArray.size() != 0) {
-                                    addMark = addMark + (avgMark / avgArray.size());
-                                }
-
-                                markListItem.setMarksOutOf100(String.valueOf(formatter.format(addMark)));
-
-                                Log.d("Query", markListItem.getMarksOutOf100());
+                                markListItem.setMarksOutOf100(markOutOf100Final);
                                 params.put("marks_out_of_100", markListItem.getMarksOutOf100());
 
                                 return params;
@@ -367,8 +314,86 @@ public class MarkSheetAdapter extends RecyclerView.Adapter<MarkSheetAdapter.Mark
                         MySingleton.getMyInstance(context).addToRequestQueue(updateResultRequest);
                     }
                 });
+
+                closeBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        bottomSheetDialog.cancel();
+                    }
+                });
             }
         });
+    }
+
+    private String doTheCalculation(String newTT1, String newTT2, String newAttendance, String newViva, String newFinal) {
+        double addMark = 0, avgMark = 0;
+        double mark, percent;
+
+        Log.d("Query",  newTT1 + " " + newTT2 + " " + newAttendance + " " + newViva + " " + newFinal);
+
+        for (int i = 0; i < nonAvgArray.size(); i++) {
+            if (nonAvgArray.get(i).equals("tt1")) {
+                mark = Double.valueOf(newTT1);
+                percent = Double.valueOf(CourseCustomize.getCustomTT1Percent());
+
+                addMark = addMark + mark * percent / 100;
+            } else if (nonAvgArray.get(i).equals("tt2")) {
+                mark = Double.valueOf(newTT2);
+                percent = Double.valueOf(CourseCustomize.getCustomTT2Percent());
+
+                addMark = addMark + mark * percent / 100;
+            } else if (nonAvgArray.get(i).equals("presence")) {
+                mark = Double.valueOf(newAttendance);
+                percent = Double.valueOf(CourseCustomize.getCustomAttendancePercent());
+
+                addMark = addMark + mark * percent / 100;
+            } else if (nonAvgArray.get(i).equals("viva")) {
+                mark = Double.valueOf(newViva);
+                percent = Double.valueOf(CourseCustomize.getCustomVivaPercent());
+
+                addMark = addMark + mark * percent / 100;
+            } else if (nonAvgArray.get(i).equals("final")) {
+                mark = Double.valueOf(newFinal);
+                percent = Double.valueOf(CourseCustomize.getCustomFinalPercent());
+
+                addMark = addMark + mark * percent / 100;
+            }
+        }
+
+        for (int i = 0; i < avgArray.size(); i++) {
+            if (avgArray.get(i).equals("tt1")) {
+                mark = Double.valueOf(newTT1);
+                percent = Double.valueOf(CourseCustomize.getCustomTT1Percent());
+
+                avgMark = avgMark + mark * percent / 100;
+            } else if (avgArray.get(i).equals("tt2")) {
+                mark = Double.valueOf(newTT2);
+                percent = Double.valueOf(CourseCustomize.getCustomTT2Percent());
+
+                avgMark = avgMark + mark * percent / 100;
+            } else if (avgArray.get(i).equals("presence")) {
+                mark = Double.valueOf(newAttendance);
+                percent = Double.valueOf(CourseCustomize.getCustomAttendancePercent());
+
+                avgMark = avgMark + mark * percent / 100;
+            } else if (avgArray.get(i).equals("viva")) {
+                mark = Double.valueOf(newViva);
+                percent = Double.valueOf(CourseCustomize.getCustomVivaPercent());
+
+                avgMark = avgMark + mark * percent / 100;
+            } else if (avgArray.get(i).equals("final")) {
+                mark = Double.valueOf(newFinal);
+                percent = Double.valueOf(CourseCustomize.getCustomFinalPercent());
+
+                avgMark = avgMark + mark * percent / 100;
+            }
+        }
+
+        if (avgArray.size() != 0) {
+            addMark = addMark + (avgMark / avgArray.size());
+        }
+
+        return String.valueOf(formatter.format(addMark));
     }
 
     @Override
