@@ -34,7 +34,6 @@ import java.util.Map;
 
 public class MarkSheetActivity extends AppCompatActivity {
 
-    private String examFullDataLoadUrl = ServerAddress.getMyServerAddress().concat("custom_full_exam_data_loader.php");
     private String markSheetLoader = ServerAddress.getMyServerAddress().concat("mark_sheet_loader.php");
 
     String courseID, teacherID, courseCode;
@@ -70,8 +69,6 @@ public class MarkSheetActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle(courseCode + " Result Sheet");
 
-        viewCustomCourseData();
-
         markSheetSearchView = (SearchView) findViewById(R.id.frag_searchView_mark_update);
         markSheetSearchEditText = (EditText) findViewById(R.id.search_src_text);
         markSheetCloseButton = (ImageView) findViewById(R.id.search_close_btn);
@@ -86,22 +83,52 @@ public class MarkSheetActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    JSONArray jsonArray = jsonObject.getJSONArray("mark_sheet_loader");
 
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject obj = jsonArray.getJSONObject(i);
+                    //Loads all Custom Course Exam data
+                    JSONArray jsonArray1 = jsonObject.getJSONArray("custom_full_exam_data_loader");
+                    JSONObject obj1 = jsonArray1.getJSONObject(0);
+
+                    boolean[] checkedAvgArray = new boolean[5];
+
+                    CourseCustomize.setCustomTT1Name(obj1.getString("custom_test1_name"));
+                    CourseCustomize.setCustomTT1Percent(obj1.getString("custom_test1_percent"));
+                    checkedAvgArray[0] = obj1.getString("custom_test1_avg_check").equals("1");
+
+                    CourseCustomize.setCustomTT2Name(obj1.getString("custom_test2_name"));
+                    CourseCustomize.setCustomTT2Percent(obj1.getString("custom_test2_percent"));
+                    checkedAvgArray[1] = obj1.getString("custom_test2_avg_check").equals("1");
+
+                    CourseCustomize.setCustomAttendanceName(obj1.getString("custom_attendance_name"));
+                    CourseCustomize.setCustomAttendancePercent(obj1.getString("custom_attendance_percent"));
+                    checkedAvgArray[2] = obj1.getString("custom_attendance_avg_check").equals("1");
+
+                    CourseCustomize.setCustomVivaName(obj1.getString("custom_viva_name"));
+                    CourseCustomize.setCustomVivaPercent(obj1.getString("custom_viva_percent"));
+                    checkedAvgArray[3] = obj1.getString("custom_viva_avg_check").equals("1");
+
+                    CourseCustomize.setCustomFinalName(obj1.getString("custom_final_name"));
+                    CourseCustomize.setCustomFinalPercent(obj1.getString("custom_final_percent"));
+                    checkedAvgArray[4] = obj1.getString("custom_final_avg_check").equals("1");
+
+                    CourseCustomize.setCheckedAvgArray(checkedAvgArray);
+
+                    //Loads all the Marks of each Student
+                    JSONArray jsonArray2 = jsonObject.getJSONArray("mark_sheet_loader");
+
+                    for (int i = 0; i < jsonArray2.length(); i++) {
+                        JSONObject obj2 = jsonArray2.getJSONObject(i);
 
                         MarkListItem markListItem = new MarkListItem();
 
-                        markListItem.setCourseRegID(obj.getString("course_reg_id"));
-                        markListItem.setRegNo(obj.getString("registration_no"));
-                        markListItem.setMarkSheetID(obj.getString("marksheet_id"));
-                        markListItem.setTermTest1_Mark(obj.getString("term_test_1"));
-                        markListItem.setTermTest2_Mark(obj.getString("term_test_2"));
-                        markListItem.setAttendanceMark(obj.getString("attendance"));
-                        markListItem.setVivaMark(obj.getString("viva"));
-                        markListItem.setFinalExamMark(obj.getString("final_exam"));
-                        markListItem.setMarksOutOf100(obj.getString("marks_out_of_100"));
+                        markListItem.setCourseRegID(obj2.getString("course_reg_id"));
+                        markListItem.setRegNo(obj2.getString("registration_no"));
+                        markListItem.setMarkSheetID(obj2.getString("marksheet_id"));
+                        markListItem.setTermTest1_Mark(obj2.getString("term_test_1"));
+                        markListItem.setTermTest2_Mark(obj2.getString("term_test_2"));
+                        markListItem.setAttendanceMark(obj2.getString("attendance"));
+                        markListItem.setVivaMark(obj2.getString("viva"));
+                        markListItem.setFinalExamMark(obj2.getString("final_exam"));
+                        markListItem.setMarksOutOf100(obj2.getString("marks_out_of_100"));
 
                         stdMarkList.add(markListItem);
                     }
@@ -110,7 +137,7 @@ public class MarkSheetActivity extends AppCompatActivity {
                     markSheetRecyclerView.setAdapter(markSheetAdapter);
 
                 } catch (JSONException e) {
-                    Toast.makeText(MarkSheetActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(MarkSheetActivity.this, response, Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
             }
@@ -170,113 +197,9 @@ public class MarkSheetActivity extends AppCompatActivity {
         });
     }
 
-    private void viewCustomCourseData() {
-
-        //Need to send this request from TeacherDashboard.java and bring here by Bundle.
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, examFullDataLoadUrl, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    JSONArray jsonArray = jsonObject.getJSONArray("custom_full_exam_data_loader");
-                    JSONObject obj = jsonArray.getJSONObject(0);
-
-                    boolean[] checkedAvgArray = new boolean[5];
-
-                    CourseCustomize.setCustomTT1Name(obj.getString("custom_test1_name"));
-                    CourseCustomize.setCustomTT1Percent(obj.getString("custom_test1_percent"));
-                    checkedAvgArray[0] = obj.getString("custom_test1_avg_check").equals("1");
-
-                    CourseCustomize.setCustomTT2Name(obj.getString("custom_test2_name"));
-                    CourseCustomize.setCustomTT2Percent(obj.getString("custom_test2_percent"));
-                    checkedAvgArray[1] = obj.getString("custom_test2_avg_check").equals("1");
-
-                    CourseCustomize.setCustomAttendanceName(obj.getString("custom_attendance_name"));
-                    CourseCustomize.setCustomAttendancePercent(obj.getString("custom_attendance_percent"));
-                    checkedAvgArray[2] = obj.getString("custom_attendance_avg_check").equals("1");
-
-                    CourseCustomize.setCustomVivaName(obj.getString("custom_viva_name"));
-                    CourseCustomize.setCustomVivaPercent(obj.getString("custom_viva_percent"));
-                    checkedAvgArray[3] = obj.getString("custom_viva_avg_check").equals("1");
-
-                    CourseCustomize.setCustomFinalName(obj.getString("custom_final_name"));
-                    CourseCustomize.setCustomFinalPercent(obj.getString("custom_final_percent"));
-                    checkedAvgArray[4] = obj.getString("custom_final_avg_check").equals("1");
-
-                    CourseCustomize.setCheckedAvgArray(checkedAvgArray);
-
-                } catch (JSONException e) {
-                    Toast.makeText(MarkSheetActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MarkSheetActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
-                error.printStackTrace();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-
-                params.put("course_id", courseID);
-
-                return params;
-            }
-        };
-
-        MySingleton.getMyInstance(MarkSheetActivity.this).addToRequestQueue(stringRequest);
-
-//        StringRequest stringRequestForAvgFunc = new StringRequest(Request.Method.POST, avgFunctionsUrl, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                try {
-//                    JSONObject jsonObject = new JSONObject(response);
-//                    JSONArray jsonArray = jsonObject.getJSONArray("avg_func_loader");
-//                    JSONObject obj = jsonArray.getJSONObject(0);
-//
-//                    boolean[] checkedAvgArray = new boolean[5];
-//
-//                    checkedAvgArray[0] = obj.getString("custom_test1_avg_check").equals("1");
-//                    checkedAvgArray[1] = obj.getString("custom_test2_avg_check").equals("1");
-//                    checkedAvgArray[2] = obj.getString("custom_attendance_avg_check").equals("1");
-//                    checkedAvgArray[3] = obj.getString("custom_viva_avg_check").equals("1");
-//                    checkedAvgArray[4] = obj.getString("custom_final_avg_check").equals("1");
-//
-//                    courseCustomize.setCheckedAvgArray(checkedAvgArray);
-//
-//                } catch (JSONException e) {
-//                    Toast.makeText(MarkSheetActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-//                    e.printStackTrace();
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(MarkSheetActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
-//                error.printStackTrace();
-//            }
-//        }) {
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                Map<String, String> params = new HashMap<>();
-//
-//                params.put("course_id", courseID);
-//
-//                return params;
-//            }
-//        };
-//
-//        MySingleton.getMyInstance(MarkSheetActivity.this).addToRequestQueue(stringRequestForAvgFunc);
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
-        viewCustomCourseData();
     }
 
     @Override

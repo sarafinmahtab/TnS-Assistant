@@ -95,6 +95,7 @@ public class TeacherActivity extends AppCompatActivity {
         userID = bundle.getString("user_id");
         fullName = bundle.getString("t_first_name") + " " + bundle.getString("t_last_name");
         imageURL = bundle.getString("display_picture");
+        imageURL = ServerAddress.getMyUploadServerAddress().concat(imageURL);
 
         getSupportActionBar().setTitle(String.format("%s Activity", bundle.getString("t_first_name")));
 

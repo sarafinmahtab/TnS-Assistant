@@ -84,6 +84,7 @@ public class StudentActivity extends AppCompatActivity {
         name = bundle.getString("s_first_name") + " " + bundle.getString("s_last_name");
         stdID = bundle.getString("student_id");
         stdImageURL = bundle.getString("std_display_picture");
+        stdImageURL = ServerAddress.getMyUploadServerAddress().concat(stdImageURL);
         userID = bundle.getString("user_id");
 
         stdName.setText(name);
