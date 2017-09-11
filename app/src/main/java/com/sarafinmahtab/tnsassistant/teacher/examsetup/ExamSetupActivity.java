@@ -1,11 +1,19 @@
 package com.sarafinmahtab.tnsassistant.teacher.examsetup;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +26,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.sarafinmahtab.tnsassistant.MySingleton;
 import com.sarafinmahtab.tnsassistant.R;
 import com.sarafinmahtab.tnsassistant.ServerAddress;
+import com.sarafinmahtab.tnsassistant.teacher.courselist.Course;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,9 +37,12 @@ import java.util.Map;
 
 public class ExamSetupActivity extends AppCompatActivity {
 
+    private String examDataLoadUrl = ServerAddress.getMyServerAddress().concat("custom_full_exam_data_loader.php");
+    private String avgFuncUpdateUrl = ServerAddress.getMyServerAddress().concat("avg_func_update.php");
+
     String courseID, teacherID, courseCode;
 
-    String examDataLoadUrl = ServerAddress.getMyServerAddress().concat("custom_exam_data_loader.php");
+    boolean[] checkedAvgArray = new boolean[5];
 
     String tt1LoadUrl = ServerAddress.getMyServerAddress().concat("custom_tt1_data_update.php");
     String tt2LoadUrl = ServerAddress.getMyServerAddress().concat("custom_tt2_data_update.php");
@@ -50,7 +62,6 @@ public class ExamSetupActivity extends AppCompatActivity {
     ImageButton customFinalBtn;
 
     Button avgFunction;
-
     TextView rulesResult;
 
     @Override
@@ -103,85 +114,440 @@ public class ExamSetupActivity extends AppCompatActivity {
         customTT1Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ExamSetupActivity.this, UpdateCustomExam.class);
+                View view = LayoutInflater.from(ExamSetupActivity.this).inflate(R.layout.update_custom_exam_dialog, null);
 
-                Bundle bundle = new Bundle();
-                bundle.putString("url", tt1LoadUrl);
-                bundle.putString("name", customTT1Name.getText().toString());
-                bundle.putString("percent", customTT1Percent.getText().toString());
-                bundle.putString("course_id", courseID);
-                bundle.putString("course_code", courseCode);
-                intent.putExtras(bundle);
+                final int width = ViewGroup.LayoutParams.MATCH_PARENT, height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                final Dialog bottomSheetDialog = new Dialog(ExamSetupActivity.this, R.style.MaterialDialogSheet);
+                bottomSheetDialog.setContentView(view);
+                bottomSheetDialog.setCancelable(false);
 
-                startActivity(intent);
+                if(bottomSheetDialog.getWindow() != null) {
+                    bottomSheetDialog.getWindow().setLayout(width, height);
+                    bottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+                    bottomSheetDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+                    bottomSheetDialog.show();
+                }
+
+                final TextView dialogHeader = (TextView) view.findViewById(R.id.update_custom_exam_dialog);
+                final Button updateBtn = (Button) view.findViewById(R.id.update_btn);
+                final ImageButton cancelBtn = (ImageButton) view.findViewById(R.id.cancel_btn);
+
+                final EditText ExamName = (EditText) view.findViewById(R.id.edit_custom_name);
+                final EditText ExamPercentage = (EditText) view.findViewById(R.id.edit_custom_percent);
+
+                ExamName.setText(CourseCustomize.getCustomTT1Name());
+                ExamPercentage.setText(CourseCustomize.getCustomTT1Percent());
+
+                updateBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        final String newName = ExamName.getText().toString();
+                        final String newPercent = ExamPercentage.getText().toString();
+
+                        StringRequest stringRequest = new StringRequest(Request.Method.POST, tt1LoadUrl, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                switch (response) {
+                                    case "success":
+                                        Toast.makeText(ExamSetupActivity.this, "Updated SuccessFully", Toast.LENGTH_LONG).show();
+
+                                        customTT1Name.setText(newName);
+                                        customTT1Name.setTextColor(Color.rgb(0, 113, 14));
+                                        CourseCustomize.setCustomTT1Name(newName);
+
+                                        customTT1Percent.setText(newPercent);
+                                        customTT1Percent.setTextColor(Color.rgb(0, 113, 14));
+                                        CourseCustomize.setCustomTT1Percent(newPercent);
+
+                                        bottomSheetDialog.cancel();
+                                        break;
+                                    case "failed":
+                                        Toast.makeText(ExamSetupActivity.this, "Update Failed", Toast.LENGTH_LONG).show();
+                                        break;
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(ExamSetupActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                                error.printStackTrace();
+                            }
+                        }) {
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String, String> params = new HashMap<>();
+
+                                params.put("course_id", courseID);
+                                params.put("custom_name", newName);
+                                params.put("custom_percent", newPercent);
+
+                                return params;
+                            }
+                        };
+
+                        MySingleton.getMyInstance(ExamSetupActivity.this).addToRequestQueue(stringRequest);
+                    }
+                });
+
+                cancelBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        bottomSheetDialog.cancel();
+                    }
+                });
             }
         });
 
         customTT2Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ExamSetupActivity.this, UpdateCustomExam.class);
+                View view = LayoutInflater.from(ExamSetupActivity.this).inflate(R.layout.update_custom_exam_dialog, null);
 
-                Bundle bundle = new Bundle();
-                bundle.putString("url", tt2LoadUrl);
-                bundle.putString("name", customTT2Name.getText().toString());
-                bundle.putString("percent", customTT2Percent.getText().toString());
-                bundle.putString("course_id", courseID);
-                bundle.putString("course_code", courseCode);
-                intent.putExtras(bundle);
+                final int width = ViewGroup.LayoutParams.MATCH_PARENT, height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                final Dialog bottomSheetDialog = new Dialog(ExamSetupActivity.this, R.style.MaterialDialogSheet);
+                bottomSheetDialog.setContentView(view);
+                bottomSheetDialog.setCancelable(false);
 
-                startActivity(intent);
+                if(bottomSheetDialog.getWindow() != null) {
+                    bottomSheetDialog.getWindow().setLayout(width, height);
+                    bottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+                    bottomSheetDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+                    bottomSheetDialog.show();
+                }
+
+                final TextView dialogHeader = (TextView) view.findViewById(R.id.update_custom_exam_dialog);
+                final Button updateBtn = (Button) view.findViewById(R.id.update_btn);
+                final ImageButton cancelBtn = (ImageButton) view.findViewById(R.id.cancel_btn);
+
+                final EditText ExamName = (EditText) view.findViewById(R.id.edit_custom_name);
+                final EditText ExamPercentage = (EditText) view.findViewById(R.id.edit_custom_percent);
+
+                ExamName.setText(CourseCustomize.getCustomTT2Name());
+                ExamPercentage.setText(CourseCustomize.getCustomTT2Percent());
+
+                updateBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        final String newName = ExamName.getText().toString();
+                        final String newPercent = ExamPercentage.getText().toString();
+
+                        StringRequest stringRequest = new StringRequest(Request.Method.POST, tt2LoadUrl, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                switch (response) {
+                                    case "success":
+                                        Toast.makeText(ExamSetupActivity.this, "Updated SuccessFully", Toast.LENGTH_LONG).show();
+
+                                        customTT2Name.setText(newName);
+                                        customTT2Name.setTextColor(Color.rgb(0, 113, 14));
+                                        CourseCustomize.setCustomTT2Name(newName);
+
+                                        customTT2Percent.setText(newPercent);
+                                        customTT2Percent.setTextColor(Color.rgb(0, 113, 14));
+                                        CourseCustomize.setCustomTT2Percent(newPercent);
+
+                                        bottomSheetDialog.cancel();
+                                        break;
+                                    case "failed":
+                                        Toast.makeText(ExamSetupActivity.this, "Update Failed", Toast.LENGTH_LONG).show();
+                                        break;
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(ExamSetupActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                                error.printStackTrace();
+                            }
+                        }) {
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String, String> params = new HashMap<>();
+
+                                params.put("course_id", courseID);
+                                params.put("custom_name", newName);
+                                params.put("custom_percent", newPercent);
+
+                                return params;
+                            }
+                        };
+
+                        MySingleton.getMyInstance(ExamSetupActivity.this).addToRequestQueue(stringRequest);
+                    }
+                });
+
+                cancelBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        bottomSheetDialog.cancel();
+                    }
+                });
             }
         });
 
         customAttendanceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ExamSetupActivity.this, UpdateCustomExam.class);
+                View view = LayoutInflater.from(ExamSetupActivity.this).inflate(R.layout.update_custom_exam_dialog, null);
 
-                Bundle bundle = new Bundle();
-                bundle.putString("url", attendanceLoadUrl);
-                bundle.putString("name", customAttendanceName.getText().toString());
-                bundle.putString("percent", customAttendancePercent.getText().toString());
-                bundle.putString("course_id", courseID);
-                bundle.putString("course_code", courseCode);
-                intent.putExtras(bundle);
+                final int width = ViewGroup.LayoutParams.MATCH_PARENT, height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                final Dialog bottomSheetDialog = new Dialog(ExamSetupActivity.this, R.style.MaterialDialogSheet);
+                bottomSheetDialog.setContentView(view);
+                bottomSheetDialog.setCancelable(false);
 
-                startActivity(intent);
+                if(bottomSheetDialog.getWindow() != null) {
+                    bottomSheetDialog.getWindow().setLayout(width, height);
+                    bottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+                    bottomSheetDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+                    bottomSheetDialog.show();
+                }
+
+                final TextView dialogHeader = (TextView) view.findViewById(R.id.update_custom_exam_dialog);
+                final Button updateBtn = (Button) view.findViewById(R.id.update_btn);
+                final ImageButton cancelBtn = (ImageButton) view.findViewById(R.id.cancel_btn);
+
+                final EditText ExamName = (EditText) view.findViewById(R.id.edit_custom_name);
+                final EditText ExamPercentage = (EditText) view.findViewById(R.id.edit_custom_percent);
+
+                ExamName.setText(CourseCustomize.getCustomAttendanceName());
+                ExamPercentage.setText(CourseCustomize.getCustomAttendancePercent());
+
+                updateBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        final String newName = ExamName.getText().toString();
+                        final String newPercent = ExamPercentage.getText().toString();
+
+                        StringRequest stringRequest = new StringRequest(Request.Method.POST, attendanceLoadUrl, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                switch (response) {
+                                    case "success":
+                                        Toast.makeText(ExamSetupActivity.this, "Updated SuccessFully", Toast.LENGTH_LONG).show();
+
+                                        customAttendanceName.setText(newName);
+                                        customAttendanceName.setTextColor(Color.rgb(0, 113, 14));
+                                        CourseCustomize.setCustomAttendanceName(newName);
+
+                                        customAttendancePercent.setText(newPercent);
+                                        customAttendancePercent.setTextColor(Color.rgb(0, 113, 14));
+                                        CourseCustomize.setCustomAttendancePercent(newPercent);
+
+                                        bottomSheetDialog.cancel();
+                                        break;
+                                    case "failed":
+                                        Toast.makeText(ExamSetupActivity.this, "Update Failed", Toast.LENGTH_LONG).show();
+                                        break;
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(ExamSetupActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                                error.printStackTrace();
+                            }
+                        }) {
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String, String> params = new HashMap<>();
+
+                                params.put("course_id", courseID);
+                                params.put("custom_name", newName);
+                                params.put("custom_percent", newPercent);
+
+                                return params;
+                            }
+                        };
+
+                        MySingleton.getMyInstance(ExamSetupActivity.this).addToRequestQueue(stringRequest);
+                    }
+                });
+
+                cancelBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        bottomSheetDialog.cancel();
+                    }
+                });
             }
         });
 
         customVivaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ExamSetupActivity.this, UpdateCustomExam.class);
+                View view = LayoutInflater.from(ExamSetupActivity.this).inflate(R.layout.update_custom_exam_dialog, null);
 
-                Bundle bundle = new Bundle();
-                bundle.putString("url", vivaLoadUrl);
-                bundle.putString("name", customVivaName.getText().toString());
-                bundle.putString("percent", customVivaPercent.getText().toString());
-                bundle.putString("course_id", courseID);
-                bundle.putString("course_code", courseCode);
-                intent.putExtras(bundle);
+                final int width = ViewGroup.LayoutParams.MATCH_PARENT, height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                final Dialog bottomSheetDialog = new Dialog(ExamSetupActivity.this, R.style.MaterialDialogSheet);
+                bottomSheetDialog.setContentView(view);
+                bottomSheetDialog.setCancelable(false);
 
-                startActivity(intent);
+                if(bottomSheetDialog.getWindow() != null) {
+                    bottomSheetDialog.getWindow().setLayout(width, height);
+                    bottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+                    bottomSheetDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+                    bottomSheetDialog.show();
+                }
+
+                final TextView dialogHeader = (TextView) view.findViewById(R.id.update_custom_exam_dialog);
+                final Button updateBtn = (Button) view.findViewById(R.id.update_btn);
+                final ImageButton cancelBtn = (ImageButton) view.findViewById(R.id.cancel_btn);
+
+                final EditText ExamName = (EditText) view.findViewById(R.id.edit_custom_name);
+                final EditText ExamPercentage = (EditText) view.findViewById(R.id.edit_custom_percent);
+
+                ExamName.setText(CourseCustomize.getCustomVivaName());
+                ExamPercentage.setText(CourseCustomize.getCustomVivaPercent());
+
+                updateBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        final String newName = ExamName.getText().toString();
+                        final String newPercent = ExamPercentage.getText().toString();
+
+                        StringRequest stringRequest = new StringRequest(Request.Method.POST, vivaLoadUrl, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                switch (response) {
+                                    case "success":
+                                        Toast.makeText(ExamSetupActivity.this, "Updated SuccessFully", Toast.LENGTH_LONG).show();
+
+                                        customVivaName.setText(newName);
+                                        customVivaName.setTextColor(Color.rgb(0, 113, 14));
+                                        CourseCustomize.setCustomVivaName(newName);
+
+                                        customVivaPercent.setText(newPercent);
+                                        customVivaPercent.setTextColor(Color.rgb(0, 113, 14));
+                                        CourseCustomize.setCustomVivaPercent(newPercent);
+
+                                        bottomSheetDialog.cancel();
+                                        break;
+                                    case "failed":
+                                        Toast.makeText(ExamSetupActivity.this, "Update Failed", Toast.LENGTH_LONG).show();
+                                        break;
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(ExamSetupActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                                error.printStackTrace();
+                            }
+                        }) {
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String, String> params = new HashMap<>();
+
+                                params.put("course_id", courseID);
+                                params.put("custom_name", newName);
+                                params.put("custom_percent", newPercent);
+
+                                return params;
+                            }
+                        };
+
+                        MySingleton.getMyInstance(ExamSetupActivity.this).addToRequestQueue(stringRequest);
+                    }
+                });
+
+                cancelBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        bottomSheetDialog.cancel();
+                    }
+                });
             }
         });
 
         customFinalBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ExamSetupActivity.this, UpdateCustomExam.class);
+                View view = LayoutInflater.from(ExamSetupActivity.this).inflate(R.layout.update_custom_exam_dialog, null);
 
-                Bundle bundle = new Bundle();
-                bundle.putString("url", finalLoadUrl);
-                bundle.putString("name", customFinalName.getText().toString());
-                bundle.putString("percent", customFinalPercent.getText().toString());
-                bundle.putString("course_id", courseID);
-                bundle.putString("course_code", courseCode);
-                intent.putExtras(bundle);
+                final int width = ViewGroup.LayoutParams.MATCH_PARENT, height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                final Dialog bottomSheetDialog = new Dialog(ExamSetupActivity.this, R.style.MaterialDialogSheet);
+                bottomSheetDialog.setContentView(view);
+                bottomSheetDialog.setCancelable(false);
 
-                startActivity(intent);
+                if(bottomSheetDialog.getWindow() != null) {
+                    bottomSheetDialog.getWindow().setLayout(width, height);
+                    bottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+                    bottomSheetDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+                    bottomSheetDialog.show();
+                }
+
+                final TextView dialogHeader = (TextView) view.findViewById(R.id.update_custom_exam_dialog);
+                final Button updateBtn = (Button) view.findViewById(R.id.update_btn);
+                final ImageButton cancelBtn = (ImageButton) view.findViewById(R.id.cancel_btn);
+
+                final EditText ExamName = (EditText) view.findViewById(R.id.edit_custom_name);
+                final EditText ExamPercentage = (EditText) view.findViewById(R.id.edit_custom_percent);
+
+                ExamName.setText(CourseCustomize.getCustomFinalName());
+                ExamPercentage.setText(CourseCustomize.getCustomFinalPercent());
+
+                updateBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        final String newName = ExamName.getText().toString();
+                        final String newPercent = ExamPercentage.getText().toString();
+
+                        StringRequest stringRequest = new StringRequest(Request.Method.POST, finalLoadUrl, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                switch (response) {
+                                    case "success":
+                                        Toast.makeText(ExamSetupActivity.this, "Updated SuccessFully", Toast.LENGTH_LONG).show();
+
+                                        customFinalName.setText(newName);
+                                        customFinalName.setTextColor(Color.rgb(0, 113, 14));
+                                        CourseCustomize.setCustomFinalName(newName);
+
+                                        customFinalPercent.setText(newPercent);
+                                        customFinalPercent.setTextColor(Color.rgb(0, 113, 14));
+                                        CourseCustomize.setCustomFinalPercent(newPercent);
+
+                                        bottomSheetDialog.cancel();
+                                        break;
+                                    case "failed":
+                                        Toast.makeText(ExamSetupActivity.this, "Update Failed", Toast.LENGTH_LONG).show();
+                                        break;
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(ExamSetupActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                                error.printStackTrace();
+                            }
+                        }) {
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String, String> params = new HashMap<>();
+
+                                params.put("course_id", courseID);
+                                params.put("custom_name", newName);
+                                params.put("custom_percent", newPercent);
+
+                                return params;
+                            }
+                        };
+
+                        MySingleton.getMyInstance(ExamSetupActivity.this).addToRequestQueue(stringRequest);
+                    }
+                });
+
+                cancelBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        bottomSheetDialog.cancel();
+                    }
+                });
             }
         });
 
@@ -190,17 +556,117 @@ public class ExamSetupActivity extends AppCompatActivity {
         avgFunction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ExamSetupActivity.this, AvgFuncCheck.class);
+                View view = LayoutInflater.from(ExamSetupActivity.this).inflate(R.layout.avg_func_check_dialog, null);
 
-                Bundle bundle = new Bundle();
-                bundle.putString("url", vivaLoadUrl);
+                final int width = ViewGroup.LayoutParams.MATCH_PARENT, height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                final Dialog bottomSheetDialog = new Dialog(ExamSetupActivity.this, R.style.MaterialDialogSheet);
+                bottomSheetDialog.setContentView(view);
+                bottomSheetDialog.setCancelable(false);
 
-                bundle.putString("course_id", courseID);
-                bundle.putString("course_code", courseCode);
-                intent.putExtras(bundle);
-//                intent.putExtra("course_customize", courseCustomize);
+                if(bottomSheetDialog.getWindow() != null) {
+                    bottomSheetDialog.getWindow().setLayout(width, height);
+                    bottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+                    bottomSheetDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+                    bottomSheetDialog.show();
+                }
 
-                startActivity(intent);
+                final Button updateBtn = (Button) view.findViewById(R.id.update_btn2);
+                final ImageButton cancelBtn = (ImageButton) view.findViewById(R.id.cancel_btn2);
+
+                final CheckBox tt1CheckBox = (CheckBox) view.findViewById(R.id.tt1_check_avg);
+                final CheckBox tt2CheckBox = (CheckBox) view.findViewById(R.id.tt2_check_avg);
+                final CheckBox attendanceCheckBox = (CheckBox) view.findViewById(R.id.attendance_check_avg);
+                final CheckBox vivaCheckBox = (CheckBox) view.findViewById(R.id.viva_check_avg);
+                final CheckBox finalCheckBox = (CheckBox) view.findViewById(R.id.final_check_avg);
+
+                checkedAvgArray = CourseCustomize.getCheckedAvgArray();
+
+                tt1CheckBox.setChecked(checkedAvgArray[0]);
+                tt1CheckBox.setText(CourseCustomize.getCustomTT1Name());
+
+                tt2CheckBox.setChecked(checkedAvgArray[1]);
+                tt2CheckBox.setText(CourseCustomize.getCustomTT2Name());
+
+                attendanceCheckBox.setChecked(checkedAvgArray[2]);
+                attendanceCheckBox.setText(CourseCustomize.getCustomAttendanceName());
+
+                vivaCheckBox.setChecked(checkedAvgArray[3]);
+                vivaCheckBox.setText(CourseCustomize.getCustomVivaName());
+
+                finalCheckBox.setChecked(checkedAvgArray[4]);
+                finalCheckBox.setText(CourseCustomize.getCustomFinalName());
+
+                updateBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        StringRequest stringRequestForAvgUpdate = new StringRequest(Request.Method.POST, avgFuncUpdateUrl, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    String code = jsonObject.getString("code");
+
+                                    switch (code) {
+                                        case "success":
+
+                                            JSONArray jsonArray = jsonObject.getJSONArray("avg_func_loader");
+                                            JSONObject obj = jsonArray.getJSONObject(0);
+
+                                            checkedAvgArray[0] = obj.getString("custom_test1_avg_check").equals("1");
+                                            checkedAvgArray[1] = obj.getString("custom_test2_avg_check").equals("1");
+                                            checkedAvgArray[2] = obj.getString("custom_attendance_avg_check").equals("1");
+                                            checkedAvgArray[3] = obj.getString("custom_viva_avg_check").equals("1");
+                                            checkedAvgArray[4] = obj.getString("custom_final_avg_check").equals("1");
+
+                                            CourseCustomize.setCheckedAvgArray(checkedAvgArray);
+
+                                            Toast.makeText(ExamSetupActivity.this, "Updated Successfully", Toast.LENGTH_LONG).show();
+
+                                            bottomSheetDialog.cancel();
+                                            break;
+                                        case "failed":
+                                            Toast.makeText(ExamSetupActivity.this, "Update Failed!! Please Try Again", Toast.LENGTH_LONG).show();
+                                            break;
+                                    }
+                                } catch (JSONException e) {
+                                    Toast.makeText(ExamSetupActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                                    e.printStackTrace();
+                                }
+
+                                bottomSheetDialog.cancel();
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(ExamSetupActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                                error.printStackTrace();
+                            }
+                        }) {
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String, String> params = new HashMap<>();
+
+                                params.put("tt1_check_box", tt1CheckBox.isChecked() ? "1" : "0");
+                                params.put("tt2_check_box", tt2CheckBox.isChecked() ? "1" : "0");
+                                params.put("attendance_check_box", attendanceCheckBox.isChecked() ? "1" : "0");
+                                params.put("viva_check_box", vivaCheckBox.isChecked() ? "1" : "0");
+                                params.put("final_check_box", finalCheckBox.isChecked() ? "1" : "0");
+                                params.put("course_id", courseID);
+
+                                return params;
+                            }
+                        };
+
+                        MySingleton.getMyInstance(ExamSetupActivity.this).addToRequestQueue(stringRequestForAvgUpdate);
+                    }
+                });
+
+                cancelBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        bottomSheetDialog.cancel();
+                    }
+                });
             }
         });
     }
@@ -212,32 +678,44 @@ public class ExamSetupActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    JSONArray jsonArray = jsonObject.getJSONArray("custom_exam_data_loader");
+                    JSONArray jsonArray = jsonObject.getJSONArray("custom_full_exam_data_loader");
                     JSONObject obj = jsonArray.getJSONObject(0);
 
                     CourseCustomize.setCustomTT1Name(obj.getString("custom_test1_name"));
-                    customTT1Name.setText(CourseCustomize.getCustomTT1Name());
                     CourseCustomize.setCustomTT1Percent(obj.getString("custom_test1_percent"));
-                    customTT1Percent.setText(CourseCustomize.getCustomTT1Percent());
+                    checkedAvgArray[0] = obj.getString("custom_test1_avg_check").equals("1");
 
                     CourseCustomize.setCustomTT2Name(obj.getString("custom_test2_name"));
-                    customTT2Name.setText(CourseCustomize.getCustomTT2Name());
                     CourseCustomize.setCustomTT2Percent(obj.getString("custom_test2_percent"));
-                    customTT2Percent.setText(CourseCustomize.getCustomTT2Percent());
+                    checkedAvgArray[1] = obj.getString("custom_test2_avg_check").equals("1");
 
                     CourseCustomize.setCustomAttendanceName(obj.getString("custom_attendance_name"));
-                    customAttendanceName.setText(CourseCustomize.getCustomAttendanceName());
                     CourseCustomize.setCustomAttendancePercent(obj.getString("custom_attendance_percent"));
-                    customAttendancePercent.setText(CourseCustomize.getCustomAttendancePercent());
+                    checkedAvgArray[2] = obj.getString("custom_attendance_avg_check").equals("1");
 
                     CourseCustomize.setCustomVivaName(obj.getString("custom_viva_name"));
-                    customVivaName.setText(CourseCustomize.getCustomVivaName());
                     CourseCustomize.setCustomVivaPercent(obj.getString("custom_viva_percent"));
-                    customVivaPercent.setText(CourseCustomize.getCustomVivaPercent());
+                    checkedAvgArray[3] = obj.getString("custom_viva_avg_check").equals("1");
 
                     CourseCustomize.setCustomFinalName(obj.getString("custom_final_name"));
-                    customFinalName.setText(CourseCustomize.getCustomFinalName());
                     CourseCustomize.setCustomFinalPercent(obj.getString("custom_final_percent"));
+                    checkedAvgArray[4] = obj.getString("custom_final_avg_check").equals("1");
+
+                    CourseCustomize.setCheckedAvgArray(checkedAvgArray);
+
+                    customTT1Name.setText(CourseCustomize.getCustomTT1Name());
+                    customTT1Percent.setText(CourseCustomize.getCustomTT1Percent());
+
+                    customTT2Name.setText(CourseCustomize.getCustomTT2Name());
+                    customTT2Percent.setText(CourseCustomize.getCustomTT2Percent());
+
+                    customAttendanceName.setText(CourseCustomize.getCustomAttendanceName());
+                    customAttendancePercent.setText(CourseCustomize.getCustomAttendancePercent());
+
+                    customVivaName.setText(CourseCustomize.getCustomVivaName());
+                    customVivaPercent.setText(CourseCustomize.getCustomVivaPercent());
+
+                    customFinalName.setText(CourseCustomize.getCustomFinalName());
                     customFinalPercent.setText(CourseCustomize.getCustomFinalPercent());
 
                     rulesResult.setText("(" + CourseCustomize.getCustomTT1Name() + ")*" + CourseCustomize.getCustomTT1Percent() + "% + " +
@@ -274,8 +752,6 @@ public class ExamSetupActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-
-        callCustomCourseData();
     }
 
     @Override

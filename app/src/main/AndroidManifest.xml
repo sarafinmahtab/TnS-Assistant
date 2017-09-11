@@ -32,8 +32,6 @@
         <activity
             android:name=".teacher.marksheet.MarkSheetActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".teacher.examsetup.UpdateCustomExam" />
-        <activity android:name=".teacher.examsetup.AvgFuncCheck" />
         <activity android:name=".teacher.examsetup.ExamSetupActivity" />
     </application>
 

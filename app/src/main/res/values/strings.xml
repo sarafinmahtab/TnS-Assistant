@@ -81,6 +81,8 @@
     <string name="code">Code</string>
     <string name="email">Email</string>
     <string name="updated">Updated</string>
+    <string name="change_your_exam_hint">Change Your Exam Name and Percentage</string>
+    <string name="customize_exam">Customize Exam</string>
 
     <!--<string name="tns_font_family">sans-serif</string>-->
     <!--<string name="tns_font_family">sans-serif-condensed</string>-->
