@@ -16,7 +16,6 @@ import com.sarafinmahtab.tnsassistant.teacher.studentlist.StudentList;
 public class TeacherDashboard extends AppCompatActivity {
 
     String courseCode, courseID, teacherID;
-
     ImageButton students, sendMail, shareFiles, markSheet, examSetup;
 
     @Override
@@ -24,7 +23,7 @@ public class TeacherDashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_dashboard);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.activity_teacher_dashboard__toolbar);
+        Toolbar myToolbar = findViewById(R.id.activity_teacher_dashboard__toolbar);
         setSupportActionBar(myToolbar);
 
         myToolbar.setTitleTextColor(0xFFFFFFFF);
@@ -36,16 +35,18 @@ public class TeacherDashboard extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
 
+        //Bundle Datas
         courseCode = bundle.getString("course_code");
         courseID = bundle.getString("course_id");
         teacherID = bundle.getString("teacher_id");
         getSupportActionBar().setTitle("Dashboard: " + courseCode);
 
-        students = (ImageButton) findViewById(R.id.student_list);
-        sendMail = (ImageButton) findViewById(R.id.teacher_inbox);
-        shareFiles = (ImageButton) findViewById(R.id.share_files);
-        markSheet = (ImageButton) findViewById(R.id.result_sheet);
-        examSetup = (ImageButton) findViewById(R.id.exam_setup);
+        //Grid ImageButtons
+        students = findViewById(R.id.student_list);
+        sendMail = findViewById(R.id.teacher_inbox);
+        shareFiles = findViewById(R.id.share_files);
+        markSheet = findViewById(R.id.result_sheet);
+        examSetup = findViewById(R.id.exam_setup);
 
         students.setOnClickListener(new View.OnClickListener() {
             @Override

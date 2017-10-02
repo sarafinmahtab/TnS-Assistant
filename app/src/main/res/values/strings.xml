@@ -83,6 +83,10 @@
     <string name="updated">Updated</string>
     <string name="change_your_exam_hint">Change Your Exam Name and Percentage</string>
     <string name="customize_exam">Customize Exam</string>
+    <string name="dot">.</string>
+    <string name="click_load_button">Click Load Button to See Running Courses</string>
+    <string name="requesting_running_courses">Requesting Running Courses</string>
+    <string name="no_network_status">No Network Available. Please Turn on your Wifi or Mobile Data</string>
 
     <!--<string name="tns_font_family">sans-serif</string>-->
     <!--<string name="tns_font_family">sans-serif-condensed</string>-->

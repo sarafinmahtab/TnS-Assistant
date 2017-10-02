@@ -1,6 +1,8 @@
 package com.sarafinmahtab.tnsassistant.teacher;
 
-import android.app.ProgressDialog;
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
+import android.animation.ValueAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -53,17 +55,13 @@ public class TeacherActivity extends AppCompatActivity {
     String imageUploadURL = ServerAddress.getMyServerAddress().concat("teacher_pic_upload.php");
     String courseListURL = ServerAddress.getMyServerAddress().concat("generate_courses.php");
 
-//    String imageUploadURL = "http://192.168.43.65/TnSAssistant/teacher_pic_upload.php";
-//    String courseListURL = "http://192.168.43.65/TnSAssistant/generate_courses.php";
-
     String fullName, teacherID, userID, imageURL;
 
+    TextView loadCourseData;
     TextView name, codeName, designation, deptName, email;
     Button courseLoader, changeTeacherImage, chooseTeacherImage, uploadTeacherImage;
 
     ImageView teacherDisplayPic, teacherImageLoad;
-
-    ProgressDialog loadingDialog;
 
     private int IMG_REQUEST = 1;
     private Bitmap bitmap;
@@ -73,21 +71,25 @@ public class TeacherActivity extends AppCompatActivity {
     CourseListAdapter adapter;
     RecyclerView recyclerView;
 
+    ObjectAnimator waveOneAnimator, waveTwoAnimator, waveThreeAnimator;
+    TextView hangoutTvOne, hangoutTvTwo, hangoutTvThree;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.activity_teacher_toolbar);
+        Toolbar myToolbar = findViewById(R.id.activity_teacher_toolbar);
         setSupportActionBar(myToolbar);
 
         myToolbar.setTitleTextColor(0xFFFFFFFF);
 
-        name = (TextView) findViewById(R.id.teacher_name);
-        codeName = (TextView) findViewById(R.id.teacher_code);
-        designation = (TextView) findViewById(R.id.designation);
-        deptName = (TextView) findViewById(R.id.dept_name);
-        email = (TextView) findViewById(R.id.email_of_teacher);
+        name = findViewById(R.id.teacher_name);
+        codeName = findViewById(R.id.teacher_code);
+        designation = findViewById(R.id.designation);
+        deptName = findViewById(R.id.dept_name);
+        email = findViewById(R.id.email_of_teacher);
+        loadCourseData = findViewById(R.id.load_course_data);
 
         Bundle bundle = getIntent().getExtras();
 
@@ -105,20 +107,34 @@ public class TeacherActivity extends AppCompatActivity {
         deptName.setText(bundle.getString("dept_name"));
         email.setText(bundle.getString("email"));
 
-        if(!imageURL.equals("")) {
-            loadingDialog = ProgressDialog.show(this, "Please wait", "Loading " + bundle.getString("t_first_name") + " data", false, false);
+        //HangOut Animation
+        hangoutTvOne = findViewById(R.id.hangoutTvOne);
+        hangoutTvTwo = findViewById(R.id.hangoutTvTwo);
+        hangoutTvThree = findViewById(R.id.hangoutTvThree);
 
+        hangoutTvOne.setVisibility(View.GONE);
+        hangoutTvTwo.setVisibility(View.GONE);
+        hangoutTvThree.setVisibility(View.GONE);
+
+        if(!imageURL.equals("")) {
             loadDisplayImage();
         }
 
         displayImageUpload();
 
-        courseLoader = (Button) findViewById(R.id.course_loader);
+        courseLoader = findViewById(R.id.course_loader);
         courseLoader.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        recyclerView = (RecyclerView) findViewById(R.id.cousres_list);
+                        loadCourseData.setText(R.string.requesting_running_courses);
+                        hangoutTvOne.setVisibility(View.VISIBLE);
+                        hangoutTvTwo.setVisibility(View.VISIBLE);
+                        hangoutTvThree.setVisibility(View.VISIBLE);
+
+                        waveAnimation();
+
+                        recyclerView = findViewById(R.id.courses_list);
                         recyclerView.setHasFixedSize(true);
                         recyclerView.setLayoutManager(new LinearLayoutManager(TeacherActivity.this));
 
@@ -131,19 +147,16 @@ public class TeacherActivity extends AppCompatActivity {
     }
 
     private void loadDisplayImage() {
-        teacherDisplayPic = (ImageView) findViewById(R.id.teacher_display_pic);
+        teacherDisplayPic = findViewById(R.id.teacher_display_pic);
 
         ImageRequest imageLoadRequest = new ImageRequest(imageURL, new Response.Listener<Bitmap>() {
             @Override
             public void onResponse(Bitmap response) {
-                loadingDialog.dismiss();
                 teacherDisplayPic.setImageBitmap(response);
             }
         }, 0, 0, ImageView.ScaleType.CENTER_INSIDE, null, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                loadingDialog.dismiss();
-                Toast.makeText(TeacherActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
                 error.printStackTrace();
             }
         });
@@ -152,7 +165,7 @@ public class TeacherActivity extends AppCompatActivity {
     }
 
     private void displayImageUpload() {
-        changeTeacherImage = (Button) findViewById(R.id.change_teacher_image);
+        changeTeacherImage = findViewById(R.id.change_teacher_image);
 
         changeTeacherImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,7 +175,7 @@ public class TeacherActivity extends AppCompatActivity {
                 LayoutInflater inflater = LayoutInflater.from(TeacherActivity.this);
                 final View customView = inflater.inflate(R.layout.upload_image_dialog_layout, null);
 
-                chooseTeacherImage = (Button) customView.findViewById(R.id.teacher_choose_btn);
+                chooseTeacherImage = customView.findViewById(R.id.teacher_choose_btn);
                 chooseTeacherImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -170,9 +183,9 @@ public class TeacherActivity extends AppCompatActivity {
                     }
                 });
 
-                teacherImageLoad = (ImageView) customView.findViewById(R.id.teacher_image_load);
+                teacherImageLoad = customView.findViewById(R.id.teacher_image_load);
 
-                uploadTeacherImage = (Button) customView.findViewById(R.id.teacher_upload_btn);
+                uploadTeacherImage = customView.findViewById(R.id.teacher_upload_btn);
                 uploadTeacherImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -225,24 +238,20 @@ public class TeacherActivity extends AppCompatActivity {
 
     //By Clicking On Upload Button
     private void uploadImage() {
-        final ProgressDialog uploadProgressDialog = ProgressDialog.show(this,"Uploading...", "Please wait...", false, false);
-
         StringRequest imageUploadStringRequest = new StringRequest(Request.Method.POST, imageUploadURL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        uploadProgressDialog.dismiss();
                         imageUploaded = true;
                         Toast.makeText(TeacherActivity.this, response, Toast.LENGTH_LONG).show();
                     }
                 }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        uploadProgressDialog.dismiss();
-                        Toast.makeText(TeacherActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
-                        error.printStackTrace();
-                    }
-                }) {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(TeacherActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                error.printStackTrace();
+            }
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new Hashtable<>();
@@ -277,16 +286,40 @@ public class TeacherActivity extends AppCompatActivity {
         return Base64.encodeToString(imgBytes, Base64.DEFAULT);
     }
 
+    //HangOut Animation
+    public void waveAnimation() {
+        PropertyValuesHolder tvOne_Y = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, -40.0f);
+        PropertyValuesHolder tvOne_X = PropertyValuesHolder.ofFloat(View.TRANSLATION_X, 0);
+        waveOneAnimator = ObjectAnimator.ofPropertyValuesHolder(hangoutTvOne, tvOne_X, tvOne_Y);
+        waveOneAnimator.setRepeatCount(-1);
+        waveOneAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        waveOneAnimator.setDuration(300);
+        waveOneAnimator.start();
+
+        PropertyValuesHolder tvTwo_Y = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, -40.0f);
+        PropertyValuesHolder tvTwo_X = PropertyValuesHolder.ofFloat(View.TRANSLATION_X, 0);
+        waveTwoAnimator = ObjectAnimator.ofPropertyValuesHolder(hangoutTvTwo, tvTwo_X, tvTwo_Y);
+        waveTwoAnimator.setRepeatCount(-1);
+        waveTwoAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        waveTwoAnimator.setDuration(300);
+        waveTwoAnimator.setStartDelay(100);
+        waveTwoAnimator.start();
+
+        PropertyValuesHolder tvThree_Y = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, -40.0f);
+        PropertyValuesHolder tvThree_X = PropertyValuesHolder.ofFloat(View.TRANSLATION_X, 0);
+        waveThreeAnimator = ObjectAnimator.ofPropertyValuesHolder(hangoutTvThree, tvThree_X, tvThree_Y);
+        waveThreeAnimator.setRepeatCount(-1);
+        waveThreeAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        waveThreeAnimator.setDuration(300);
+        waveThreeAnimator.setStartDelay(200);
+        waveThreeAnimator.start();
+    }
+
     //By Clicking On Load Button
     private void loadCourseData() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading Courses!!");
-        progressDialog.show();
-
         StringRequest stringRequestJSONArray = new StringRequest(Request.Method.POST, courseListURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                progressDialog.dismiss();
 
                 try {
                     JSONObject jsonObject = new JSONObject(response);
@@ -303,18 +336,31 @@ public class TeacherActivity extends AppCompatActivity {
                         listItem.add(courses);
                     }
 
+                    loadCourseData.setVisibility(View.GONE);
+                    hangoutTvOne.setVisibility(View.GONE);
+                    hangoutTvTwo.setVisibility(View.GONE);
+                    hangoutTvThree.setVisibility(View.GONE);
+
                     adapter = new CourseListAdapter(listItem, TeacherActivity.this);
                     recyclerView.setAdapter(adapter);
                 } catch (JSONException e) {
-                    Toast.makeText(TeacherActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    hangoutTvOne.setVisibility(View.GONE);
+                    hangoutTvTwo.setVisibility(View.GONE);
+                    hangoutTvThree.setVisibility(View.GONE);
+
+                    loadCourseData.setText(e.getMessage());
                     e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                progressDialog.dismiss();
-                Toast.makeText(TeacherActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                hangoutTvOne.setVisibility(View.GONE);
+                hangoutTvTwo.setVisibility(View.GONE);
+                hangoutTvThree.setVisibility(View.GONE);
+
+                loadCourseData.setText(R.string.no_network_status);
+
                 error.printStackTrace();
             }
         }) {

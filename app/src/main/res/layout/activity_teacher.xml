@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     android:background="@color/colorAppBackground"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.sarafinmahtab.tnsassistant.teacher.TeacherActivity" >
+    tools:context="com.sarafinmahtab.tnsassistant.teacher.TeacherActivity"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="0dp">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/activity_teacher_toolbar"
@@ -26,6 +28,8 @@
         android:paddingBottom="4dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:paddingTop="2dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -36,11 +40,34 @@
         tools:layout_conversion_absoluteY="0dp" />
 
     <TextView
-        android:id="@+id/email_of_teacher"
-        android:layout_width="wrap_content"
+        android:id="@+id/teacher_name"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/colorAppBackground"
+        android:fontFamily="@string/tns_font_family"
+        android:hint="@string/teacher_s_name"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorTnSText"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/email_of_teacher"
+        app:layout_constraintRight_toRightOf="@+id/email_of_teacher"
+        app:layout_constraintTop_toBottomOf="@+id/activity_teacher_toolbar"
+        tools:layout_conversion_absoluteHeight="21dp"
+        tools:layout_conversion_absoluteWidth="129dp"
+        tools:layout_conversion_absoluteX="127dp"
+        tools:layout_conversion_absoluteY="22dp" />
+
+    <TextView
+        android:id="@+id/email_of_teacher"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
         android:fontFamily="@string/tns_font_family"
         android:hint="@string/email"
         android:textAlignment="viewStart"
@@ -53,14 +80,16 @@
         tools:layout_conversion_absoluteHeight="16dp"
         tools:layout_conversion_absoluteWidth="34dp"
         tools:layout_conversion_absoluteX="127dp"
-        tools:layout_conversion_absoluteY="43dp" />
+        tools:layout_conversion_absoluteY="43dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <TextView
         android:id="@+id/teacher_code"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
         android:fontFamily="@string/tns_font_family"
         android:hint="@string/code"
         android:textAlignment="viewStart"
@@ -73,34 +102,16 @@
         tools:layout_conversion_absoluteHeight="21dp"
         tools:layout_conversion_absoluteWidth="41dp"
         tools:layout_conversion_absoluteX="127dp"
-        tools:layout_conversion_absoluteY="60dp" />
-
-    <TextView
-        android:id="@+id/teacher_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="12dp"
-        android:fontFamily="@string/tns_font_family"
-        android:hint="@string/teacher_s_name"
-        android:textAlignment="viewStart"
-        android:textColor="@color/colorTnSText"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:background="@color/colorAppBackground"
-        app:layout_constraintLeft_toLeftOf="@+id/email_of_teacher"
-        app:layout_constraintTop_toBottomOf="@+id/activity_teacher_toolbar"
-        tools:layout_conversion_absoluteHeight="21dp"
-        tools:layout_conversion_absoluteWidth="129dp"
-        tools:layout_conversion_absoluteX="127dp"
-        tools:layout_conversion_absoluteY="22dp" />
+        tools:layout_conversion_absoluteY="60dp"
+        app:layout_constraintRight_toRightOf="@+id/designation"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <TextView
         android:id="@+id/designation"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginEnd="8dp"
         android:fontFamily="@string/tns_font_family"
         android:hint="@string/desig"
         android:textAlignment="viewStart"
@@ -112,11 +123,12 @@
         tools:layout_conversion_absoluteHeight="21dp"
         tools:layout_conversion_absoluteWidth="44dp"
         tools:layout_conversion_absoluteX="127dp"
-        tools:layout_conversion_absoluteY="81dp" />
+        tools:layout_conversion_absoluteY="81dp"
+        app:layout_constraintRight_toRightOf="@+id/dept_name" />
 
     <TextView
         android:id="@+id/dept_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
@@ -131,14 +143,20 @@
         tools:layout_conversion_absoluteHeight="21dp"
         tools:layout_conversion_absoluteWidth="37dp"
         tools:layout_conversion_absoluteX="180dp"
-        tools:layout_conversion_absoluteY="81dp" />
+        tools:layout_conversion_absoluteY="81dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toTopOf="@+id/teacher_details"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/change_teacher_image"
         android:layout_width="0dp"
         android:layout_height="30dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@color/colorTnSPrimary"
         android:fontFamily="@string/tns_font_family"
         android:text="@string/upload_image"
@@ -158,9 +176,10 @@
         android:id="@+id/teacher_details"
         android:layout_width="0dp"
         android:layout_height="30dp"
-        android:layout_marginBottom="0dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@color/colorTnSPrimary"
         android:fontFamily="@string/tns_font_family"
         android:text="@string/update_details"
@@ -180,9 +199,11 @@
         android:id="@+id/course_list_header"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginEnd="1dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/border"
         android:fontFamily="@string/tns_font_family"
         android:text="@string/running_courses"
@@ -199,6 +220,8 @@
         android:layout_height="0dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:background="@color/colorTnSPrimary"
         android:fontFamily="@string/tns_font_family"
         android:text="@string/load"
@@ -211,7 +234,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/cousres_list"
+        android:id="@+id/courses_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
@@ -224,5 +247,43 @@
         app:layout_constraintRight_toRightOf="@+id/course_loader"
         app:layout_constraintTop_toBottomOf="@+id/course_list_header"
         app:layout_constraintVertical_bias="0.00999999" />
+
+    <TextView
+        android:id="@+id/load_course_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorAppBackground"
+        android:fontFamily="@string/tns_font_family"
+        android:text="@string/click_load_button"
+        android:textColor="@color/colorTnSText"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintLeft_toLeftOf="@+id/course_list_header"
+        app:layout_constraintRight_toRightOf="@+id/course_loader"
+        app:layout_constraintTop_toBottomOf="@+id/course_list_header"
+        app:layout_constraintVertical_bias="0.365" />
+
+    <RelativeLayout
+        android:id="@+id/waveAnimation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintLeft_toLeftOf="@+id/course_list_header"
+        app:layout_constraintRight_toRightOf="@+id/course_loader"
+        app:layout_constraintTop_toBottomOf="@+id/course_list_header"
+        app:layout_constraintVertical_bias="0.505">
+
+        <include layout="@layout/activity_hangout_dot_anim" />
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
