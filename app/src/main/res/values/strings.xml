@@ -87,6 +87,15 @@
     <string name="click_load_button">Click Load Button to See Running Courses</string>
     <string name="requesting_running_courses">Requesting Running Courses</string>
     <string name="no_network_status">No Network Available. Please Turn on your Wifi or Mobile Data</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="check_in_your_profile">*** Please check in your Profile ***</string>
+    <string name="login_success">Login is Successful</string>
+    <string name="have_not_checked">You haven\'t checked any profile yet!</string>
 
     <!--<string name="tns_font_family">sans-serif</string>-->
     <!--<string name="tns_font_family">sans-serif-condensed</string>-->

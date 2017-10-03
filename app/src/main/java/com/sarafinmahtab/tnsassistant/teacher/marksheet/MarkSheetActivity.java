@@ -1,5 +1,8 @@
 package com.sarafinmahtab.tnsassistant.teacher.marksheet;
 
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
+import android.animation.ValueAnimator;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +14,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -46,12 +50,15 @@ public class MarkSheetActivity extends AppCompatActivity {
     EditText markSheetSearchEditText;
     ImageView markSheetCloseButton;
 
+    ObjectAnimator waveOneAnimator, waveTwoAnimator, waveThreeAnimator;
+    TextView hangoutTvOne, hangoutTvTwo, hangoutTvThree;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mark_sheet);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.mark_sheet_toolbar);
+        Toolbar toolbar = findViewById(R.id.mark_sheet_toolbar);
         setSupportActionBar(toolbar);
 
         if(getSupportActionBar() != null) {
@@ -69,11 +76,22 @@ public class MarkSheetActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle(courseCode + " Result Sheet");
 
-        markSheetSearchView = (SearchView) findViewById(R.id.frag_searchView_mark_update);
-        markSheetSearchEditText = (EditText) findViewById(R.id.search_src_text);
-        markSheetCloseButton = (ImageView) findViewById(R.id.search_close_btn);
+        //HangOut Animation
+        hangoutTvOne = findViewById(R.id.hangoutTvOne);
+        hangoutTvTwo = findViewById(R.id.hangoutTvTwo);
+        hangoutTvThree = findViewById(R.id.hangoutTvThree);
 
-        markSheetRecyclerView = (RecyclerView) findViewById(R.id.frag_recyclerView_mark_update);
+        hangoutTvOne.setVisibility(View.VISIBLE);
+        hangoutTvTwo.setVisibility(View.VISIBLE);
+        hangoutTvThree.setVisibility(View.VISIBLE);
+
+        waveAnimation();
+
+        markSheetSearchView = findViewById(R.id.frag_searchView_mark_update);
+        markSheetSearchEditText = findViewById(R.id.search_src_text);
+        markSheetCloseButton = findViewById(R.id.search_close_btn);
+
+        markSheetRecyclerView = findViewById(R.id.frag_recyclerView_mark_update);
         markSheetRecyclerView.setHasFixedSize(true);
         markSheetRecyclerView.setLayoutManager(new LinearLayoutManager(MarkSheetActivity.this));
         stdMarkList = new ArrayList<>();
@@ -133,10 +151,18 @@ public class MarkSheetActivity extends AppCompatActivity {
                         stdMarkList.add(markListItem);
                     }
 
+                    hangoutTvOne.setVisibility(View.GONE);
+                    hangoutTvTwo.setVisibility(View.GONE);
+                    hangoutTvThree.setVisibility(View.GONE);
+
                     markSheetAdapter = new MarkSheetAdapter(stdMarkList, MarkSheetActivity.this);
                     markSheetRecyclerView.setAdapter(markSheetAdapter);
 
                 } catch (JSONException e) {
+                    hangoutTvOne.setVisibility(View.GONE);
+                    hangoutTvTwo.setVisibility(View.GONE);
+                    hangoutTvThree.setVisibility(View.GONE);
+
                     Toast.makeText(MarkSheetActivity.this, response, Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
@@ -144,6 +170,10 @@ public class MarkSheetActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                hangoutTvOne.setVisibility(View.GONE);
+                hangoutTvTwo.setVisibility(View.GONE);
+                hangoutTvThree.setVisibility(View.GONE);
+
                 Toast.makeText(MarkSheetActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
                 error.printStackTrace();
             }
@@ -195,6 +225,35 @@ public class MarkSheetActivity extends AppCompatActivity {
                 markSheetSearchView.clearFocus();
             }
         });
+    }
+
+    //HangOut Animation
+    public void waveAnimation() {
+        PropertyValuesHolder tvOne_Y = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, -40.0f);
+        PropertyValuesHolder tvOne_X = PropertyValuesHolder.ofFloat(View.TRANSLATION_X, 0);
+        waveOneAnimator = ObjectAnimator.ofPropertyValuesHolder(hangoutTvOne, tvOne_X, tvOne_Y);
+        waveOneAnimator.setRepeatCount(-1);
+        waveOneAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        waveOneAnimator.setDuration(300);
+        waveOneAnimator.start();
+
+        PropertyValuesHolder tvTwo_Y = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, -40.0f);
+        PropertyValuesHolder tvTwo_X = PropertyValuesHolder.ofFloat(View.TRANSLATION_X, 0);
+        waveTwoAnimator = ObjectAnimator.ofPropertyValuesHolder(hangoutTvTwo, tvTwo_X, tvTwo_Y);
+        waveTwoAnimator.setRepeatCount(-1);
+        waveTwoAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        waveTwoAnimator.setDuration(300);
+        waveTwoAnimator.setStartDelay(100);
+        waveTwoAnimator.start();
+
+        PropertyValuesHolder tvThree_Y = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, -40.0f);
+        PropertyValuesHolder tvThree_X = PropertyValuesHolder.ofFloat(View.TRANSLATION_X, 0);
+        waveThreeAnimator = ObjectAnimator.ofPropertyValuesHolder(hangoutTvThree, tvThree_X, tvThree_Y);
+        waveThreeAnimator.setRepeatCount(-1);
+        waveThreeAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        waveThreeAnimator.setDuration(300);
+        waveThreeAnimator.setStartDelay(200);
+        waveThreeAnimator.start();
     }
 
     @Override

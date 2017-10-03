@@ -22,16 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".teacher.TeacherActivity"
-            android:label="Teacher Activity" />
+        <activity android:name=".teacher.TeacherActivity" />
         <activity android:name=".student.StudentActivity" />
         <activity android:name=".teacher.TeacherDashboard" />
         <activity android:name=".teacher.studentlist.StudentList" />
         <activity android:name=".student.stdcourses.AllCoursesActivity" />
-        <activity
-            android:name=".teacher.marksheet.MarkSheetActivity"
-            android:theme="@style/AppTheme" />
+        <activity android:name=".teacher.marksheet.MarkSheetActivity" />
         <activity android:name=".teacher.examsetup.ExamSetupActivity" />
     </application>
 

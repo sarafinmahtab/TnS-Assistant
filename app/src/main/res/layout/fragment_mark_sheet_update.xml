@@ -31,4 +31,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="229dp" />
 
+    <RelativeLayout
+        android:id="@+id/mark_sheet_dot_animation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintLeft_toLeftOf="@+id/frag_recyclerView_mark_update"
+        app:layout_constraintRight_toRightOf="@+id/frag_recyclerView_mark_update"
+        app:layout_constraintTop_toBottomOf="@+id/frag_recyclerView_mark_update"
+        app:layout_constraintVertical_bias="0.505">
+
+        <include layout="@layout/activity_hangout_dot_anim" />
+    </RelativeLayout>
+
 </RelativeLayout>
