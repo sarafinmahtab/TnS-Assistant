@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,6 +72,7 @@ public class TeacherActivity extends AppCompatActivity {
     CourseListAdapter adapter;
     RecyclerView recyclerView;
 
+    RelativeLayout dotAnimation;
     ObjectAnimator waveOneAnimator, waveTwoAnimator, waveThreeAnimator;
     TextView hangoutTvOne, hangoutTvTwo, hangoutTvThree;
 
@@ -108,10 +110,13 @@ public class TeacherActivity extends AppCompatActivity {
         email.setText(bundle.getString("email"));
 
         //HangOut Animation
+        dotAnimation = findViewById(R.id.course_data_dot_animation);
         hangoutTvOne = findViewById(R.id.hangoutTvOne);
         hangoutTvTwo = findViewById(R.id.hangoutTvTwo);
         hangoutTvThree = findViewById(R.id.hangoutTvThree);
 
+        loadCourseData.setVisibility(View.VISIBLE);
+        dotAnimation.setVisibility(View.GONE);
         hangoutTvOne.setVisibility(View.GONE);
         hangoutTvTwo.setVisibility(View.GONE);
         hangoutTvThree.setVisibility(View.GONE);
@@ -128,6 +133,7 @@ public class TeacherActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         loadCourseData.setText(R.string.requesting_running_courses);
+                        dotAnimation.setVisibility(View.VISIBLE);
                         hangoutTvOne.setVisibility(View.VISIBLE);
                         hangoutTvTwo.setVisibility(View.VISIBLE);
                         hangoutTvThree.setVisibility(View.VISIBLE);
@@ -337,6 +343,7 @@ public class TeacherActivity extends AppCompatActivity {
                     }
 
                     loadCourseData.setVisibility(View.GONE);
+                    dotAnimation.setVisibility(View.GONE);
                     hangoutTvOne.setVisibility(View.GONE);
                     hangoutTvTwo.setVisibility(View.GONE);
                     hangoutTvThree.setVisibility(View.GONE);
@@ -344,6 +351,8 @@ public class TeacherActivity extends AppCompatActivity {
                     adapter = new CourseListAdapter(listItem, TeacherActivity.this);
                     recyclerView.setAdapter(adapter);
                 } catch (JSONException e) {
+                    loadCourseData.setVisibility(View.VISIBLE);
+                    dotAnimation.setVisibility(View.GONE);
                     hangoutTvOne.setVisibility(View.GONE);
                     hangoutTvTwo.setVisibility(View.GONE);
                     hangoutTvThree.setVisibility(View.GONE);
@@ -355,6 +364,8 @@ public class TeacherActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                loadCourseData.setVisibility(View.VISIBLE);
+                dotAnimation.setVisibility(View.GONE);
                 hangoutTvOne.setVisibility(View.GONE);
                 hangoutTvTwo.setVisibility(View.GONE);
                 hangoutTvThree.setVisibility(View.GONE);

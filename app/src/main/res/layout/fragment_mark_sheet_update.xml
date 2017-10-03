@@ -38,6 +38,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginBottom="32dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintLeft_toLeftOf="@+id/frag_recyclerView_mark_update"
@@ -45,7 +46,7 @@
         app:layout_constraintTop_toBottomOf="@+id/frag_recyclerView_mark_update"
         app:layout_constraintVertical_bias="0.505">
 
-        <include layout="@layout/activity_hangout_dot_anim" />
+        <include layout="@layout/hangout_dot_animation" />
     </RelativeLayout>
 
 </RelativeLayout>

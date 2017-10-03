@@ -243,7 +243,7 @@
                 android:padding="8dp">
 
                 <ImageButton
-                    android:id="@+id/t_statistics"
+                    android:id="@+id/syllabus"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:layout_marginBottom="0dp"
@@ -254,41 +254,10 @@
                     android:contentDescription="@null"
                     android:scaleType="centerInside"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintBottom_toTopOf="@+id/t_statistics_title"
+                    app:layout_constraintBottom_toTopOf="@+id/syllabus_title"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.195"
-                    app:srcCompat="@drawable/statistics" />
-
-                <TextView
-                    android:id="@+id/t_statistics_title"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/statistics_icon"
-                    android:textAlignment="center"
-                    android:textAllCaps="false"
-                    android:textColor="@color/colorTnSText"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintLeft_toLeftOf="@+id/t_statistics"
-                    app:layout_constraintRight_toRightOf="@+id/t_statistics" />
-
-                <ImageButton
-                    android:id="@+id/syllabus"
-                    android:layout_width="90dp"
-                    android:layout_height="0dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginStart="30dp"
-                    android:background="@drawable/icon_selector"
-                    android:contentDescription="@null"
-                    android:scaleType="centerInside"
-                    app:layout_constraintBottom_toBottomOf="@+id/t_statistics"
-                    app:layout_constraintLeft_toRightOf="@+id/t_statistics"
-                    app:layout_constraintRight_toLeftOf="@+id/share_files"
-                    app:layout_constraintTop_toTopOf="@+id/t_statistics"
-                    app:layout_constraintVertical_bias="0.0"
                     app:srcCompat="@drawable/syllabus" />
 
                 <TextView
@@ -302,21 +271,22 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintLeft_toLeftOf="@+id/syllabus"
-                    app:layout_constraintRight_toRightOf="@+id/syllabus"
-                    app:layout_constraintTop_toBottomOf="@+id/syllabus"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:layout_constraintRight_toRightOf="@+id/syllabus" />
 
                 <ImageButton
                     android:id="@+id/share_files"
                     android:layout_width="90dp"
                     android:layout_height="0dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginStart="30dp"
                     android:background="@drawable/icon_selector"
                     android:contentDescription="@null"
                     android:scaleType="centerInside"
                     app:layout_constraintBottom_toBottomOf="@+id/syllabus"
-                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/syllabus"
+                    app:layout_constraintRight_toLeftOf="@+id/t_statistics"
                     app:layout_constraintTop_toTopOf="@+id/syllabus"
                     app:layout_constraintVertical_bias="0.0"
                     app:srcCompat="@drawable/share_files" />
@@ -333,12 +303,43 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintLeft_toLeftOf="@+id/share_files"
                     app:layout_constraintRight_toRightOf="@+id/share_files"
-                    app:layout_constraintTop_toBottomOf="@+id/syllabus"
+                    app:layout_constraintTop_toBottomOf="@+id/share_files"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <ImageButton
+                    android:id="@+id/t_statistics"
+                    android:layout_width="90dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/icon_selector"
+                    android:contentDescription="@null"
+                    android:scaleType="centerInside"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="@+id/share_files"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/share_files"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:srcCompat="@drawable/statistics" />
+
+                <TextView
+                    android:id="@+id/t_statistics_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statistics_icon"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorTnSText"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="@+id/t_statistics"
+                    app:layout_constraintRight_toRightOf="@+id/t_statistics"
+                    app:layout_constraintTop_toBottomOf="@+id/share_files"
                     app:layout_constraintVertical_bias="0.0" />
 
             </android.support.constraint.ConstraintLayout>
 
         </LinearLayout>
-
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

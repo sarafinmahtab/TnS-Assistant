@@ -1,6 +1,8 @@
 package com.sarafinmahtab.tnsassistant.teacher;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -69,7 +71,26 @@ public class TeacherDashboard extends AppCompatActivity {
         sendMail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(TeacherDashboard.this, teacherID, Toast.LENGTH_LONG).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(TeacherDashboard.this);
+                builder.setMessage("Developer is building own mailbox for TnS soon!! Till then, use default mailbox.")
+                .setPositiveButton("Go To Mail", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_APP_EMAIL);
+                        startActivity(intent);
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.setTitle("Mail Box is default!!");
+                alert.show();
             }
         });
 

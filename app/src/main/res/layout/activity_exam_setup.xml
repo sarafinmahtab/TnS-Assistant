@@ -1,30 +1,440 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/exam_setup_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sarafinmahtab.tnsassistant.teacher.marksheet.MarkSheetActivity">
+    android:fillViewport="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.sarafinmahtab.tnsassistant.teacher.marksheet.MarkSheetActivity" >
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/exam_setup_appbar"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme">
+        android:layout_height="wrap_content">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/exam_setup_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorTnSPrimary"
-            app:contentInsetStartWithNavigation="0dp"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="?actionBarPopupTheme"
-            app:theme="@style/ToolbarStyle" />
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/exam_setup_appbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme"
+            app:layout_constraintHorizontal_bias="0.56"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" >
 
-    </android.support.design.widget.AppBarLayout>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/exam_setup_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorTnSPrimary"
+                app:contentInsetStartWithNavigation="0dp"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="?actionBarPopupTheme"
+                app:theme="@style/ToolbarStyle" />
 
-    <include layout="@layout/fragment_teacher_customize" />
+        </android.support.design.widget.AppBarLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+        <RelativeLayout
+            android:id="@+id/exam_setup_dot_animation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="0dp"
+            android:gravity="center"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="@+id/exam_setup_appbar"
+            app:layout_constraintRight_toRightOf="@+id/exam_setup_appbar"
+            app:layout_constraintTop_toBottomOf="@+id/exam_setup_appbar">
+
+            <include layout="@layout/hangout_dot_animation" />
+        </RelativeLayout>
+
+        <TableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:stretchColumns="*"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/exam_setup_dot_animation">
+
+            <TableRow
+                android:id="@+id/table_row_custom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                tools:layout_editor_absoluteX="71dp"
+                tools:layout_editor_absoluteY="184dp">
+
+                <TextView
+                    android:id="@+id/custom_name_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_border"
+                    android:fontFamily="@string/tns_font_family"
+                    android:gravity="center"
+                    android:text="@string/course_exam_name"
+                    android:textColor="@color/colorTnSText"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/custom_percent_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_border"
+                    android:fontFamily="@string/tns_font_family"
+                    android:gravity="center"
+                    android:text="@string/exam_percent"
+                    android:textColor="@color/colorTnSText"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="228dp" />
+
+                <TextView
+                    android:id="@+id/customize_icon_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_border"
+                    android:fontFamily="@string/tns_font_family"
+                    android:gravity="center"
+                    android:text="@string/update_data"
+                    android:textColor="@color/colorTnSText"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="228dp" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/table_row_custom_tt1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                tools:layout_editor_absoluteX="71dp"
+                tools:layout_editor_absoluteY="184dp">
+
+                <TextView
+                    android:id="@+id/custom_tt1_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_border"
+                    android:fontFamily="@string/tns_font_family"
+                    android:gravity="center"
+                    android:text="@string/term_test_1"
+                    android:textColor="@color/colorTnSText"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/custom_tt1_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_border"
+                    android:fontFamily="@string/tns_font_family"
+                    android:gravity="center"
+                    android:textColor="@color/colorTnSText"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="228dp" />
+
+                <ImageButton
+                    android:id="@+id/customize_tt1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/icon_selector2"
+                    android:contentDescription="@null"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/mark_update_icon2"
+                    tools:layout_editor_absoluteY="102dp" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/table_row_custom_tt2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                tools:layout_editor_absoluteX="71dp"
+                tools:layout_editor_absoluteY="184dp">
+
+                <TextView
+                    android:id="@+id/custom_tt2_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_border"
+                    android:fontFamily="@string/tns_font_family"
+                    android:gravity="center"
+                    android:text="@string/term_test_2"
+                    android:textColor="@color/colorTnSText"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/custom_tt2_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_border"
+                    android:fontFamily="@string/tns_font_family"
+                    android:gravity="center"
+                    android:textColor="@color/colorTnSText"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="228dp" />
+
+                <ImageButton
+                    android:id="@+id/customize_tt2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/icon_selector2"
+                    android:contentDescription="@null"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/mark_update_icon2"
+                    tools:layout_editor_absoluteY="102dp" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/table_row_custom_attendance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                tools:layout_editor_absoluteX="71dp"
+                tools:layout_editor_absoluteY="184dp">
+
+                <TextView
+                    android:id="@+id/custom_attendance_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_border"
+                    android:fontFamily="@string/tns_font_family"
+                    android:gravity="center"
+                    android:text="@string/attendance"
+                    android:textColor="@color/colorTnSText"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/custom_attendance_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_border"
+                    android:fontFamily="@string/tns_font_family"
+                    android:gravity="center"
+                    android:textColor="@color/colorTnSText"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="228dp" />
+
+                <ImageButton
+                    android:id="@+id/customize_attendance"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/icon_selector2"
+                    android:contentDescription="@null"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/mark_update_icon2"
+                    tools:layout_editor_absoluteY="102dp" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/table_row_custom_viva"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                tools:layout_editor_absoluteX="71dp"
+                tools:layout_editor_absoluteY="184dp">
+
+                <TextView
+                    android:id="@+id/custom_viva_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_border"
+                    android:fontFamily="@string/tns_font_family"
+                    android:gravity="center"
+                    android:text="@string/viva"
+                    android:textColor="@color/colorTnSText"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/custom_viva_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_border"
+                    android:fontFamily="@string/tns_font_family"
+                    android:gravity="center"
+                    android:textColor="@color/colorTnSText"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="228dp" />
+
+                <ImageButton
+                    android:id="@+id/customize_viva"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/icon_selector2"
+                    android:contentDescription="@null"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/mark_update_icon2"
+                    tools:layout_editor_absoluteY="102dp" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/table_row_custom_final"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:gravity="center"
+                tools:layout_editor_absoluteX="71dp"
+                tools:layout_editor_absoluteY="184dp">
+
+                <TextView
+                    android:id="@+id/custom_final_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_border"
+                    android:fontFamily="@string/tns_font_family"
+                    android:gravity="center"
+                    android:text="@string/final_exam"
+                    android:textColor="@color/colorTnSText"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/custom_final_percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/header_border"
+                    android:fontFamily="@string/tns_font_family"
+                    android:gravity="center"
+                    android:textColor="@color/colorTnSText"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="228dp" />
+
+                <ImageButton
+                    android:id="@+id/customize_final"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="1dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/icon_selector2"
+                    android:contentDescription="@null"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/mark_update_icon2"
+                    tools:layout_editor_absoluteY="102dp" />
+            </TableRow>
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="@+id/tableLayout"
+            app:layout_constraintRight_toRightOf="@+id/tableLayout"
+            app:layout_constraintTop_toBottomOf="@+id/tableLayout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintVertical_bias="0.0">
+
+            <TextView
+                android:id="@+id/rules_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@string/tns_font_family"
+                android:text="@string/as_per_rules"
+                android:textAlignment="center"
+                android:textColor="@color/deep_red"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/rules_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@string/tns_font_family"
+                android:gravity="center"
+                android:background="@drawable/edit_text_border"
+                android:text=""
+                android:textColor="@color/colorTnSText"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/avg_check_btn"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_weight="1"
+                android:background="@color/colorTnSPrimary"
+                android:fontFamily="@string/tns_font_family"
+                android:padding="8dp"
+                android:text="@string/avg_functions"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

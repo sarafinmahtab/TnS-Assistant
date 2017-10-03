@@ -35,40 +35,4 @@
         android:textColor="@color/colorTnSText"
         android:textSize="40sp" />
 
-    <TextView
-        android:id="@+id/dummyLeftRightOne"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:gravity="center"
-        android:text="@string/dot"
-        android:textColor="@color/colorTnSText"
-        android:textSize="40sp"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/dummyLeftRightTwo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/hangoutTvOne"
-        android:layout_toEndOf="@id/hangoutTvOne"
-        android:gravity="center"
-        android:text="@string/dot"
-        android:textColor="@color/colorTnSText"
-        android:textSize="40sp"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/dummyLeftRightThree"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/hangoutTvTwo"
-        android:layout_toEndOf="@id/hangoutTvTwo"
-        android:gravity="center"
-        android:text="@string/dot"
-        android:textColor="@color/colorTnSText"
-        android:textSize="40sp"
-        android:visibility="gone" />
-
 </merge>

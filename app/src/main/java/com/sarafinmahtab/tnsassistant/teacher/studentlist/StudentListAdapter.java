@@ -108,14 +108,14 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
         public StdViewHolder(View itemView) {
             super(itemView);
 
-            textViewStdName = (TextView) itemView.findViewById(R.id.stdlist_name);
-            textViewStdReg = (TextView) itemView.findViewById(R.id.stdlist_reg);
+            textViewStdName = itemView.findViewById(R.id.stdlist_name);
+            textViewStdReg = itemView.findViewById(R.id.stdlist_reg);
 
-            stdDisplayPic = (ImageView) itemView.findViewById(R.id.stdlist_display);
-            stdCall = (ImageButton) itemView.findViewById(R.id.std_call);
+            stdDisplayPic = itemView.findViewById(R.id.stdlist_display);
+            stdCall = itemView.findViewById(R.id.std_call);
 
-            stdLinearLayout = (LinearLayout) itemView.findViewById(R.id.std_linearLayout);
-            std_cardView = (CardView) itemView.findViewById(R.id.std_cardview);
+            stdLinearLayout = itemView.findViewById(R.id.std_linearLayout);
+            std_cardView = itemView.findViewById(R.id.std_cardview);
         }
     }
 

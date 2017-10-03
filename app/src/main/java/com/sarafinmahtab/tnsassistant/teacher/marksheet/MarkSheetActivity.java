@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +51,7 @@ public class MarkSheetActivity extends AppCompatActivity {
     EditText markSheetSearchEditText;
     ImageView markSheetCloseButton;
 
+    RelativeLayout dotAnimation;
     ObjectAnimator waveOneAnimator, waveTwoAnimator, waveThreeAnimator;
     TextView hangoutTvOne, hangoutTvTwo, hangoutTvThree;
 
@@ -77,10 +79,12 @@ public class MarkSheetActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(courseCode + " Result Sheet");
 
         //HangOut Animation
+        dotAnimation = findViewById(R.id.mark_sheet_dot_animation);
         hangoutTvOne = findViewById(R.id.hangoutTvOne);
         hangoutTvTwo = findViewById(R.id.hangoutTvTwo);
         hangoutTvThree = findViewById(R.id.hangoutTvThree);
 
+        dotAnimation.setVisibility(View.VISIBLE);
         hangoutTvOne.setVisibility(View.VISIBLE);
         hangoutTvTwo.setVisibility(View.VISIBLE);
         hangoutTvThree.setVisibility(View.VISIBLE);
@@ -151,6 +155,7 @@ public class MarkSheetActivity extends AppCompatActivity {
                         stdMarkList.add(markListItem);
                     }
 
+                    dotAnimation.setVisibility(View.GONE);
                     hangoutTvOne.setVisibility(View.GONE);
                     hangoutTvTwo.setVisibility(View.GONE);
                     hangoutTvThree.setVisibility(View.GONE);
@@ -159,6 +164,7 @@ public class MarkSheetActivity extends AppCompatActivity {
                     markSheetRecyclerView.setAdapter(markSheetAdapter);
 
                 } catch (JSONException e) {
+                    dotAnimation.setVisibility(View.GONE);
                     hangoutTvOne.setVisibility(View.GONE);
                     hangoutTvTwo.setVisibility(View.GONE);
                     hangoutTvThree.setVisibility(View.GONE);
@@ -170,6 +176,7 @@ public class MarkSheetActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                dotAnimation.setVisibility(View.GONE);
                 hangoutTvOne.setVisibility(View.GONE);
                 hangoutTvTwo.setVisibility(View.GONE);
                 hangoutTvThree.setVisibility(View.GONE);

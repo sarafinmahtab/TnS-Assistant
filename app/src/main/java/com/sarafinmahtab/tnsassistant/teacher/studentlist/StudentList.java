@@ -1,5 +1,8 @@
 package com.sarafinmahtab.tnsassistant.teacher.studentlist;
 
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
+import android.animation.ValueAnimator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -32,7 +37,6 @@ import java.util.Map;
 public class StudentList extends AppCompatActivity {
 
     String stdListURL = ServerAddress.getMyServerAddress().concat("std_list.php");
-//    String stdListURL = "http://192.168.43.65/TnSAssistant/std_list.php";
 
     String courseID, teacherID, stdName;
 
@@ -44,12 +48,16 @@ public class StudentList extends AppCompatActivity {
     EditText searchEditText;
     ImageView closeButton;
 
+    RelativeLayout dotAnimation;
+    ObjectAnimator waveOneAnimator, waveTwoAnimator, waveThreeAnimator;
+    TextView hangoutTvOne, hangoutTvTwo, hangoutTvThree;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_list);
 
-        Toolbar stdListToolbar = (Toolbar) findViewById(R.id.stdlist_toolbar);
+        Toolbar stdListToolbar = findViewById(R.id.stdlist_toolbar);
         setSupportActionBar(stdListToolbar);
 
         if(getSupportActionBar() != null) {
@@ -66,10 +74,23 @@ public class StudentList extends AppCompatActivity {
 
         getSupportActionBar().setTitle(bundle.getString("course_code"));
 
-        stdSearchView = (SearchView) findViewById(R.id.std_searchView);
-        searchEditText = (EditText) findViewById(R.id.search_src_text);
-        closeButton = (ImageView) findViewById(R.id.search_close_btn);
-        stdRecyclerView = (RecyclerView) findViewById(R.id.std_list_view);
+        //HangOut Animation
+        dotAnimation = findViewById(R.id.std_list_dot_animation);
+        hangoutTvOne = findViewById(R.id.hangoutTvOne);
+        hangoutTvTwo = findViewById(R.id.hangoutTvTwo);
+        hangoutTvThree = findViewById(R.id.hangoutTvThree);
+
+        dotAnimation.setVisibility(View.VISIBLE);
+        hangoutTvOne.setVisibility(View.VISIBLE);
+        hangoutTvTwo.setVisibility(View.VISIBLE);
+        hangoutTvThree.setVisibility(View.VISIBLE);
+
+        waveAnimation();
+
+        stdSearchView = findViewById(R.id.std_searchView);
+        searchEditText = findViewById(R.id.search_src_text);
+        closeButton = findViewById(R.id.search_close_btn);
+        stdRecyclerView = findViewById(R.id.std_list_view);
 
         stdRecyclerView.setHasFixedSize(true);
         stdRecyclerView.setLayoutManager(new LinearLayoutManager(StudentList.this));
@@ -96,9 +117,19 @@ public class StudentList extends AppCompatActivity {
                         stdListItem.add(studentItem);
                     }
 
+                    dotAnimation.setVisibility(View.GONE);
+                    hangoutTvOne.setVisibility(View.GONE);
+                    hangoutTvTwo.setVisibility(View.GONE);
+                    hangoutTvThree.setVisibility(View.GONE);
+
                     stdAdapter = new StudentListAdapter(stdListItem, StudentList.this);
                     stdRecyclerView.setAdapter(stdAdapter);
                 } catch (JSONException e) {
+                    dotAnimation.setVisibility(View.GONE);
+                    hangoutTvOne.setVisibility(View.GONE);
+                    hangoutTvTwo.setVisibility(View.GONE);
+                    hangoutTvThree.setVisibility(View.GONE);
+
                     Toast.makeText(StudentList.this, e.getMessage(), Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
@@ -106,6 +137,11 @@ public class StudentList extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                dotAnimation.setVisibility(View.GONE);
+                hangoutTvOne.setVisibility(View.GONE);
+                hangoutTvTwo.setVisibility(View.GONE);
+                hangoutTvThree.setVisibility(View.GONE);
+
                 Toast.makeText(StudentList.this, error.getMessage(), Toast.LENGTH_LONG).show();
                 error.printStackTrace();
             }
@@ -130,13 +166,6 @@ public class StudentList extends AppCompatActivity {
             stdSearchView.clearFocus();
         }
 
-//        stdSearchView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                searchView.setIconified(false);
-//            }
-//        });
-
         stdSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -148,7 +177,6 @@ public class StudentList extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
 
                 stdAdapter.checkQueryFromList(newText.toLowerCase());
-//                Toast.makeText(StudentList.this, newText, Toast.LENGTH_LONG).show();
 
                 return true;
             }
@@ -166,6 +194,35 @@ public class StudentList extends AppCompatActivity {
                 stdSearchView.clearFocus();
             }
         });
+    }
+
+    //HangOut Animation
+    public void waveAnimation() {
+        PropertyValuesHolder tvOne_Y = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, -40.0f);
+        PropertyValuesHolder tvOne_X = PropertyValuesHolder.ofFloat(View.TRANSLATION_X, 0);
+        waveOneAnimator = ObjectAnimator.ofPropertyValuesHolder(hangoutTvOne, tvOne_X, tvOne_Y);
+        waveOneAnimator.setRepeatCount(-1);
+        waveOneAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        waveOneAnimator.setDuration(300);
+        waveOneAnimator.start();
+
+        PropertyValuesHolder tvTwo_Y = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, -40.0f);
+        PropertyValuesHolder tvTwo_X = PropertyValuesHolder.ofFloat(View.TRANSLATION_X, 0);
+        waveTwoAnimator = ObjectAnimator.ofPropertyValuesHolder(hangoutTvTwo, tvTwo_X, tvTwo_Y);
+        waveTwoAnimator.setRepeatCount(-1);
+        waveTwoAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        waveTwoAnimator.setDuration(300);
+        waveTwoAnimator.setStartDelay(100);
+        waveTwoAnimator.start();
+
+        PropertyValuesHolder tvThree_Y = PropertyValuesHolder.ofFloat(View.TRANSLATION_Y, -40.0f);
+        PropertyValuesHolder tvThree_X = PropertyValuesHolder.ofFloat(View.TRANSLATION_X, 0);
+        waveThreeAnimator = ObjectAnimator.ofPropertyValuesHolder(hangoutTvThree, tvThree_X, tvThree_Y);
+        waveThreeAnimator.setRepeatCount(-1);
+        waveThreeAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        waveThreeAnimator.setDuration(300);
+        waveThreeAnimator.setStartDelay(200);
+        waveThreeAnimator.start();
     }
 
     @Override

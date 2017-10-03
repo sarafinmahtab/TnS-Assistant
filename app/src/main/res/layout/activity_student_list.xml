@@ -42,7 +42,26 @@
         android:layout_below="@+id/std_searchView"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="229dp" />
+
+    <RelativeLayout
+        android:id="@+id/std_list_dot_animation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintLeft_toLeftOf="@+id/std_list_view"
+        app:layout_constraintRight_toRightOf="@+id/std_list_view"
+        app:layout_constraintTop_toBottomOf="@+id/std_list_view"
+        app:layout_constraintVertical_bias="0.505">
+
+        <include layout="@layout/hangout_dot_animation" />
+    </RelativeLayout>
 
 </RelativeLayout>
