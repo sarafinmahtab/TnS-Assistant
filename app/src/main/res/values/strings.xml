@@ -98,6 +98,8 @@
     <string name="have_not_checked">You haven\'t checked any profile yet!</string>
     <string name="network_unreachable">Network Unreachable!!</string>
     <string name="no_rules_set_up">No rules set up!!</string>
+    <string name="demo_std_name">Shamsul Arafin Mahtab</string>
+    <string name="demo_reg_id">Reg ID: 2014331063</string>
 
     <!--<string name="tns_font_family">sans-serif</string>-->
     <!--<string name="tns_font_family">sans-serif-condensed</string>-->

@@ -31,6 +31,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.sarafinmahtab.tnsassistant.student.StudentActivity;
 import com.sarafinmahtab.tnsassistant.teacher.TeacherActivity;
 
@@ -63,6 +64,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fresco.initialize(this);
+
         setContentView(R.layout.activity_login);
 
         loginStatus = findViewById(R.id.loginStatus);

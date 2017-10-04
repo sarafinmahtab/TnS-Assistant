@@ -3,6 +3,7 @@ package com.sarafinmahtab.tnsassistant.teacher.studentlist;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,8 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
+import com.facebook.drawee.generic.RoundingParams;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.sarafinmahtab.tnsassistant.MySingleton;
 import com.sarafinmahtab.tnsassistant.R;
 
@@ -54,30 +57,37 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
     public void onBindViewHolder(final StdViewHolder holder, int position) {
         final StudentItem stdItem = newStdListItem.get(position);
 
-//        if(!stdItem.getStdListDisplay().equals("")) {
-//            ImageRequest imageListLoadRequest = new ImageRequest(stdItem.getStdListDisplay(), new Response.Listener<Bitmap>() {
-//                @Override
-//                public void onResponse(Bitmap response) {
-//                    holder.stdDisplayPic.setImageBitmap(response);
-//                }
-//            }, 0, 0, ImageView.ScaleType.CENTER_INSIDE, null, new Response.ErrorListener() {
-//                @Override
-//                public void onErrorResponse(VolleyError error) {
-//                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
-//                    error.printStackTrace();
-//                }
-//            });
-//
-//            MySingleton.getMyInstance(context).addToRequestQueue(imageListLoadRequest);
-//        }
+        if(!stdItem.getStdListDisplay().equals("")) {
+            Uri uri = Uri.parse(stdItem.getStdListDisplay());
+            holder.stdDisplayPic.setImageURI(uri);
+
+            int color = Color.rgb(88, 88, 88);
+            RoundingParams roundingParams = RoundingParams.fromCornersRadius(5f);
+            roundingParams.setBorder(color, 1.0f);
+            roundingParams.setRoundAsCircle(true);
+            holder.stdDisplayPic.getHierarchy().setRoundingParams(roundingParams);
+        }
 
         holder.textViewStdName.setText(stdItem.getStdListName());
         holder.textViewStdReg.setText(String.format("Reg ID: %s", stdItem.getStdListReg()));
 
+        holder.stdMail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(Intent.ACTION_SEND);
+                String[] recipients= {stdItem.getStdListMail()};
+                intent.putExtra(Intent.EXTRA_EMAIL, recipients);
+                intent.putExtra(Intent.EXTRA_SUBJECT,"");
+                intent.putExtra(Intent.EXTRA_TEXT,"");
+                intent.putExtra(Intent.EXTRA_CC,"");
+                intent.setType("text/html");
+                context.startActivity(Intent.createChooser(intent, "Send mail"));
+            }
+        });
+
         holder.stdCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(context, "Call " + stdItem.getStdListPhone(), Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse(String.format("tel:%s", stdItem.getStdListPhone())));
                 context.startActivity(intent);
@@ -100,8 +110,8 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
     public static class StdViewHolder extends RecyclerView.ViewHolder {
 
         TextView textViewStdName, textViewStdReg;
-        ImageView stdDisplayPic;
-        ImageButton stdCall;
+        SimpleDraweeView stdDisplayPic;
+        ImageButton stdCall, stdMail;
         LinearLayout stdLinearLayout;
         CardView std_cardView;
 
@@ -113,6 +123,7 @@ public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.
 
             stdDisplayPic = itemView.findViewById(R.id.stdlist_display);
             stdCall = itemView.findViewById(R.id.std_call);
+            stdMail = itemView.findViewById(R.id.std_mail);
 
             stdLinearLayout = itemView.findViewById(R.id.std_linearLayout);
             std_cardView = itemView.findViewById(R.id.std_cardview);

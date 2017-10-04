@@ -113,6 +113,7 @@ public class StudentList extends AppCompatActivity {
                                 obj.getString("student_id"),
                                 obj.getString("std_display_picture"), stdName,
                                 obj.getString("registration_no"),
+                                obj.getString("email_no"),
                                 obj.getString("contact_no"));
                         stdListItem.add(studentItem);
                     }

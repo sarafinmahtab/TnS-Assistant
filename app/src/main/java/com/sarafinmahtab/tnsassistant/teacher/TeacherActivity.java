@@ -6,6 +6,7 @@ import android.animation.ValueAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
@@ -30,8 +31,10 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.generic.RoundingParams;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.sarafinmahtab.tnsassistant.LoginActivity;
 import com.sarafinmahtab.tnsassistant.MySingleton;
 import com.sarafinmahtab.tnsassistant.R;
@@ -62,7 +65,8 @@ public class TeacherActivity extends AppCompatActivity {
     TextView name, codeName, designation, deptName, email;
     Button courseLoader, changeTeacherImage, chooseTeacherImage, uploadTeacherImage;
 
-    ImageView teacherDisplayPic, teacherImageLoad;
+    SimpleDraweeView teacherDisplayPic;
+    ImageView teacherImageLoad;
 
     private int IMG_REQUEST = 1;
     private Bitmap bitmap;
@@ -79,6 +83,7 @@ public class TeacherActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_teacher);
 
         Toolbar myToolbar = findViewById(R.id.activity_teacher_toolbar);
@@ -155,19 +160,8 @@ public class TeacherActivity extends AppCompatActivity {
     private void loadDisplayImage() {
         teacherDisplayPic = findViewById(R.id.teacher_display_pic);
 
-        ImageRequest imageLoadRequest = new ImageRequest(imageURL, new Response.Listener<Bitmap>() {
-            @Override
-            public void onResponse(Bitmap response) {
-                teacherDisplayPic.setImageBitmap(response);
-            }
-        }, 0, 0, ImageView.ScaleType.CENTER_INSIDE, null, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-
-        MySingleton.getMyInstance(TeacherActivity.this).addToRequestQueue(imageLoadRequest);
+        Uri uri = Uri.parse(imageURL);
+        teacherDisplayPic.setImageURI(uri);
     }
 
     private void displayImageUpload() {

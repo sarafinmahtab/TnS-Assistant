@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -24,20 +25,22 @@
             app:popupTheme="?actionBarPopupTheme"
             app:theme="@style/ToolbarStyle" />
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/student_display_pic"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginStart="0dp"
             android:layout_marginTop="58dp"
             android:contentDescription="@null"
-            android:paddingBottom="4dp"
+            android:paddingBottom="2dp"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:paddingTop="2dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/display_pic"
+            fresco:actualImageScaleType="focusCrop"
+            fresco:placeholderImage="@drawable/display_picture"
+            fresco:placeholderImageScaleType="fitCenter"
             tools:layout_conversion_absoluteHeight="120dp"
             tools:layout_conversion_absoluteWidth="120dp"
             tools:layout_conversion_absoluteX="0dp"

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -25,22 +26,15 @@
             android:orientation="horizontal"
             android:padding="3dp">
 
-            <RelativeLayout
-                android:id="@+id/circle_display"
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/stdlist_display"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
-                android:background="@drawable/oval">
-
-                <ImageView
-                    android:id="@+id/stdlist_display"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true"
-                    android:contentDescription="@null"
-                    app:srcCompat="@drawable/students" />
-            </RelativeLayout>
+                fresco:actualImageScaleType="focusCrop"
+                fresco:placeholderImage="@drawable/student_round"
+                fresco:placeholderImageScaleType="fitCenter" />
 
             <LinearLayout
                 android:id="@+id/std_linearLayout2"
@@ -58,7 +52,7 @@
                     android:layout_marginTop="1dp"
                     android:layout_weight="1"
                     android:fontFamily="@string/tns_font_family"
-                    android:text="Shamsul Arafin Mahtab"
+                    android:text="@string/demo_std_name"
                     android:textColor="@color/text_selector"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -68,7 +62,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
-                    android:text="Reg ID: 2014331063"
+                    android:text="@string/demo_reg_id"
                     android:textColor="@color/text_selector2"
                     android:textSize="12sp"
                     android:textStyle="bold" />
