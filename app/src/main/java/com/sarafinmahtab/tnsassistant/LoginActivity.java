@@ -55,7 +55,6 @@ public class LoginActivity extends AppCompatActivity {
     TextView loginStatus;
 
     TextView leftRightTvOne, leftRightTvTwo, leftRightTvThree, leftRightTvFour, leftRightTvFive;
-    AnimatorSet animatorSet, animatorSet1;
     RelativeLayout leftRightAnimation;
     private int layoutWidth;
 
@@ -317,7 +316,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void leftToRightToLeftMove() {
-
         final ValueAnimator valueTvOne_x = ObjectAnimator.ofFloat(leftRightTvOne, "x", leftRightTvOne.getX(), layoutWidth * .84f);
 
         valueTvOne_x.setDuration(1000);
@@ -353,7 +351,7 @@ public class LoginActivity extends AppCompatActivity {
         valueTvFive_x.setRepeatMode(ValueAnimator.REVERSE);
         valueTvFive_x.setInterpolator(new DecelerateInterpolator());
 
-        animatorSet1 = new AnimatorSet();
+        final AnimatorSet animatorSet1 = new AnimatorSet();
         animatorSet1.playSequentially(valueTvOne_x, valueTvTwo_x, valueTvThree_x, valueTvFour_x, valueTvFive_x);
 
         animatorSet1.start();
@@ -371,7 +369,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                ValueAnimator valueTvOne_x = ObjectAnimator.ofFloat(leftRightTvOne, "x", leftRightTvOne.getX(), leftRightTvOne.getX() * .01f);
+                final ValueAnimator valueTvOne_x = ObjectAnimator.ofFloat(leftRightTvOne, "x", leftRightTvOne.getX(), leftRightTvOne.getX() * .01f);
 
                 valueTvOne_x.setDuration(1000);
                 valueTvOne_x.setRepeatCount(0);
@@ -406,7 +404,7 @@ public class LoginActivity extends AppCompatActivity {
                 valueTvFive_x.setRepeatMode(ValueAnimator.REVERSE);
                 valueTvFive_x.setInterpolator(new DecelerateInterpolator());
 
-                animatorSet = new AnimatorSet();
+                final AnimatorSet animatorSet = new AnimatorSet();
                 animatorSet.playSequentially(valueTvFive_x, valueTvFour_x, valueTvThree_x, valueTvTwo_x, valueTvOne_x);
 
                 animatorSet.start();
@@ -429,17 +427,26 @@ public class LoginActivity extends AppCompatActivity {
 
                     @Override
                     public void onAnimationCancel(Animator animation) {
-
+                        leftRightAnimation.setVisibility(View.GONE);
+                        leftRightTvOne.setVisibility(View.GONE);
+                        leftRightTvTwo.setVisibility(View.GONE);
+                        leftRightTvThree.setVisibility(View.GONE);
+                        leftRightTvFour.setVisibility(View.GONE);
+                        leftRightTvFive.setVisibility(View.GONE);
                     }
                 });
             }
 
             @Override
             public void onAnimationCancel(Animator animation) {
-
+                leftRightAnimation.setVisibility(View.GONE);
+                leftRightTvOne.setVisibility(View.GONE);
+                leftRightTvTwo.setVisibility(View.GONE);
+                leftRightTvThree.setVisibility(View.GONE);
+                leftRightTvFour.setVisibility(View.GONE);
+                leftRightTvFive.setVisibility(View.GONE);
             }
         });
-
     }
 
     @Override

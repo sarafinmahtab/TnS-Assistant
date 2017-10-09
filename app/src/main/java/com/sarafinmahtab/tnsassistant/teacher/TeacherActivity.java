@@ -196,7 +196,8 @@ public class TeacherActivity extends AppCompatActivity {
                 builder.setView(customView).setNegativeButton("Close", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         if(imageUploaded) {
-                            loadDisplayImage();
+                            Uri uri = Uri.parse(imageURL);
+                            teacherDisplayPic.setImageURI(uri);
                         }
                         dialog.cancel();
                     }

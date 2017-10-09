@@ -27,10 +27,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorTnSPrimary"
-                app:contentInsetStartWithNavigation="0dp"
-                app:layout_scrollFlags="scroll|enterAlways"
+                android:theme="@style/ToolbarStyle"
                 app:popupTheme="?actionBarPopupTheme"
-                app:theme="@style/ToolbarStyle" />
+                app:contentInsetStartWithNavigation="0dp"
+                app:layout_scrollFlags="scroll|enterAlways" />
 
         </android.support.design.widget.AppBarLayout>
 

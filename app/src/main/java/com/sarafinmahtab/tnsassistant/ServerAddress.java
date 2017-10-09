@@ -5,8 +5,8 @@ package com.sarafinmahtab.tnsassistant;
  */
 
 public class ServerAddress {
-    private static String myServerAddress = "http://192.168.0.150/TnSAssistant/";
-    private static String myUploadServerAddress = "http://192.168.0.150/TnSAssistant/uploads/";
+    private static String myServerAddress = "http://192.168.0.63/TnSAssistant/";
+    private static String myUploadServerAddress = "http://192.168.0.63/TnSAssistant/uploads/";
 
     public static void setMyServerAddress(String myServerAddress) {
         ServerAddress.myServerAddress = myServerAddress;

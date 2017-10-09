@@ -17,13 +17,12 @@
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:background="@color/colorTnSPrimary"
-            android:theme="@style/AppTheme"
+            android:theme="@style/ToolbarStyle"
+            app:popupTheme="?actionBarPopupTheme"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:popupTheme="?actionBarPopupTheme"
-            app:theme="@style/ToolbarStyle" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/student_display_pic"

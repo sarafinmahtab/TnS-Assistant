@@ -231,4 +231,14 @@ public class StudentList extends AppCompatActivity {
         onBackPressed();
         return true;
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }
